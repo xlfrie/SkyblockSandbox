@@ -1,6 +1,6 @@
 name: SBSandbox
 version: '${project.version}'
-main: sbsandbox.sbsandbox.SBSandbox
+main: me.xlfrie.sbsandbox.SBSandbox
 api-version: 1.19
 authors: [ XLFrie ]
 description: Skyblock sandbox scuffed edition.
