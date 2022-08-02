@@ -1,4 +1,4 @@
-package sbsandbox.sbsandbox.handlers;
+package sbsandbox.sbsandbox.Handlers.NPCs;
 
 import net.minecraft.network.protocol.game.ClientboundMoveEntityPacket;
 import net.minecraft.network.protocol.game.ClientboundRotateHeadPacket;
@@ -14,7 +14,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import sbsandbox.sbsandbox.SBSandbox;
-import sbsandbox.sbsandbox.mobs.CustomNpc;
+import sbsandbox.sbsandbox.Mobs.CustomNpc;
 
 import java.util.Map;
 

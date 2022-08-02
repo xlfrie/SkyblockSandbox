@@ -1,4 +1,4 @@
-package sbsandbox.sbsandbox.handlers;
+package sbsandbox.sbsandbox.Handlers.CustomItems;
 
 import org.bukkit.*;
 import org.bukkit.entity.Damageable;

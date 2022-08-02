@@ -1,4 +1,4 @@
-package sbsandbox.sbsandbox.interactions;
+package sbsandbox.sbsandbox.Interactions;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

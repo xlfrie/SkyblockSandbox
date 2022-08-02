@@ -16,7 +16,7 @@ import java.util.HashMap;
 
 import static sbsandbox.sbsandbox.SBSandbox.color;
 
-public class reset implements CommandExecutor {
+public class ResetCommand implements CommandExecutor {
     private static HashMap<ServerPlayer, CraftPlayer> npcs;
 
     @Override

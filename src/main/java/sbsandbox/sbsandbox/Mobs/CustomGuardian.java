@@ -1,4 +1,4 @@
-package sbsandbox.sbsandbox.mobs;
+package sbsandbox.sbsandbox.Mobs;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;

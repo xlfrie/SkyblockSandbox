@@ -7,7 +7,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_19_R1.CraftWorld;
-import sbsandbox.sbsandbox.mobs.CustomGuardian;
+import sbsandbox.sbsandbox.Mobs.CustomGuardian;
 
 import java.util.HashMap;
 import java.util.UUID;

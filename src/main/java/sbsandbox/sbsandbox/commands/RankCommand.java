@@ -12,7 +12,7 @@ import java.util.List;
 
 import static sbsandbox.sbsandbox.SBSandbox.color;
 
-public class rank implements TabExecutor {
+public class RankCommand implements TabExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) return true;

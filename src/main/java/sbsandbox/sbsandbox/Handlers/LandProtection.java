@@ -1,4 +1,4 @@
-package sbsandbox.sbsandbox.handlers;
+package sbsandbox.sbsandbox.Handlers;
 
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.game.ClientboundLevelParticlesPacket;

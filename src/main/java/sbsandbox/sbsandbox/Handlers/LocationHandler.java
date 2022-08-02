@@ -1,4 +1,4 @@
-package sbsandbox.sbsandbox.handlers;
+package sbsandbox.sbsandbox.Handlers;
 
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import org.bukkit.Bukkit;
@@ -9,6 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import sbsandbox.sbsandbox.Rank;
 import sbsandbox.sbsandbox.SBSandbox;
 
@@ -33,6 +34,15 @@ public class LocationHandler implements Listener {
     public void changeWorld(PlayerChangedWorldEvent event) {
         Player player = event.getPlayer();
         Location bedLoc = new Location(player.getWorld(), -0.5, 0, 4);
+        bedLoc.setYaw(180);
+        player.setBedSpawnLocation(bedLoc, true);
+        player.teleport(bedLoc);
+    }
+
+    @EventHandler
+    public void quitWorld(PlayerQuitEvent event) {
+        Player player = event.getPlayer();
+        Location bedLoc = new Location(Bukkit.getWorld("world"), -0.5, 0, 4);
         bedLoc.setYaw(180);
         player.setBedSpawnLocation(bedLoc, true);
         player.teleport(bedLoc);

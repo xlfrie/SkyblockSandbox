@@ -21,11 +21,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 import org.bukkit.scoreboard.Team;
+import sbsandbox.sbsandbox.Handlers.CustomItems.*;
+import sbsandbox.sbsandbox.Handlers.NPCs.NPCHandler;
+import sbsandbox.sbsandbox.Handlers.NPCs.NPCRotationHandler;
 import sbsandbox.sbsandbox.commands.*;
-import sbsandbox.sbsandbox.handlers.TerminatorHandler;
-import sbsandbox.sbsandbox.handlers.*;
-import sbsandbox.sbsandbox.interactions.player;
-import sbsandbox.sbsandbox.mobs.CustomNpc;
+import sbsandbox.sbsandbox.Handlers.CustomItems.TerminatorHandler;
+import sbsandbox.sbsandbox.Handlers.*;
+import sbsandbox.sbsandbox.Interactions.player;
+import sbsandbox.sbsandbox.Mobs.CustomNpc;
 
 import java.util.*;
 
@@ -88,14 +91,14 @@ public final class SBSandbox extends JavaPlugin {
         new LocationHandler(this);
 
 //        Register commands
-        getCommand("loop").setExecutor(new loop());
-        getCommand("spawn").setExecutor(new spawn());
-        getCommand("npc").setExecutor(new npc());
-        getCommand("stonk").setExecutor(new stonk());
-        getCommand("reset").setExecutor(new reset());
-        getCommand("warp").setExecutor(new warp());
-        getCommand("lobby").setExecutor(new lobby());
-        getCommand("rank").setExecutor(new rank());
+        getCommand("loop").setExecutor(new LoopCommand());
+        getCommand("spawn").setExecutor(new SpawnCommand());
+        getCommand("npc").setExecutor(new NPCCommand());
+        getCommand("stonk").setExecutor(new StonkCommand());
+        getCommand("reset").setExecutor(new ResetCommand());
+        getCommand("warp").setExecutor(new WarpCommand());
+        getCommand("lobby").setExecutor(new LobbyCommand());
+        getCommand("rank").setExecutor(new RankCommand());
 
         ProtocolManager manager = ProtocolLibrary.getProtocolManager();
         manager.addPacketListener(new PacketAdapter(this, PacketType.Play.Client.USE_ENTITY) {

@@ -1,4 +1,4 @@
-package sbsandbox.sbsandbox.mobs;
+package sbsandbox.sbsandbox.Mobs;
 
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;

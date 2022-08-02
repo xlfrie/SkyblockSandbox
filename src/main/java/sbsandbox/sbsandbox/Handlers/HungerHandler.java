@@ -1,4 +1,4 @@
-package sbsandbox.sbsandbox.handlers;
+package sbsandbox.sbsandbox.Handlers;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;

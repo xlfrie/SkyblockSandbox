@@ -40,7 +40,7 @@ public enum Rank {
     }
 
 
-    public void saveRank(Player player) {
+    private void saveRank(Player player) {
         plugin.getConfig().set(player.getUniqueId() + ".rank", ranks.get(player).name());
         plugin.saveConfig();
         ranks.remove(player);
