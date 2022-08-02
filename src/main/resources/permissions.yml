@@ -1,0 +1,19 @@
+groups:
+  non:
+    default: true
+    permissions:
+    inheritance: []
+    info:
+      prefix: '&7'
+      suffix: '&f'
+      build: false
+  admin:
+    default: false
+    permissions:
+      - sbsandbox.*
+    inheritance:
+      - Non
+    info:
+      prefix: '&c[ADMIN] '
+      build: true
+users:
