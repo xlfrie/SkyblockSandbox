@@ -34,7 +34,7 @@ public class TerminatorHandler extends CustomItemBase {
         if (item == null || !canUse(item, CustomItems.SLOT11, player)) return;
         double _cooldown = getCooldown(player, cooldown);
         if (_cooldown > 0) {
-            player.sendMessage(color("&cYou can use this ability in " + _cooldown + " seconds."));
+            player.sendMessage(color("&cWhoa! Slow down!"));
             return;
         }
 

@@ -119,7 +119,7 @@ public enum CustomNpc {
         ps.send(new ClientboundSetEntityDataPacket(clickMeStand.getId(), clickMeStand.getEntityData(), true));
         Bukkit.getScheduler().runTaskLaterAsynchronously(SBSandbox.getInstance(), () -> {
             ps.send(new ClientboundPlayerInfoPacket(ClientboundPlayerInfoPacket.Action.REMOVE_PLAYER, serverPlayer));
-        }, 40L);
+        }, 100L);
         if (!add) return;
         SBSandbox.addNpc(serverPlayer, serverPlayer.getId(), craftPlayer.getHandle().getUUID(), this, clickMeStand);
     }

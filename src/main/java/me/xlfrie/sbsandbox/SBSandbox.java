@@ -36,8 +36,8 @@ import java.io.IOException;
 import java.util.*;
 
 public final class SBSandbox extends JavaPlugin {
+    public static final List<Integer> npcIDs = new ArrayList<>();
     private static final HashMap<ServerPlayer, UUID> npcs = new HashMap<ServerPlayer, UUID>();
-    private static final List<Integer> npcIDs = new ArrayList<>();
     public static SBSandbox instance = null;
     public static HashMap<Integer, Tuple<CustomNpc, ServerPlayer>> npcClazz = new HashMap<Integer, Tuple<CustomNpc, ServerPlayer>>();
     public static HashMap<Integer, ArmorStand> clickMeStands = new HashMap<Integer, ArmorStand>();
@@ -136,13 +136,10 @@ public final class SBSandbox extends JavaPlugin {
             public void onPacketReceiving(PacketEvent event) {
                 PacketContainer packet = event.getPacket();
                 int entityID = packet.getIntegers().read(0);
-
-                for (Integer npc : npcIDs) {
-                    if (npc != entityID) continue;
-//                    EnumWrappers.Hand hand = packet.getEnumEntityUseActions().read(0).getHand();
+                for (Map.Entry<Integer, Tuple<CustomNpc, ServerPlayer>> integerTupleEntry : npcClazz.entrySet()) {
+                    if (integerTupleEntry.getKey() != entityID) continue;
                     EnumWrappers.EntityUseAction action = packet.getEnumEntityUseActions().read(0).getAction();
-//                    if (hand == EnumWrappers.Hand.MAIN_HAND && action == EnumWrappers.EntityUseAction.INTERACT)
-                    {
+                    if ((action == EnumWrappers.EntityUseAction.INTERACT && packet.getEnumEntityUseActions().read(0).getHand() == EnumWrappers.Hand.MAIN_HAND) || action == EnumWrappers.EntityUseAction.ATTACK) {
                         switch (npcClazz.get(entityID).getA()) {
                             case XLFRIE:
                                 Bukkit.getScheduler().runTask(plugin, () -> player.xlfrieMenu(event.getPlayer()));

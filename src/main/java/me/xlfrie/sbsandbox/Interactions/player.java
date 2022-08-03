@@ -3,6 +3,7 @@ package me.xlfrie.sbsandbox.Interactions;
 import me.xlfrie.sbsandbox.CustomItems;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -90,5 +91,6 @@ public class player {
 
     public static void bodyguard(Player player) {
         player.sendMessage(color("&e[NPC] &6Bodyguard&f: Bah humbug!"));
+        player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 10, 0.65F);
     }
 }

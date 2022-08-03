@@ -5,6 +5,7 @@ import me.xlfrie.sbsandbox.GuardianBeam;
 import me.xlfrie.sbsandbox.SBSandbox;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,7 +20,7 @@ import java.util.UUID;
 import static me.xlfrie.sbsandbox.SBSandbox.color;
 
 public class LaserGunHandler extends CustomItemBase {
-    private final double cooldown = 0.3;
+    private final double cooldown = 0.15;
 
     public LaserGunHandler(SBSandbox plugin) {
         Bukkit.getPluginManager().registerEvents(this, plugin);
@@ -43,15 +44,15 @@ public class LaserGunHandler extends CustomItemBase {
         Vector recoil = player.getEyeLocation().getDirection().multiply(-0.15);
         int dist = 200;
         Location endpoint = player.getEyeLocation().add(player.getEyeLocation().getDirection().multiply(dist));
-        RayTraceResult res = player.getWorld().rayTraceEntities(player.getEyeLocation().add(player.getEyeLocation().getDirection().multiply(1)), player.getEyeLocation().getDirection(), dist);
-        if (res != null && res.getHitEntity() instanceof Damageable) {
-            if (res.getHitEntity().getUniqueId() == player.getUniqueId()) return;
+        RayTraceResult res = player.getWorld().rayTraceEntities(player.getEyeLocation().add(player.getEyeLocation().getDirection().multiply(1)), player.getEyeLocation().getDirection(), dist, (e) -> e.getUniqueId() != player.getUniqueId());
+        if (res != null && res.getHitEntity() instanceof Damageable && res.getHitBlock() == null) {
             endpoint = res.getHitPosition().toLocation(player.getWorld());
             ((Damageable) res.getHitEntity()).damage(100, player);
+            player.setVelocity(player.getVelocity().add(recoil));
+            cooldownRegister(player);
+            player.playSound(player.getLocation(), Sound.ENTITY_WARDEN_DEATH, 10, 1);
         }
-        player.setVelocity(player.getVelocity().add(recoil));
         UUID beam = GuardianBeam.spawn(player.getEyeLocation().add(0, -0.5, 0).add(player.getEyeLocation().getDirection().multiply(-1)), endpoint);
-        cooldownRegister(player);
         player.getServer().getScheduler().scheduleSyncDelayedTask(SBSandbox.getInstance(), new Runnable() {
             public void run() {
                 GuardianBeam.despawn(beam);
