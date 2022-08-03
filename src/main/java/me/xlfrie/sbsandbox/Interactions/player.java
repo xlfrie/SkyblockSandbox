@@ -1,15 +1,16 @@
 package me.xlfrie.sbsandbox.Interactions;
 
-import me.xlfrie.sbsandbox.SBSandbox;
+import me.xlfrie.sbsandbox.CustomItems;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import me.xlfrie.sbsandbox.CustomItems;
 
 import java.util.Arrays;
+
+import static me.xlfrie.sbsandbox.SBSandbox.color;
 
 public class player {
     public static void hypixelMenu(Player player) {
@@ -51,8 +52,8 @@ public class player {
         Inventory menu = Bukkit.createInventory(null, 27, "Menu > Warps");
         ItemStack item = new ItemStack(Material.SAND, 1);
         ItemMeta m = item.getItemMeta();
-        m.setDisplayName(SBSandbox.color("&6Sandbox"));
-        m.setLore(Arrays.asList(SBSandbox.color("&8Sandbox is a mode where you can play"), SBSandbox.color("&8 with Hypixel Skyblock & custom items!")));
+        m.setDisplayName(color("&6Sandbox"));
+        m.setLore(Arrays.asList(color("&8Sandbox is a mode where you can play"), color("&8 with Hypixel Skyblock & custom items!")));
         item.setItemMeta(m);
         menu.setItem(0, new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1));
         menu.setItem(1, new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1));
@@ -85,5 +86,9 @@ public class player {
         menu.setItem(26, new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1));
 
         player.openInventory(menu);
+    }
+
+    public static void bodyguard(Player player) {
+        player.sendMessage(color("&e[NPC] &6Bodyguard&f: Bah humbug!"));
     }
 }

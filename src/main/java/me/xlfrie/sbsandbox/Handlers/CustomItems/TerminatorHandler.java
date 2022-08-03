@@ -12,7 +12,11 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
+import static me.xlfrie.sbsandbox.SBSandbox.color;
+
 public class TerminatorHandler extends CustomItemBase {
+    private final double cooldown = 0.1;
+
     public TerminatorHandler(SBSandbox plugin) {
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
@@ -22,10 +26,17 @@ public class TerminatorHandler extends CustomItemBase {
         Player player = event.getPlayer();
         Action action = event.getAction();
         ItemStack item = event.getItem();
+
         if (!player.getWorld().getName().startsWith(SBSandbox.sandboxName)) return;
-        if (!action.equals(Action.LEFT_CLICK_BLOCK) && !action.equals(Action.LEFT_CLICK_AIR) && !action.equals(Action.RIGHT_CLICK_BLOCK) && !action.equals(Action.RIGHT_CLICK_AIR))
+        if (!action.equals(Action.LEFT_CLICK_BLOCK) && !action.equals(Action.LEFT_CLICK_AIR) && !action.equals(Action.RIGHT_CLICK_BLOCK) && !action.equals(Action.RIGHT_CLICK_AIR)) {
             return;
-        if (item == null || !canUse(item, CustomItems.SLOT11, player.getWorld())) return;
+        }
+        if (item == null || !canUse(item, CustomItems.SLOT11, player)) return;
+        double _cooldown = getCooldown(player, cooldown);
+        if (_cooldown > 0) {
+            player.sendMessage(color("&cYou can use this ability in " + _cooldown + " seconds."));
+            return;
+        }
 
         Location loc = player.getLocation().add(new Vector(0, 1.15, 0));
         loc.add(loc.getDirection().multiply(3));
@@ -36,6 +47,7 @@ public class TerminatorHandler extends CustomItemBase {
         player.getWorld().spawnArrow(loc, arr2vec, 3, 0);
         Vector arr3vec = arr1vec.add(loc.getDirection().clone().crossProduct(new Vector(0, -2, 0)).multiply(2));
         player.getWorld().spawnArrow(loc, arr3vec, 3, 0);
+        cooldownRegister(player);
         if (action.equals(Action.RIGHT_CLICK_BLOCK) || action.equals(Action.RIGHT_CLICK_AIR)) event.setCancelled(true);
     }
 

@@ -16,7 +16,11 @@ import org.bukkit.util.Vector;
 
 import java.util.UUID;
 
+import static me.xlfrie.sbsandbox.SBSandbox.color;
+
 public class LaserGunHandler extends CustomItemBase {
+    private final double cooldown = 0.3;
+
     public LaserGunHandler(SBSandbox plugin) {
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
@@ -28,8 +32,14 @@ public class LaserGunHandler extends CustomItemBase {
         ItemStack item = event.getItem();
 
         if (!action.equals(Action.RIGHT_CLICK_AIR) && !action.equals(Action.RIGHT_CLICK_BLOCK)) return;
-        if (item == null || !canUse(item, CustomItems.SLOT15, player.getWorld()))
+        if (item == null || !canUse(item, CustomItems.SLOT15, player)) {
             return;
+        }
+        double _cooldown = getCooldown(player, cooldown);
+        if (_cooldown > 0) {
+            player.sendMessage(color("&cYou can use this ability in " + _cooldown + " seconds."));
+            return;
+        }
         Vector recoil = player.getEyeLocation().getDirection().multiply(-0.15);
         int dist = 200;
         Location endpoint = player.getEyeLocation().add(player.getEyeLocation().getDirection().multiply(dist));
@@ -41,6 +51,7 @@ public class LaserGunHandler extends CustomItemBase {
         }
         player.setVelocity(player.getVelocity().add(recoil));
         UUID beam = GuardianBeam.spawn(player.getEyeLocation().add(0, -0.5, 0).add(player.getEyeLocation().getDirection().multiply(-1)), endpoint);
+        cooldownRegister(player);
         player.getServer().getScheduler().scheduleSyncDelayedTask(SBSandbox.getInstance(), new Runnable() {
             public void run() {
                 GuardianBeam.despawn(beam);

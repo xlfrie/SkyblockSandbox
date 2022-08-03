@@ -10,7 +10,12 @@ import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
+import static me.xlfrie.sbsandbox.SBSandbox.color;
+
 public class GrapplingHookHandler extends CustomItemBase {
+    private final double cooldown = 2.0;
+
+
     public GrapplingHookHandler(SBSandbox plugin) {
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
@@ -21,10 +26,16 @@ public class GrapplingHookHandler extends CustomItemBase {
         FishHook hook = event.getHook();
         ItemStack item = player.getInventory().getItemInMainHand();
 
-        if (event.getState().equals(PlayerFishEvent.State.FISHING) || !canUse(item, CustomItems.SLOT13, player.getWorld())) return;
+        if (event.getState().equals(PlayerFishEvent.State.FISHING) || !canUse(item, CustomItems.SLOT13, player)) return;
+        double _cooldown = getCooldown(player, cooldown);
+        if (_cooldown > 0) {
+            player.sendMessage(color("&cYou can use this ability in " + _cooldown + " seconds."));
+            return;
+        }
         Vector vec = hook.getLocation().toVector().subtract(player.getLocation().toVector());
         vec.multiply(new Vector(0.5, 0, 0.5));
         vec.setY(1);
         player.setVelocity(vec);
+        cooldownRegister(player);
     }
 }

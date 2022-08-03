@@ -36,16 +36,21 @@ import java.io.IOException;
 import java.util.*;
 
 public final class SBSandbox extends JavaPlugin {
+    private static final HashMap<ServerPlayer, UUID> npcs = new HashMap<ServerPlayer, UUID>();
+    private static final List<Integer> npcIDs = new ArrayList<>();
     public static SBSandbox instance = null;
+    public static HashMap<Integer, Tuple<CustomNpc, ServerPlayer>> npcClazz = new HashMap<Integer, Tuple<CustomNpc, ServerPlayer>>();
+    public static HashMap<Integer, ArmorStand> clickMeStands = new HashMap<Integer, ArmorStand>();
+    public static String sandboxName = "Stinky";
+    public static Scoreboard board;
+    public static Team collision;
+    public static HashMap<Rank, Team> rankTeams = new HashMap<>();
+    public static HashMap<UUID, PermissionAttachment> attachments = new HashMap<>();
+    static ScoreboardManager manager;
 
     public static String color(String string) {
         return ChatColor.translateAlternateColorCodes('&', string);
     }
-
-    private static final HashMap<ServerPlayer, UUID> npcs = new HashMap<ServerPlayer, UUID>();
-    public static HashMap<Integer, Tuple<CustomNpc, ServerPlayer>> npcClazz = new HashMap<Integer, Tuple<CustomNpc, ServerPlayer>>();
-    public static HashMap<Integer, ArmorStand> clickMeStands = new HashMap<Integer, ArmorStand>();
-    private static final List<Integer> npcIDs = new ArrayList<>();
 
     public static void addNpc(ServerPlayer npc, int id, UUID p, CustomNpc npc_, ArmorStand cms) {
         npcs.put(npc, p);
@@ -58,12 +63,9 @@ public final class SBSandbox extends JavaPlugin {
         return npcs;
     }
 
-    public static String sandboxName = "Stinky";
-    static ScoreboardManager manager;
-    public static Scoreboard board;
-    public static Team collision;
-    public static HashMap<Rank, Team> rankTeams = new HashMap<>();
-    public static HashMap<UUID, PermissionAttachment> attachments = new HashMap<>();
+    public static SBSandbox getInstance() {
+        return instance;
+    }
 
     @Override
     public void onEnable() {
@@ -147,15 +149,15 @@ public final class SBSandbox extends JavaPlugin {
                             case HYPIXEL:
                                 Bukkit.getScheduler().runTask(plugin, () -> player.hypixelMenu(event.getPlayer()));
                                 break;
+                            case LTT:
+                            case LTT2:
+                                Bukkit.getScheduler().runTask(plugin, () -> player.bodyguard(event.getPlayer()));
+                                break;
                         }
                     }
                 }
             }
         });
-    }
-
-    public static SBSandbox getInstance() {
-        return instance;
     }
 
     @Override
