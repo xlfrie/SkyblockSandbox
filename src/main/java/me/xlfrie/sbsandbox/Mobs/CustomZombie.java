@@ -25,14 +25,9 @@ public class CustomZombie extends Villager {
         this.targetSelector.removeAllGoals();
 
         this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 4, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal(this, Zombie.class, true));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Zombie.class, true));
         this.getAttributes().getInstance(Attributes.ATTACK_DAMAGE).addPermanentModifier(new AttributeModifier(UUID.randomUUID(), "generic.attack_damage", 2, AttributeModifier.Operation.ADDITION));
     }
-
-//    @Override
-//    protected boolean isSunSensitive() {
-//        return false;
-//    }
 
 
 

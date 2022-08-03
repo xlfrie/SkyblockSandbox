@@ -8,20 +8,19 @@ import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import me.xlfrie.sbsandbox.Handlers.CustomItems.*;
-import me.xlfrie.sbsandbox.Handlers.HealthHandler;
-import me.xlfrie.sbsandbox.Handlers.HungerHandler;
-import me.xlfrie.sbsandbox.Handlers.LandProtection;
-import me.xlfrie.sbsandbox.Handlers.LocationHandler;
+import me.xlfrie.sbsandbox.Handlers.*;
+import me.xlfrie.sbsandbox.Handlers.NPCs.MenuHandler;
 import me.xlfrie.sbsandbox.Handlers.NPCs.NPCHandler;
 import me.xlfrie.sbsandbox.Handlers.NPCs.NPCRotationHandler;
 import me.xlfrie.sbsandbox.Interactions.player;
 import me.xlfrie.sbsandbox.Mobs.CustomNpc;
 import me.xlfrie.sbsandbox.commands.*;
-import net.minecraft.network.protocol.game.ClientboundPlayerInfoPacket;
 import net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import net.minecraft.util.Tuple;
+import net.minecraft.world.entity.decoration.ArmorStand;
+import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_19_R1.entity.CraftPlayer;
@@ -32,6 +31,8 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 import org.bukkit.scoreboard.Team;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 public final class SBSandbox extends JavaPlugin {
@@ -41,14 +42,16 @@ public final class SBSandbox extends JavaPlugin {
         return ChatColor.translateAlternateColorCodes('&', string);
     }
 
-    private static HashMap<ServerPlayer, UUID> npcs = new HashMap<ServerPlayer, UUID>();
+    private static final HashMap<ServerPlayer, UUID> npcs = new HashMap<ServerPlayer, UUID>();
     public static HashMap<Integer, Tuple<CustomNpc, ServerPlayer>> npcClazz = new HashMap<Integer, Tuple<CustomNpc, ServerPlayer>>();
-    private static List<Integer> npcIDs = new ArrayList<>();
+    public static HashMap<Integer, ArmorStand> clickMeStands = new HashMap<Integer, ArmorStand>();
+    private static final List<Integer> npcIDs = new ArrayList<>();
 
-    public static void addNpc(ServerPlayer npc, int id, UUID p, CustomNpc npc_) {
+    public static void addNpc(ServerPlayer npc, int id, UUID p, CustomNpc npc_, ArmorStand cms) {
         npcs.put(npc, p);
         npcIDs.add(id);
         npcClazz.put(id, new Tuple<>(npc_, npc));
+        clickMeStands.put(id, cms);
     }
 
     public static HashMap<ServerPlayer, UUID> getNpcs() {
@@ -59,7 +62,8 @@ public final class SBSandbox extends JavaPlugin {
     static ScoreboardManager manager;
     public static Scoreboard board;
     public static Team collision;
-    public HashMap<UUID, PermissionAttachment> attachments = new HashMap<>();
+    public static HashMap<Rank, Team> rankTeams = new HashMap<>();
+    public static HashMap<UUID, PermissionAttachment> attachments = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -69,9 +73,29 @@ public final class SBSandbox extends JavaPlugin {
         board = manager.getMainScoreboard();
         if (board.getTeam("collision") == null) collision = board.registerNewTeam("collision");
         else collision = board.getTeam("collision");
+
+        for (Rank value : Rank.values()) {
+            if (board.getTeam(value.toString()) == null) {
+                rankTeams.put(value, board.registerNewTeam(value.toString()));
+                rankTeams.get(value).setColor(value.getColor());
+                rankTeams.get(value).setPrefix(value.getPrefix());
+            } else rankTeams.put(value, board.getTeam(String.valueOf(value)));
+        }
+
         collision.setOption(Team.Option.COLLISION_RULE, Team.OptionStatus.NEVER);
         Bukkit.getWorld("world").setTime(0);
-        if (Bukkit.getWorlds().size() < 2) Utils.sandboxWorld();
+        if (Bukkit.getWorlds().size() < 2) {
+            for (File file : Bukkit.getWorld("world").getWorldFolder().getParentFile().listFiles()) {
+                if (file != null && file.isDirectory() && file.getName().startsWith("Stinky_active_")) {
+                    try {
+                        FileUtils.deleteDirectory(file);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+            Utils.sandboxWorld();
+        }
         for (Player player : Bukkit.getOnlinePlayers()) {
             for (CustomNpc npc : CustomNpc.values()) {
                 npc.spawn(player, true);
@@ -91,6 +115,7 @@ public final class SBSandbox extends JavaPlugin {
         new NPCRotationHandler(this);
         new LaserGunHandler(this);
         new LocationHandler(this);
+        new PermissionHandler(this);
 
 //        Register commands
         getCommand("loop").setExecutor(new LoopCommand());
@@ -142,8 +167,8 @@ public final class SBSandbox extends JavaPlugin {
             ServerPlayer npc = serverPlayerUUIDEntry.getKey();
 
             ServerGamePacketListenerImpl ps = craftPlayer.getHandle().connection;
-            ps.send(new ClientboundPlayerInfoPacket(ClientboundPlayerInfoPacket.Action.REMOVE_PLAYER, npc));
             ps.send(new ClientboundRemoveEntitiesPacket(npc.getId()));
+            ps.send(new ClientboundRemoveEntitiesPacket(clickMeStands.get(npc.getId()).getId()));
         }
         npcs.clear();
         saveConfig();

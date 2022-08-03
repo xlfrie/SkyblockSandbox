@@ -1,12 +1,16 @@
 package me.xlfrie.sbsandbox.Handlers.CustomItems;
 
-import org.bukkit.*;
+import me.xlfrie.sbsandbox.CustomItems;
+import me.xlfrie.sbsandbox.SBSandbox;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityTeleportEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -15,12 +19,10 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
-import me.xlfrie.sbsandbox.CustomItems;
-import me.xlfrie.sbsandbox.SBSandbox;
 
 import java.util.List;
 
-public class HyperionHandler implements Listener {
+public class HyperionHandler extends CustomItemBase {
     public HyperionHandler(SBSandbox plugin) {
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
@@ -32,7 +34,7 @@ public class HyperionHandler implements Listener {
         ItemStack item = event.getItem();
 
         if (!action.equals(Action.RIGHT_CLICK_AIR) && !action.equals(Action.RIGHT_CLICK_BLOCK)) return;
-        if (item == null || !item.getItemMeta().hasCustomModelData() || item.getItemMeta().getCustomModelData() != CustomItems.SLOT10.id)
+        if (item == null || !canUse(item, CustomItems.SLOT10, player.getWorld()))
             return;
 
         double tpdistance = 8;

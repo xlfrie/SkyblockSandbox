@@ -55,6 +55,6 @@ public class LandProtection implements Listener {
 
     @EventHandler
     public void explode(EntityExplodeEvent event) {
-        event.blockList().removeIf((b) -> protectedChunks.contains(List.of(b.getChunk().getX(), b.getChunk().getZ())) || b.getLocation().getWorld().getName().equalsIgnoreCase("world"));
+//        event.blockList().removeIf((b) -> protectedChunks.contains(List.of(b.getChunk().getX(), b.getChunk().getZ())) || b.getLocation().getWorld().getName().equalsIgnoreCase("world"));
     }
 }

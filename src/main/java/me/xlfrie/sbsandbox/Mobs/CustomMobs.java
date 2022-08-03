@@ -18,6 +18,7 @@ public enum CustomMobs {
         this.type = type;
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     public LivingEntity spawn(Location loc) {
         LivingEntity entity = (LivingEntity) loc.getWorld().spawnEntity(loc, type);
         entity.setCustomNameVisible(true);

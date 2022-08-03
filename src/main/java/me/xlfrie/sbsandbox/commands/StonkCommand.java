@@ -1,6 +1,5 @@
 package me.xlfrie.sbsandbox.commands;
 
-import me.xlfrie.sbsandbox.Rank;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -11,7 +10,6 @@ public class StonkCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) return true;
         Player player = ((Player) sender);
-        Rank.ADMIN.setRank(player);
         return true;
     }
 }

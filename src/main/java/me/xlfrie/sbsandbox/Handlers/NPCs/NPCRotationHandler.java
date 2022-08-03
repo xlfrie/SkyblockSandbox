@@ -27,6 +27,7 @@ public class NPCRotationHandler implements Listener {
     public void move(PlayerMoveEvent event) {
         Player player = event.getPlayer();
         for (Map.Entry<Integer, Tuple<CustomNpc, ServerPlayer>> integerCustomNpcEntry : SBSandbox.npcClazz.entrySet()) {
+            //noinspection SwitchStatementWithTooFewBranches
             switch (integerCustomNpcEntry.getValue().getA()) {
                 default:
                     ServerPlayer npc = integerCustomNpcEntry.getValue().getB();

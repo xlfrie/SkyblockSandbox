@@ -9,28 +9,28 @@ commands:
   loop:
     description: Loops a specific command
     usage: /loop times command
-    permission: sbsandbox.sbandbox.admin
-    permission-message: You do not have permission.
+    permission: sbsandbox.admin
+    permission-message: §cYou do not have permission.
   spawn:
     description: Spawns custom mob.
     usage: /spawn id coordinates
-    permission: sbsandbox.sbandbox.admin
-    permission-message: You do not have permission.
+    permission: sbsandbox.friend
+    permission-message: §cYou do not have permission.
   npc:
     description: Spawns npc.
     usage: /npc
-    permission: OP
-    permission-message: You do not have permission.
+    permission: sbsandbox.admin
+    permission-message: §cYou do not have permission.
   stonk:
     description: Stonk.
     usage: /stonk
-    permission: sbsandbox.admin
-    permission-message: You do not have permission.
+    permission: sbsandbox.owner
+    permission-message: §cYou do not have permission.
   reset:
     description: Reset.
     usage: /reset
     permission: sbsandbox.admin
-    permission-message: You do not have permission.
+    permission-message: §cYou do not have permission.
   warp:
     description: Warp.
     usage: /reset
@@ -41,3 +41,27 @@ commands:
   rank:
     description: Rank.
     usage: /rank rank
+permissions:
+  sbsandbox.none:
+    description: NONE
+  sbsandbox.friend:
+    description: FRIEND
+    children:
+      sbsandbox.none: true
+  sbsandbox.admin:
+    description: ADMIN
+    children:
+      sbsandbox.friend: true
+      minecraft.command.ban: true
+      minecraft.command.banlist: true
+      minecraft.command.gamemode: true
+      minecraft.command.give: true
+      minecraft.command.kick: true
+      minecraft.command.kill: true
+      minecraft.command.summon: true
+      minecraft.command.stop: true
+      bukkit.command.reload: true
+  sbsandbox.owner:
+    description: OWNER
+    children:
+      sbsandbox.admin: true

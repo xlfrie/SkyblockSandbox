@@ -1,4 +1,4 @@
-package me.xlfrie.sbsandbox.Handlers.CustomItems;
+package me.xlfrie.sbsandbox.Handlers.NPCs;
 
 import me.xlfrie.sbsandbox.SBSandbox;
 import org.bukkit.Bukkit;

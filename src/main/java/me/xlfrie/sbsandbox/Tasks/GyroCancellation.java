@@ -13,16 +13,13 @@ import java.util.Collection;
 import java.util.Random;
 
 public class GyroCancellation extends BukkitRunnable {
-    private final JavaPlugin plugin;
-
     private int count;
-    private Player player;
-    private Vector rift;
-    private ArrayList<Location> usedLocs;
-    private Material[] blocks;
+    private final Player player;
+    private final Vector rift;
+    private final ArrayList<Location> usedLocs;
+    private final Material[] blocks;
 
     public GyroCancellation(JavaPlugin plugin, int count, Player player, Vector rift) {
-        this.plugin = plugin;
         this.player = player;
         this.rift = rift;
         this.usedLocs = new ArrayList<Location>();

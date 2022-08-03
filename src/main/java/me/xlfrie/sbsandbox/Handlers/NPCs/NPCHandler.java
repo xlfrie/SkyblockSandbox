@@ -17,6 +17,8 @@ import me.xlfrie.sbsandbox.Mobs.CustomNpc;
 import java.util.Map;
 import java.util.UUID;
 
+import static me.xlfrie.sbsandbox.SBSandbox.clickMeStands;
+
 public class NPCHandler implements Listener {
     public NPCHandler(SBSandbox plugin) {
         Bukkit.getPluginManager().registerEvents(this, plugin);
@@ -41,6 +43,7 @@ public class NPCHandler implements Listener {
                 ServerGamePacketListenerImpl ps = ((CraftPlayer) player).getHandle().connection;
                 ps.send(new ClientboundPlayerInfoPacket(ClientboundPlayerInfoPacket.Action.REMOVE_PLAYER, npc));
                 ps.send(new ClientboundRemoveEntitiesPacket(npc.getId()));
+                ps.send(new ClientboundRemoveEntitiesPacket(clickMeStands.get(npc.getId()).getId()));
             }
         }
         for (CustomNpc npc : CustomNpc.values()) {
