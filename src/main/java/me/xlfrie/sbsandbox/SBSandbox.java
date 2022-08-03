@@ -118,6 +118,7 @@ public final class SBSandbox extends JavaPlugin {
         new LaserGunHandler(this);
         new LocationHandler(this);
         new PermissionHandler(this);
+        new DeathMessageHandler(this);
 
 //        Register commands
         getCommand("loop").setExecutor(new LoopCommand());

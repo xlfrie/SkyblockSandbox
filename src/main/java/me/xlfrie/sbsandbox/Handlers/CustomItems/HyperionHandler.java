@@ -48,7 +48,6 @@ public class HyperionHandler extends CustomItemBase {
         }
 
         double tpdistance = 8;
-        player.sendMessage("Implosion!");
         Location loc = player.getLocation();
         loc.add(0, 0.5, 0);
         Location infront = loc.clone().add(loc.getDirection().multiply(tpdistance));

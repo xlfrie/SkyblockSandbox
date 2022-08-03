@@ -121,7 +121,6 @@ public enum CustomNpc {
             ps.send(new ClientboundPlayerInfoPacket(ClientboundPlayerInfoPacket.Action.REMOVE_PLAYER, serverPlayer));
         }, 40L);
         if (!add) return;
-//        serverLevel.addFreshEntity(serverPlayer);
         SBSandbox.addNpc(serverPlayer, serverPlayer.getId(), craftPlayer.getHandle().getUUID(), this, clickMeStand);
     }
 }
