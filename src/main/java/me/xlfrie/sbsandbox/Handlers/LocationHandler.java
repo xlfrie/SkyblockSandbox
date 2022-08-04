@@ -22,6 +22,7 @@ public class LocationHandler implements Listener {
     public void join(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         Rank.NONE.loadRank(player);
+        player.setAllowFlight(true);
         CraftPlayer craftPlayer = (CraftPlayer) player;
         ServerGamePacketListenerImpl ps = craftPlayer.getHandle().connection;
         Location bedLoc = new Location(player.getWorld(), -0.5, 0, 4);
@@ -33,6 +34,7 @@ public class LocationHandler implements Listener {
     @EventHandler
     public void changeWorld(PlayerChangedWorldEvent event) {
         Player player = event.getPlayer();
+        player.setAllowFlight(true);
         Location bedLoc = new Location(player.getWorld(), -0.5, 0, 4);
         bedLoc.setYaw(180);
         player.setBedSpawnLocation(bedLoc, true);

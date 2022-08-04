@@ -121,6 +121,7 @@ public final class SBSandbox extends JavaPlugin {
         new DeathMessageHandler(this);
         new BombDetonatorHandler(this);
         new FancyExplosionHandler(this);
+        new SpidersBootsHandler(this);
 
 //        Register commands
         getCommand("loop").setExecutor(new LoopCommand());
