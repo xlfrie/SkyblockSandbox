@@ -34,7 +34,7 @@ public class GrapplingHookHandler extends CustomItemBase {
         if (event.getState().equals(PlayerFishEvent.State.FISHING) || !canUse(item, CustomItems.SLOT13, player)) return;
         double _cooldown = getCooldown(player, cooldown, CustomItems.SLOT13.id);
         if (_cooldown > 0) {
-            player.sendMessage(color("&cYou can use this ability in " + _cooldown + " seconds."));
+            player.sendMessage(color("&cYou can use this ability in " + (long) Math.ceil(_cooldown) + " seconds."));
             return;
         }
         Vector vec = hook.getLocation().toVector().subtract(player.getLocation().toVector());

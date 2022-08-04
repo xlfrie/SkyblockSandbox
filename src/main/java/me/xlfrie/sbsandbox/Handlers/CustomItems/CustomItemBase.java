@@ -35,7 +35,7 @@ public class CustomItemBase implements Listener {
         if (cooldownHash.get(player.getUniqueId()).get(id) + (cooldown * 1000) - System.currentTimeMillis() > 0) {
             double time = (cooldownHash.get(player.getUniqueId()).get(id) + (cooldown * 1000) - System.currentTimeMillis()) / 1000;
             Bukkit.getLogger().info(String.valueOf(time < 0 ? 0 : time));
-            return time < 0 ? 0 : time;
+            return time;
         }
         return 0;
     }

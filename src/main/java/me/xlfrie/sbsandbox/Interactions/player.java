@@ -15,36 +15,17 @@ import static me.xlfrie.sbsandbox.SBSandbox.color;
 
 public class player {
     public static void hypixelMenu(Player player) {
-        Inventory menu = Bukkit.createInventory(null, 27, "Menu > Items");
-        menu.setItem(0, new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1));
-        menu.setItem(1, new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1));
-        menu.setItem(2, new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1));
-        menu.setItem(3, new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1));
-        menu.setItem(4, new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1));
-        menu.setItem(5, new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1));
-        menu.setItem(6, new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1));
-        menu.setItem(7, new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1));
-        menu.setItem(8, new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1));
+        int size = 54;
+        Inventory menu = Bukkit.createInventory(null, size, "Menu > Items");
+        for (int i = 0; i < size; i++) {
+//            Add border & filler
+            menu.setItem(i, new ItemStack(i <= 8 || i >= size - 10 || i % 9 == 0 || (i + 1) % 9 == 0 ? Material.GRAY_STAINED_GLASS_PANE : Material.RED_STAINED_GLASS_PANE, 1));
+        }
 
-        menu.setItem(9, new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1));
-        menu.setItem(10, CustomItems.SLOT10.Item());
-        menu.setItem(11, CustomItems.SLOT11.Item());
-        menu.setItem(12, CustomItems.SLOT12.Item());
-        menu.setItem(13, CustomItems.SLOT13.Item());
-        menu.setItem(14, CustomItems.SLOT14.Item());
-        menu.setItem(15, CustomItems.SLOT15.Item());
-        menu.setItem(16, new ItemStack(Material.RED_STAINED_GLASS_PANE, 1));
-        menu.setItem(17, new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1));
-
-        menu.setItem(18, new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1));
-        menu.setItem(19, new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1));
-        menu.setItem(20, new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1));
-        menu.setItem(21, new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1));
-        menu.setItem(22, new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1));
-        menu.setItem(23, new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1));
-        menu.setItem(24, new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1));
-        menu.setItem(25, new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1));
-        menu.setItem(26, new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1));
+        for (CustomItems value : CustomItems.values()) {
+            if (!value.toString().startsWith("SLOT")) continue;
+            menu.setItem(Integer.parseInt(value.toString().substring(4)), value.Item());
+        }
 
         player.openInventory(menu);
     }

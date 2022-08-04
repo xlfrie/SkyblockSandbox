@@ -119,7 +119,8 @@ public final class SBSandbox extends JavaPlugin {
         new LocationHandler(this);
         new PermissionHandler(this);
         new DeathMessageHandler(this);
-        new MeteorThrowerHandler(this);
+        new BombDetonatorHandler(this);
+        new FancyExplosionHandler(this);
 
 //        Register commands
         getCommand("loop").setExecutor(new LoopCommand());

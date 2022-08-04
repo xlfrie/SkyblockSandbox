@@ -30,7 +30,7 @@ public class SheepHandler extends CustomItemBase {
         if (item == null || !canUse(item, CustomItems.SLOT14, player)) return;
         double _cooldown = getCooldown(player, cooldown, CustomItems.SLOT14.id);
         if (_cooldown > 0) {
-            player.sendMessage(color("&cYou can use this ability in " + _cooldown + " seconds."));
+            player.sendMessage(color("&cYou can use this ability in " + (long) Math.ceil(_cooldown) + " seconds."));
             return;
         }
         Entity e = player.getWorld().spawnEntity(player.getLocation().add(player.getLocation().getDirection().multiply(3)), EntityType.SHEEP);

@@ -39,25 +39,25 @@ public class LaserGunHandler extends CustomItemBase {
         }
         double _cooldown = getCooldown(player, cooldown, CustomItems.SLOT15.id);
         if (_cooldown > 0) {
-            player.sendMessage(color("&cYou can use this ability in " + _cooldown + " seconds."));
+            player.sendMessage(color("&cYou can use this ability in " + (long) Math.ceil(_cooldown) + " seconds."));
             return;
         }
         Vector recoil = player.getEyeLocation().getDirection().multiply(-0.15);
         int dist = 200;
-        Location endpoint = player.getEyeLocation().add(player.getEyeLocation().getDirection().multiply(dist));
+        Location endpoint;
         RayTraceResult res = player.getWorld().rayTraceEntities(player.getEyeLocation().add(player.getEyeLocation().getDirection().multiply(1)), player.getEyeLocation().getDirection(), dist, (e) -> e.getUniqueId() != player.getUniqueId() && !(e instanceof ArmorStand));
         if (res != null && res.getHitEntity() instanceof Damageable && res.getHitBlock() == null) {
             endpoint = res.getHitPosition().toLocation(player.getWorld());
             ((Damageable) res.getHitEntity()).damage(100, player);
             player.setVelocity(player.getVelocity().add(recoil));
             cooldownRegister(player, CustomItems.SLOT15.id);
-            player.playSound(player.getLocation(), Sound.ENTITY_WARDEN_DEATH, 10, 1);
+            player.playSound(player.getLocation(), Sound.ENTITY_WARDEN_DEATH, 10, 1.5F);
+            UUID beam = GuardianBeam.spawn(player.getEyeLocation().add(0, -0.5, 0).add(player.getEyeLocation().getDirection().multiply(-1)), endpoint);
+            player.getServer().getScheduler().scheduleSyncDelayedTask(SBSandbox.getInstance(), new Runnable() {
+                public void run() {
+                    GuardianBeam.despawn(beam);
+                }
+            }, 2L);
         }
-        UUID beam = GuardianBeam.spawn(player.getEyeLocation().add(0, -0.5, 0).add(player.getEyeLocation().getDirection().multiply(-1)), endpoint);
-        player.getServer().getScheduler().scheduleSyncDelayedTask(SBSandbox.getInstance(), new Runnable() {
-            public void run() {
-                GuardianBeam.despawn(beam);
-            }
-        }, 2L);
     }
 }

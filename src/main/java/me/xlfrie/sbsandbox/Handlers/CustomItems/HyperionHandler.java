@@ -43,7 +43,7 @@ public class HyperionHandler extends CustomItemBase {
         }
         double _cooldown = getCooldown(player, cooldown, CustomItems.SLOT10.id);
         if (_cooldown > 0) {
-            player.sendMessage(color("&cYou can use this ability in " + _cooldown + " seconds."));
+            player.sendMessage(color("&cYou can use this ability in " + (long) Math.ceil(_cooldown) + " seconds."));
             return;
         }
 

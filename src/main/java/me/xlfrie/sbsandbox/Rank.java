@@ -41,7 +41,7 @@ public enum Rank {
         }
         Rank rank = (rankString.equals("null")) ? NONE : Rank.valueOf(rankString);
         for (Rank value : Rank.values()) {
-            if (value != rank) attach.setPermission("sbsandbox." + value.toString().toLowerCase(), false);
+            if (value != rank && value.getHierarchy() > rank.getHierarchy()) attach.setPermission("sbsandbox." + value.toString().toLowerCase(), false);
         }
         String rankPrefix = rank.color + rank.prefix + (rank.equals(NONE) ? "" : " ") + player.getName();
         rankTeams.get(rank).addEntry(player.getName());

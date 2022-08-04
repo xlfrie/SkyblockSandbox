@@ -9,7 +9,7 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.UUID;
 
 public enum CustomItems {
-    METEORTHROWER(SBSandbox.color("&6&l&kA&r&6&lMeteor Thrower&kA&r"), new ItemStack(Material.GOLDEN_HORSE_ARMOR, 1), 1001, "Stinky"),
+    BOMBDETONATOR(SBSandbox.color("&6&l&kA&r&6&lBOMB DETONATOR&kA&r"), new ItemStack(Material.GOLDEN_HORSE_ARMOR, 1), 1001, "Stinky", "was nuked by"),
     SLOT10(SBSandbox.color("&6Hyperion"), new ItemStack(Material.IRON_SWORD, 1), 1, "Stinky", "was exploded to smithereens by"),
     SLOT11(SBSandbox.color("&6Terminator"), new ItemStack(Material.BOW, 1), 2, "Stinky", "was terminated by"),
     SLOT12(SBSandbox.color("&5Gyrokinetic Wand"), new ItemStack(Material.BLAZE_ROD), 3, "Stinky"),

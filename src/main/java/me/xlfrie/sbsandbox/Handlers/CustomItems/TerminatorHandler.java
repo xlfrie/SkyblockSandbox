@@ -42,11 +42,17 @@ public class TerminatorHandler extends CustomItemBase {
         loc.add(loc.getDirection().multiply(3));
         Location arr1endpoint = loc.clone().add(loc.getDirection().multiply(10));
         Vector arr1vec = arr1endpoint.toVector().subtract(loc.toVector());
-        player.getWorld().spawnArrow(loc, arr1vec, 3, 0).setShooter(player);
+        Arrow arr1 = player.getWorld().spawnArrow(loc, arr1vec, 3, 0);
         Vector arr2vec = arr1vec.add(loc.getDirection().clone().crossProduct(new Vector(0, 1, 0)).multiply(2));
-        player.getWorld().spawnArrow(loc, arr2vec, 3, 0).setShooter(player);
+        Arrow arr2 = player.getWorld().spawnArrow(loc, arr2vec, 3, 0);
         Vector arr3vec = arr1vec.add(loc.getDirection().clone().crossProduct(new Vector(0, -2, 0)).multiply(2));
-        player.getWorld().spawnArrow(loc, arr3vec, 3, 0).setShooter(player);
+        Arrow arr3 = player.getWorld().spawnArrow(loc, arr3vec, 3, 0);
+        arr1.setShooter(player);
+        arr2.setShooter(player);
+        arr3.setShooter(player);
+        arr1.setBounce(false);
+        arr2.setBounce(false);
+        arr3.setBounce(false);
         cooldownRegister(player, CustomItems.SLOT11.id);
         if (action.equals(Action.RIGHT_CLICK_BLOCK) || action.equals(Action.RIGHT_CLICK_AIR)) event.setCancelled(true);
     }
@@ -62,6 +68,7 @@ public class TerminatorHandler extends CustomItemBase {
             double damage = ((Arrow) arrow).getDamage();
             ((Arrow) arrow).setDamage(0D);
             ((Damageable) entity).damage(damage, (Player) arrow.getShooter());
+            event.setCancelled(true);
         }
     }
 }
