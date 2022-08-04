@@ -27,10 +27,8 @@ public class SheepHandler extends CustomItemBase {
         ItemStack item = event.getItem();
 
         if (!action.equals(Action.RIGHT_CLICK_AIR) && !action.equals(Action.RIGHT_CLICK_BLOCK)) return;
-        if (item == null || !canUse(item, CustomItems.SLOT14, player)) {
-            return;
-        }
-        double _cooldown = getCooldown(player, cooldown);
+        if (item == null || !canUse(item, CustomItems.SLOT14, player)) return;
+        double _cooldown = getCooldown(player, cooldown, CustomItems.SLOT14.id);
         if (_cooldown > 0) {
             player.sendMessage(color("&cYou can use this ability in " + _cooldown + " seconds."));
             return;
@@ -38,7 +36,7 @@ public class SheepHandler extends CustomItemBase {
         Entity e = player.getWorld().spawnEntity(player.getLocation().add(player.getLocation().getDirection().multiply(3)), EntityType.SHEEP);
         e.setCustomName("jeb_");
         e.setVelocity(player.getLocation().getDirection().multiply(4));
-        cooldownRegister(player);
+        cooldownRegister(player, CustomItems.SLOT14.id);
         if (action.equals(Action.RIGHT_CLICK_BLOCK)) event.setCancelled(true);
     }
 }

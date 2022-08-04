@@ -41,7 +41,7 @@ public class HyperionHandler extends CustomItemBase {
         if (item == null || !canUse(item, CustomItems.SLOT10, player)) {
             return;
         }
-        double _cooldown = getCooldown(player, cooldown);
+        double _cooldown = getCooldown(player, cooldown, CustomItems.SLOT10.id);
         if (_cooldown > 0) {
             player.sendMessage(color("&cYou can use this ability in " + _cooldown + " seconds."));
             return;
@@ -63,11 +63,11 @@ public class HyperionHandler extends CustomItemBase {
         }
         player.teleport(infront);
         player.setVelocity(new Vector(0, 0, 0));
-        cooldownRegister(player);
+        cooldownRegister(player, CustomItems.SLOT10.id);
 //              Damage engine
         List<Entity> toDamage = player.getNearbyEntities(6, 6, 6);
         for (Entity entity : toDamage) {
-            if (entity instanceof Damageable) ((Damageable) entity).damage(200);
+            if (entity instanceof Damageable) ((Damageable) entity).damage(200, player);
         }
 //              Particles, shield
         infront.add(0, 1, 0);

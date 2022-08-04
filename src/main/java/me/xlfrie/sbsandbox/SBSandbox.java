@@ -119,6 +119,7 @@ public final class SBSandbox extends JavaPlugin {
         new LocationHandler(this);
         new PermissionHandler(this);
         new DeathMessageHandler(this);
+        new MeteorThrowerHandler(this);
 
 //        Register commands
         getCommand("loop").setExecutor(new LoopCommand());
@@ -129,6 +130,7 @@ public final class SBSandbox extends JavaPlugin {
         getCommand("warp").setExecutor(new WarpCommand());
         getCommand("lobby").setExecutor(new LobbyCommand());
         getCommand("rank").setExecutor(new RankCommand());
+        getCommand("giveitem").setExecutor(new GiveItemCommand());
 
         ProtocolManager manager = ProtocolLibrary.getProtocolManager();
         manager.addPacketListener(new PacketAdapter(this, PacketType.Play.Client.USE_ENTITY) {

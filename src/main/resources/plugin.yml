@@ -6,6 +6,16 @@ authors: [ XLFrie ]
 description: Skyblock sandbox scuffed edition.
 depend: [ProtocolLib]
 commands:
+  giveitem:
+    description: Give custom item.
+    usage: /giveitem id
+    permission: sbsandbox.owner
+    permission-message: §cYou do not have permission.
+  stonk:
+    description: Stonk.
+    usage: /stonk
+    permission: sbsandbox.admin
+    permission-message: §cYou do not have permission.
   loop:
     description: Loops a specific command
     usage: /loop times command
@@ -20,11 +30,6 @@ commands:
     description: Spawns npc.
     usage: /npc
     permission: sbsandbox.admin
-    permission-message: §cYou do not have permission.
-  stonk:
-    description: Stonk.
-    usage: /stonk
-    permission: sbsandbox.owner
     permission-message: §cYou do not have permission.
   reset:
     description: Reset.

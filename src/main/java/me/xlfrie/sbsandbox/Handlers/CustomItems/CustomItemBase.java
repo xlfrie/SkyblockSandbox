@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class CustomItemBase implements Listener {
-    private static final HashMap<UUID, Long> cooldownHash = new HashMap<>();
+    protected static HashMap<UUID, HashMap<Integer, Long>> cooldownHash = new HashMap<>();
     //        TODO Add cooldowns to all items
     public boolean canUse(ItemStack item, CustomItems customItem, Player player) {
         ItemMeta m = item.getItemMeta();
@@ -20,14 +20,20 @@ public class CustomItemBase implements Listener {
                 && player.getWorld().getName().startsWith(customItem.getWorld());
     }
 
-    public void cooldownRegister(Player player) {
-        cooldownHash.put(player.getUniqueId(), System.currentTimeMillis());
+    public void cooldownRegister(Player player, int id) {
+        cooldownHash.get(player.getUniqueId()).put(id, System.currentTimeMillis());
     }
 
-    public double getCooldown(Player player, double cooldown) {
-        if (!cooldownHash.containsKey(player.getUniqueId())) cooldownHash.put(player.getUniqueId(), 0L);
-        if (cooldownHash.get(player.getUniqueId()) + (cooldown * 1000) - System.currentTimeMillis() > 0) {
-            double time = (cooldownHash.get(player.getUniqueId()) + (cooldown * 1000) - System.currentTimeMillis()) / 1000;
+    public double getCooldown(Player player, double cooldown, int id) {
+        if (!cooldownHash.containsKey(player.getUniqueId())) {
+            HashMap<Integer, Long> tmp = new HashMap<>();
+            tmp.put(id, 0L);
+            cooldownHash.put(player.getUniqueId(), tmp);
+        } else if (!cooldownHash.get(player.getUniqueId()).containsKey(id)) {
+            cooldownHash.get(player.getUniqueId()).put(id, 0L);
+        }
+        if (cooldownHash.get(player.getUniqueId()).get(id) + (cooldown * 1000) - System.currentTimeMillis() > 0) {
+            double time = (cooldownHash.get(player.getUniqueId()).get(id) + (cooldown * 1000) - System.currentTimeMillis()) / 1000;
             Bukkit.getLogger().info(String.valueOf(time < 0 ? 0 : time));
             return time < 0 ? 0 : time;
         }

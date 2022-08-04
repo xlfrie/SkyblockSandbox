@@ -4,7 +4,7 @@ import me.xlfrie.sbsandbox.CustomItems;
 import me.xlfrie.sbsandbox.SBSandbox;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.ProjectileHitEvent;
@@ -32,7 +32,7 @@ public class TerminatorHandler extends CustomItemBase {
             return;
         }
         if (item == null || !canUse(item, CustomItems.SLOT11, player)) return;
-        double _cooldown = getCooldown(player, cooldown);
+        double _cooldown = getCooldown(player, cooldown, CustomItems.SLOT11.id);
         if (_cooldown > 0) {
             player.sendMessage(color("&cWhoa! Slow down!"));
             return;
@@ -42,18 +42,26 @@ public class TerminatorHandler extends CustomItemBase {
         loc.add(loc.getDirection().multiply(3));
         Location arr1endpoint = loc.clone().add(loc.getDirection().multiply(10));
         Vector arr1vec = arr1endpoint.toVector().subtract(loc.toVector());
-        player.getWorld().spawnArrow(loc, arr1vec, 3, 0);
+        player.getWorld().spawnArrow(loc, arr1vec, 3, 0).setShooter(player);
         Vector arr2vec = arr1vec.add(loc.getDirection().clone().crossProduct(new Vector(0, 1, 0)).multiply(2));
-        player.getWorld().spawnArrow(loc, arr2vec, 3, 0);
+        player.getWorld().spawnArrow(loc, arr2vec, 3, 0).setShooter(player);
         Vector arr3vec = arr1vec.add(loc.getDirection().clone().crossProduct(new Vector(0, -2, 0)).multiply(2));
-        player.getWorld().spawnArrow(loc, arr3vec, 3, 0);
-        cooldownRegister(player);
+        player.getWorld().spawnArrow(loc, arr3vec, 3, 0).setShooter(player);
+        cooldownRegister(player, CustomItems.SLOT11.id);
         if (action.equals(Action.RIGHT_CLICK_BLOCK) || action.equals(Action.RIGHT_CLICK_AIR)) event.setCancelled(true);
     }
 
     @EventHandler
     public void hit(ProjectileHitEvent event) {
-        if (event.getHitBlock() != null)
+        if (event.getHitBlock() != null && event.getEntityType() == EntityType.ARROW)
             event.getEntity().remove();
+        if (event.getHitEntity() != null) {
+            Entity entity = event.getHitEntity();
+            Projectile arrow = event.getEntity();
+            if (!(arrow.getShooter() instanceof Player) || !(event.getEntityType() == EntityType.ARROW)) return;
+            double damage = ((Arrow) arrow).getDamage();
+            ((Arrow) arrow).setDamage(0D);
+            ((Damageable) entity).damage(damage, (Player) arrow.getShooter());
+        }
     }
 }

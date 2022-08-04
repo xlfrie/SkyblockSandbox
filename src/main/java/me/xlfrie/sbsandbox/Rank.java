@@ -40,6 +40,9 @@ public enum Rank {
             attach.setPermission("sbsandbox." + rankString.toLowerCase(), true);
         }
         Rank rank = (rankString.equals("null")) ? NONE : Rank.valueOf(rankString);
+        for (Rank value : Rank.values()) {
+            if (value != rank) attach.setPermission("sbsandbox." + value.toString().toLowerCase(), false);
+        }
         String rankPrefix = rank.color + rank.prefix + (rank.equals(NONE) ? "" : " ") + player.getName();
         rankTeams.get(rank).addEntry(player.getName());
         player.setDisplayName(rankPrefix + ChatColor.WHITE);

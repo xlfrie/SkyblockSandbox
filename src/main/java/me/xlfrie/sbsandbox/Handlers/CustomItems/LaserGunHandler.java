@@ -6,6 +6,7 @@ import me.xlfrie.sbsandbox.SBSandbox;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -36,7 +37,7 @@ public class LaserGunHandler extends CustomItemBase {
         if (item == null || !canUse(item, CustomItems.SLOT15, player)) {
             return;
         }
-        double _cooldown = getCooldown(player, cooldown);
+        double _cooldown = getCooldown(player, cooldown, CustomItems.SLOT15.id);
         if (_cooldown > 0) {
             player.sendMessage(color("&cYou can use this ability in " + _cooldown + " seconds."));
             return;
@@ -44,12 +45,12 @@ public class LaserGunHandler extends CustomItemBase {
         Vector recoil = player.getEyeLocation().getDirection().multiply(-0.15);
         int dist = 200;
         Location endpoint = player.getEyeLocation().add(player.getEyeLocation().getDirection().multiply(dist));
-        RayTraceResult res = player.getWorld().rayTraceEntities(player.getEyeLocation().add(player.getEyeLocation().getDirection().multiply(1)), player.getEyeLocation().getDirection(), dist, (e) -> e.getUniqueId() != player.getUniqueId());
+        RayTraceResult res = player.getWorld().rayTraceEntities(player.getEyeLocation().add(player.getEyeLocation().getDirection().multiply(1)), player.getEyeLocation().getDirection(), dist, (e) -> e.getUniqueId() != player.getUniqueId() && !(e instanceof ArmorStand));
         if (res != null && res.getHitEntity() instanceof Damageable && res.getHitBlock() == null) {
             endpoint = res.getHitPosition().toLocation(player.getWorld());
             ((Damageable) res.getHitEntity()).damage(100, player);
             player.setVelocity(player.getVelocity().add(recoil));
-            cooldownRegister(player);
+            cooldownRegister(player, CustomItems.SLOT15.id);
             player.playSound(player.getLocation(), Sound.ENTITY_WARDEN_DEATH, 10, 1);
         }
         UUID beam = GuardianBeam.spawn(player.getEyeLocation().add(0, -0.5, 0).add(player.getEyeLocation().getDirection().multiply(-1)), endpoint);
