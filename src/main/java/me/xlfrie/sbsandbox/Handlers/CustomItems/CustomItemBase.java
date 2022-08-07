@@ -9,7 +9,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class CustomItemBase implements Listener {
+public abstract class CustomItemBase implements Listener {
     protected static HashMap<UUID, HashMap<Integer, Long>> cooldownHash = new HashMap<>();
     //        TODO Add cooldowns to all items
     public boolean canUse(ItemStack item, CustomItems customItem, Player player) {

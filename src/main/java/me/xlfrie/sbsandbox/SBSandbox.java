@@ -7,8 +7,8 @@ import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.EnumWrappers;
-import me.xlfrie.sbsandbox.Handlers.CustomItems.*;
 import me.xlfrie.sbsandbox.Handlers.*;
+import me.xlfrie.sbsandbox.Handlers.CustomItems.*;
 import me.xlfrie.sbsandbox.Handlers.NPCs.MenuHandler;
 import me.xlfrie.sbsandbox.Handlers.NPCs.NPCHandler;
 import me.xlfrie.sbsandbox.Handlers.NPCs.NPCRotationHandler;
@@ -95,23 +95,25 @@ public final class SBSandbox extends JavaPlugin {
 //        Register handlers
         new HyperionHandler(this);
         new GyrokineticWandHandler(this);
-        new HealthHandler(this);
         new TerminatorHandler(this);
-        new LandProtection(this);
         new GrapplingHookHandler(this);
+        new SheepHandler(this);
+        new LaserGunHandler(this);
+        new BombDetonatorHandler(this);
+        new SpidersBootsHandler(this);
+        new PortalGunHandler(this);
+
+        new HealthHandler(this);
+        new LandProtection(this);
         new NPCHandler(this);
         new MenuHandler(this);
-        new SheepHandler(this);
         new HungerHandler(this);
         new NPCRotationHandler(this);
-        new LaserGunHandler(this);
         new LocationHandler(this);
         new PermissionHandler(this);
         new DeathMessageHandler(this);
-        new BombDetonatorHandler(this);
         new FancyExplosionHandler(this);
-        new SpidersBootsHandler(this);
-        new PortalGunHandler(this);
+        new ChatHandler(this);
 
 //        Register commands
         getCommand("loop").setExecutor(new LoopCommand());
