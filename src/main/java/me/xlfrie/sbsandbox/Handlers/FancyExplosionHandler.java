@@ -28,6 +28,5 @@ public class FancyExplosionHandler implements Listener {
             fb.setVelocity(vec);
             fb.setDropItem(false);
         }
-//        event.
     }
 }

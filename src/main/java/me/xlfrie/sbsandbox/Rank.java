@@ -31,7 +31,6 @@ public enum Rank {
     public void loadRank(Player player) {
         plugin.reloadConfig();
         String rankString = String.valueOf(plugin.getConfig().get(player.getUniqueId() + ".rank"));
-        Bukkit.getLogger().info(rankString);
         if (rankString.equals("null")) NONE.setRank(player);
         if (!SBSandbox.attachments.containsKey(player.getUniqueId()))
             SBSandbox.attachments.put(player.getUniqueId(), player.addAttachment(SBSandbox.getInstance()));

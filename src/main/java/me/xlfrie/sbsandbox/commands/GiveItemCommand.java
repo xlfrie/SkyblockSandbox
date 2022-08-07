@@ -15,7 +15,6 @@ public class GiveItemCommand implements TabExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) return true;
             Player player = (Player) sender;
-        if (player.hasPermission("sbsanbox.owner")) Bukkit.getLogger().info("St");
         if (args.length < 1) return true;
         try {
             CustomItems.valueOf(args[0]).Item();

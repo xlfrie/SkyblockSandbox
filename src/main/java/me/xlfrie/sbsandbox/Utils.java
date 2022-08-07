@@ -35,7 +35,7 @@ public final class Utils {
     public static void sandboxWorld() {
         File worldFolder = new File(SBSandbox.getInstance().getDataFolder(), "gameMaps");
         File sourceFolder = new File(worldFolder, "Stinky");
-        File sandboxFolder = new File(Bukkit.getWorldContainer().getParentFile(), sourceFolder.getName() + "_active_" + System.currentTimeMillis());
+        File sandboxFolder = new File(Bukkit.getWorldContainer().getParentFile(), "Stinky" + "_active_" + System.currentTimeMillis());
 
         try {
             Utils.copy(sourceFolder, sandboxFolder);

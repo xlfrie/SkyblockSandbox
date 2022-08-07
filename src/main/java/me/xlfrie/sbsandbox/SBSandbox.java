@@ -71,6 +71,7 @@ public final class SBSandbox extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         instance = this;
+        Bukkit.getWorld("world").setKeepSpawnInMemory(false);
         manager = Bukkit.getScoreboardManager();
         board = manager.getMainScoreboard();
         if (board.getTeam("collision") == null) collision = board.registerNewTeam("collision");
@@ -86,18 +87,6 @@ public final class SBSandbox extends JavaPlugin {
 
         collision.setOption(Team.Option.COLLISION_RULE, Team.OptionStatus.NEVER);
         Bukkit.getWorld("world").setTime(0);
-        if (Bukkit.getWorlds().size() < 2) {
-            for (File file : Bukkit.getWorld("world").getWorldFolder().getParentFile().listFiles()) {
-                if (file != null && file.isDirectory() && file.getName().startsWith("Stinky_active_")) {
-                    try {
-                        FileUtils.deleteDirectory(file);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-            Utils.sandboxWorld();
-        }
         for (Player player : Bukkit.getOnlinePlayers()) {
             for (CustomNpc npc : CustomNpc.values()) {
                 npc.spawn(player, true);
@@ -122,6 +111,7 @@ public final class SBSandbox extends JavaPlugin {
         new BombDetonatorHandler(this);
         new FancyExplosionHandler(this);
         new SpidersBootsHandler(this);
+        new PortalGunHandler(this);
 
 //        Register commands
         getCommand("loop").setExecutor(new LoopCommand());
@@ -133,6 +123,19 @@ public final class SBSandbox extends JavaPlugin {
         getCommand("lobby").setExecutor(new LobbyCommand());
         getCommand("rank").setExecutor(new RankCommand());
         getCommand("giveitem").setExecutor(new GiveItemCommand());
+
+        if (Bukkit.getWorlds().size() < 2) {
+            for (File file : Bukkit.getWorld("world").getWorldFolder().getParentFile().listFiles()) {
+                if (file != null && file.isDirectory() && file.getName().startsWith("Stinky_active_")) {
+                    try {
+                        FileUtils.deleteDirectory(file);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+            Utils.sandboxWorld();
+        }
 
         ProtocolManager manager = ProtocolLibrary.getProtocolManager();
         manager.addPacketListener(new PacketAdapter(this, PacketType.Play.Client.USE_ENTITY) {

@@ -16,7 +16,8 @@ public enum CustomItems {
     SLOT13(SBSandbox.color("&aGrappling Hook"), new ItemStack(Material.FISHING_ROD), 4, "Stinky"),
     SLOT14(SBSandbox.color("&cSheep"), new ItemStack(Material.MANGROVE_PROPAGULE), 5, "Stinky"),
     SLOT15(SBSandbox.color("&6L.A.S.E.R. Gun"), new ItemStack(Material.DIAMOND_HORSE_ARMOR), 6, "Stinky", "was beamed by"),
-    SLOT16(SBSandbox.color("&9Spider's Boots"), new ItemStack(Material.IRON_BOOTS), 7, "Stinky");
+    SLOT16(SBSandbox.color("&9Spider's Boots"), new ItemStack(Material.IRON_BOOTS), 7, "Stinky"),
+    SLOT19(SBSandbox.color("&dPortal Gun"), new ItemStack(Material.ORANGE_CANDLE), 8, "Stinky");
 
     public final int id;
     private final String name;

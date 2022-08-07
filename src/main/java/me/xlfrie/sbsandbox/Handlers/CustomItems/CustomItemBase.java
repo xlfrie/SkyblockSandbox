@@ -1,7 +1,6 @@
 package me.xlfrie.sbsandbox.Handlers.CustomItems;
 
 import me.xlfrie.sbsandbox.CustomItems;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
@@ -34,7 +33,7 @@ public class CustomItemBase implements Listener {
         }
         if (cooldownHash.get(player.getUniqueId()).get(id) + (cooldown * 1000) - System.currentTimeMillis() > 0) {
             double time = (cooldownHash.get(player.getUniqueId()).get(id) + (cooldown * 1000) - System.currentTimeMillis()) / 1000;
-            Bukkit.getLogger().info(String.valueOf(time < 0 ? 0 : time));
+            if (player.hasPermission("OWNER")) return 0;
             return time;
         }
         return 0;

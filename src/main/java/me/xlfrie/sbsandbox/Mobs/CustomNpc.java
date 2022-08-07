@@ -90,6 +90,7 @@ public enum CustomNpc {
 
     public void spawn(Player p, boolean add) {
         if (!p.getWorld().getName().startsWith(this.world)) return;
+//        if (this.toString() != "XLFRIE") return;
         CraftPlayer craftPlayer = (CraftPlayer) p;
         MinecraftServer minecraftServer = ((CraftServer) Bukkit.getServer()).getServer();
         ServerLevel serverLevel = ((CraftWorld) p.getWorld()).getHandle();
@@ -117,9 +118,9 @@ public enum CustomNpc {
         clickMeStand.setInvisible(true);
         ps.send(new ClientboundAddEntityPacket(clickMeStand));
         ps.send(new ClientboundSetEntityDataPacket(clickMeStand.getId(), clickMeStand.getEntityData(), true));
-        Bukkit.getScheduler().runTaskLaterAsynchronously(SBSandbox.getInstance(), () -> {
+        Bukkit.getScheduler().runTaskLater(SBSandbox.getInstance(), () -> {
             ps.send(new ClientboundPlayerInfoPacket(ClientboundPlayerInfoPacket.Action.REMOVE_PLAYER, serverPlayer));
-        }, 100L);
+        }, 200L);
         if (!add) return;
         SBSandbox.addNpc(serverPlayer, serverPlayer.getId(), craftPlayer.getHandle().getUUID(), this, clickMeStand);
     }

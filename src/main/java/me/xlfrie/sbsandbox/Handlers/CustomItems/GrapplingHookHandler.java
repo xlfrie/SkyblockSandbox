@@ -15,7 +15,7 @@ import java.util.HashMap;
 import static me.xlfrie.sbsandbox.SBSandbox.color;
 
 public class GrapplingHookHandler extends CustomItemBase {
-    private final double cooldown = 2.0;
+    private final double cooldown = 0;
     static {
         cooldownHash = new HashMap<>();
     }

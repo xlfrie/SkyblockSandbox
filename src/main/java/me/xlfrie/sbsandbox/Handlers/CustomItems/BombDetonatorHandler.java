@@ -10,6 +10,7 @@ import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.ExplosionDamageCalculator;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_19_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_19_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
@@ -21,7 +22,7 @@ import org.bukkit.inventory.ItemStack;
 import static me.xlfrie.sbsandbox.SBSandbox.color;
 
 public class BombDetonatorHandler extends CustomItemBase {
-    private final double cooldown = 0.0;
+    private final double cooldown = 1;
 
 
     public BombDetonatorHandler(SBSandbox plugin) {
@@ -42,8 +43,9 @@ public class BombDetonatorHandler extends CustomItemBase {
             return;
         }
         Location loc = player.getTargetBlock(null, 200).getLocation();
+        if (loc.getBlock().getBlockData().getMaterial() == Material.AIR) return;
         ServerLevel level = ((CraftWorld) player.getWorld()).getHandle();
-        level.explode(new Illusioner(EntityType.ILLUSIONER, level), DamageSource.playerAttack(((CraftPlayer) player).getHandle()), new ExplosionDamageCalculator(), loc.getX(), loc.getY()+1, loc.getZ(), 20, true, Explosion.BlockInteraction.BREAK);
+        level.explode(new Illusioner(EntityType.ILLUSIONER, level), DamageSource.playerAttack(((CraftPlayer) player).getHandle()), new ExplosionDamageCalculator(), loc.getX(), loc.getY() + 1, loc.getZ(), 40, false, Explosion.BlockInteraction.BREAK);
         cooldownRegister(player, CustomItems.BOMBDETONATOR.id);
     }
 }

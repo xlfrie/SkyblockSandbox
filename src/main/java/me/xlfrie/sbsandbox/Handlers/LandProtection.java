@@ -8,24 +8,26 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_19_R1.entity.CraftPlayer;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.world.WorldInitEvent;
 
 import java.util.List;
 
 public class LandProtection implements Listener {
-    public LandProtection(SBSandbox plugin) {
-        Bukkit.getPluginManager().registerEvents(this, plugin);
-    }
-
     private final List<List<Integer>> protectedChunks = List.of(
             List.of(-1, 0),
             List.of(-1, -1),
             List.of(0, -1),
             List.of(0, 0)
     );
+
+    public LandProtection(SBSandbox plugin) {
+        Bukkit.getPluginManager().registerEvents(this, plugin);
+    }
 
     @EventHandler
     public void interact(BlockBreakEvent event) {
@@ -56,5 +58,10 @@ public class LandProtection implements Listener {
     @EventHandler
     public void explode(EntityExplodeEvent event) {
 //        event.blockList().removeIf((b) -> protectedChunks.contains(List.of(b.getChunk().getX(), b.getChunk().getZ())) || b.getLocation().getWorld().getName().equalsIgnoreCase("world"));
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void worldInit(WorldInitEvent event) {
+        event.getWorld().setKeepSpawnInMemory(false);
     }
 }

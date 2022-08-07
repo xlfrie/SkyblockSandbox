@@ -23,7 +23,7 @@ public class HealthHandler implements Listener {
     @EventHandler
     public void spawn(EntitySpawnEvent event) {
         Entity e = event.getEntity();
-        if (!(e instanceof Damageable) || e instanceof ArmorStand || e.getCustomName() == "jeb_" || !((CraftEntity) e).getHandle().isAttackable()) return;
+        if (!(e instanceof Damageable) || e instanceof ArmorStand || !((CraftEntity) e).getHandle().isAttackable() || (e.getCustomName() != null && Objects.equals(e.getCustomName(), "jeb_"))) return;
         e.setCustomNameVisible(true);
         e.setCustomName(e.getName() + " §c❤ " + ((Damageable) e).getHealth() + "/" + Objects.requireNonNull(((Attributable) e).getAttribute(Attribute.GENERIC_MAX_HEALTH)).getValue() + "");
     }
@@ -31,7 +31,7 @@ public class HealthHandler implements Listener {
     @EventHandler
     public void dmg(EntityDamageEvent event) {
         Entity e = event.getEntity();
-        if (!(e instanceof Damageable) || e instanceof ArmorStand || e.getCustomName() == "jeb_") return;
+        if (!(e instanceof Damageable) || e instanceof ArmorStand || e.getName().equals("jeb_")) return;
         e.setCustomNameVisible(true);
         e.setCustomName(e.getName().split(" §c❤")[0] + " §c❤ " + Math.round((((Damageable) e).getHealth() - event.getDamage()) * 100.0) / 100.0 + "/" + Objects.requireNonNull(((Attributable) e).getAttribute(Attribute.GENERIC_MAX_HEALTH)).getValue());
     }

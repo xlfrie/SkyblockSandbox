@@ -6,10 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
-import org.bukkit.entity.Damageable;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityTeleportEvent;
@@ -68,11 +65,13 @@ public class HyperionHandler extends CustomItemBase {
         List<Entity> toDamage = player.getNearbyEntities(6, 6, 6);
         for (Entity entity : toDamage) {
             if (entity instanceof Damageable) ((Damageable) entity).damage(200, player);
+            else if (entity instanceof Item) entity.remove();
         }
 //              Particles, shield
         infront.add(0, 1, 0);
         player.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, loc, 20, 2.5, 2.5, 2.5);
         player.getWorld().playSound(infront, Sound.ENTITY_GENERIC_EXPLODE, 1, 1);
+        player.setFallDistance(0);
         if (player.getAbsorptionAmount() == 0) {
             player.getWorld().playSound(infront, Sound.ENTITY_ZOMBIE_VILLAGER_CURE, 1, 1);
             player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 400, 5));

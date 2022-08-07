@@ -53,6 +53,7 @@ permissions:
     description: FRIEND
     children:
       sbsandbox.none: true
+      minecraft.command.gamemode: true
   sbsandbox.admin:
     description: ADMIN
     children:

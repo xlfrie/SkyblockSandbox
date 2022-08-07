@@ -21,7 +21,7 @@ import java.util.UUID;
 import static me.xlfrie.sbsandbox.SBSandbox.color;
 
 public class LaserGunHandler extends CustomItemBase {
-    private final double cooldown = 0.15;
+    private final double cooldown = 0   ;
 
     public LaserGunHandler(SBSandbox plugin) {
         Bukkit.getPluginManager().registerEvents(this, plugin);
@@ -51,7 +51,7 @@ public class LaserGunHandler extends CustomItemBase {
             ((Damageable) res.getHitEntity()).damage(100, player);
             player.setVelocity(player.getVelocity().add(recoil));
             cooldownRegister(player, CustomItems.SLOT15.id);
-            player.playSound(player.getLocation(), Sound.ENTITY_WARDEN_DEATH, 10, 1.5F);
+            player.playSound(player.getLocation(), Sound.ENTITY_WARDEN_ATTACK_IMPACT, 10, 2F);
             UUID beam = GuardianBeam.spawn(player.getEyeLocation().add(0, -0.5, 0).add(player.getEyeLocation().getDirection().multiply(-1)), endpoint);
             player.getServer().getScheduler().scheduleSyncDelayedTask(SBSandbox.getInstance(), new Runnable() {
                 public void run() {
