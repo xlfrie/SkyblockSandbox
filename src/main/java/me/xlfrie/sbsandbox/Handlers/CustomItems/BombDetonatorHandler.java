@@ -15,6 +15,7 @@ import org.bukkit.craftbukkit.v1_19_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_19_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -29,7 +30,7 @@ public class BombDetonatorHandler extends CustomItemBase {
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void ability(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         Action action = event.getAction();
@@ -46,6 +47,6 @@ public class BombDetonatorHandler extends CustomItemBase {
         if (loc.getBlock().getBlockData().getMaterial() == Material.AIR) return;
         ServerLevel level = ((CraftWorld) player.getWorld()).getHandle();
         level.explode(new Illusioner(EntityType.ILLUSIONER, level), DamageSource.playerAttack(((CraftPlayer) player).getHandle()), new ExplosionDamageCalculator(), loc.getX(), loc.getY() + 1, loc.getZ(), 40, false, Explosion.BlockInteraction.BREAK);
-        cooldownRegister(player, CustomItems.BOMBDETONATOR.id);
+        abilityRegister(player, CustomItems.BOMBDETONATOR.id);
     }
 }

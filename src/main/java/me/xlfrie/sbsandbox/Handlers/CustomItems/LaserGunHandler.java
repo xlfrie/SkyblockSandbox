@@ -10,6 +10,7 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -27,7 +28,7 @@ public class LaserGunHandler extends CustomItemBase {
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void ability(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         Action action = event.getAction();
@@ -50,7 +51,7 @@ public class LaserGunHandler extends CustomItemBase {
             endpoint = res.getHitPosition().toLocation(player.getWorld());
             ((Damageable) res.getHitEntity()).damage(100, player);
             player.setVelocity(player.getVelocity().add(recoil));
-            cooldownRegister(player, CustomItems.SLOT15.id);
+            abilityRegister(player, CustomItems.SLOT15.id);
             player.playSound(player.getLocation(), Sound.ENTITY_WARDEN_ATTACK_IMPACT, 10, 2F);
             UUID beam = GuardianBeam.spawn(player.getEyeLocation().add(0, -0.5, 0).add(player.getEyeLocation().getDirection().multiply(-1)), endpoint);
             player.getServer().getScheduler().scheduleSyncDelayedTask(SBSandbox.getInstance(), new Runnable() {

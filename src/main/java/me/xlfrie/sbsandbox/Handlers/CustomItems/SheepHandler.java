@@ -7,6 +7,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -20,7 +21,7 @@ public class SheepHandler extends CustomItemBase {
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void ability(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         Action action = event.getAction();
@@ -36,7 +37,7 @@ public class SheepHandler extends CustomItemBase {
         Entity e = player.getWorld().spawnEntity(player.getLocation().add(player.getLocation().getDirection().multiply(3)), EntityType.SHEEP);
         e.setCustomName("jeb_");
         e.setVelocity(player.getLocation().getDirection().multiply(4));
-        cooldownRegister(player, CustomItems.SLOT14.id);
+        abilityRegister(player, CustomItems.SLOT14.id);
         if (action.equals(Action.RIGHT_CLICK_BLOCK)) event.setCancelled(true);
     }
 }

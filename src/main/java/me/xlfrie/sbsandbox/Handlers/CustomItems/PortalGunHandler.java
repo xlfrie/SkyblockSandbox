@@ -15,6 +15,7 @@ import org.bukkit.craftbukkit.v1_19_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_19_R1.block.data.CraftBlockData;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -36,7 +37,7 @@ public class PortalGunHandler extends CustomItemBase {
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void ability(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         Action action = event.getAction();
@@ -95,7 +96,7 @@ public class PortalGunHandler extends CustomItemBase {
         loc.add(0, 1, 0);
         fbes[7] = spawnFallingBlock(player, loc, Material.BLACK_CONCRETE_POWDER, ray.getHitBlockFace(), -1);
         loc.subtract(0, 1, 0);
-        cooldownRegister(player, CustomItems.SLOT19.id);
+        abilityRegister(player, CustomItems.SLOT19.id);
         if (color == Material.ORANGE_CONCRETE_POWDER) {
             portals.get(player.getUniqueId()).getA().setA(loc);
             portals.get(player.getUniqueId()).getA().setB(fbes);

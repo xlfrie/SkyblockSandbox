@@ -21,7 +21,7 @@ public class SpidersBootsHandler extends CustomItemBase {
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void flightToggle(PlayerToggleFlightEvent event) {
         Player player = event.getPlayer();
         ItemStack item = player.getEquipment().getBoots();

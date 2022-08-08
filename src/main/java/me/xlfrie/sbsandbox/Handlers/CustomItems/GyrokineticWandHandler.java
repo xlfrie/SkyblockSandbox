@@ -6,6 +6,7 @@ import me.xlfrie.sbsandbox.Tasks.GyroCancellation;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -21,7 +22,7 @@ public class GyrokineticWandHandler extends CustomItemBase {
     }
     private final double cooldown = 30.0;
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void ability(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         Action action = event.getAction();
@@ -38,7 +39,7 @@ public class GyrokineticWandHandler extends CustomItemBase {
         if (ray != null) {
             Vector rift = ray.getHitBlock().getLocation().add(0.5, 0, 0.5).toVector();
             int count = 20;
-            cooldownRegister(player, CustomItems.SLOT12.id);
+            abilityRegister(player, CustomItems.SLOT12.id);
             BukkitTask task = new GyroCancellation(SBSandbox.getInstance(), count, player, rift).runTaskTimer(SBSandbox.getInstance(), 0, 2);
         } else {
             player.sendMessage("§cYou must aim at the floor.");

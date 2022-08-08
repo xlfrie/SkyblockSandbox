@@ -6,26 +6,22 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.FishHook;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
-
-import java.util.HashMap;
 
 import static me.xlfrie.sbsandbox.SBSandbox.color;
 
 public class GrapplingHookHandler extends CustomItemBase {
     private final double cooldown = 0;
-    static {
-        cooldownHash = new HashMap<>();
-    }
 
 
     public GrapplingHookHandler(SBSandbox plugin) {
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void cast(PlayerFishEvent event) {
         Player player = event.getPlayer();
         FishHook hook = event.getHook();
@@ -41,6 +37,6 @@ public class GrapplingHookHandler extends CustomItemBase {
         vec.multiply(new Vector(0.5, 0, 0.5));
         vec.setY(1);
         player.setVelocity(vec);
-        cooldownRegister(player, CustomItems.SLOT13.id);
+        abilityRegister(player, CustomItems.SLOT13.id);
     }
 }

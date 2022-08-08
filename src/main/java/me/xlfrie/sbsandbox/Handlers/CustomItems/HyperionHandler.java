@@ -8,6 +8,7 @@ import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityTeleportEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -28,7 +29,7 @@ public class HyperionHandler extends CustomItemBase {
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void ability(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         Action action = event.getAction();
@@ -60,7 +61,7 @@ public class HyperionHandler extends CustomItemBase {
         }
         player.teleport(infront);
         player.setVelocity(new Vector(0, 0, 0));
-        cooldownRegister(player, CustomItems.SLOT10.id);
+        abilityRegister(player, CustomItems.SLOT10.id);
 //              Damage engine
         List<Entity> toDamage = player.getNearbyEntities(6, 6, 6);
         for (Entity entity : toDamage) {

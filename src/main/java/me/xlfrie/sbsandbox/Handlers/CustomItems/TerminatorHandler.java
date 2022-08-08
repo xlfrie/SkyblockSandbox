@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -21,7 +22,7 @@ public class TerminatorHandler extends CustomItemBase {
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void ability(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         Action action = event.getAction();
@@ -53,7 +54,7 @@ public class TerminatorHandler extends CustomItemBase {
         arr1.setBounce(false);
         arr2.setBounce(false);
         arr3.setBounce(false);
-        cooldownRegister(player, CustomItems.SLOT11.id);
+        abilityRegister(player, CustomItems.SLOT11.id);
         if (action.equals(Action.RIGHT_CLICK_BLOCK) || action.equals(Action.RIGHT_CLICK_AIR)) event.setCancelled(true);
     }
 

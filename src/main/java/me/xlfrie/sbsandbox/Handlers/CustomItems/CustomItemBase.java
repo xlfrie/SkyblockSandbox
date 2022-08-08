@@ -19,7 +19,7 @@ public abstract class CustomItemBase implements Listener {
                 && player.getWorld().getName().startsWith(customItem.getWorld());
     }
 
-    public void cooldownRegister(Player player, int id) {
+    public void abilityRegister(Player player, int id) {
         cooldownHash.get(player.getUniqueId()).put(id, System.currentTimeMillis());
     }
 
@@ -33,7 +33,7 @@ public abstract class CustomItemBase implements Listener {
         }
         if (cooldownHash.get(player.getUniqueId()).get(id) + (cooldown * 1000) - System.currentTimeMillis() > 0) {
             double time = (cooldownHash.get(player.getUniqueId()).get(id) + (cooldown * 1000) - System.currentTimeMillis()) / 1000;
-            if (player.hasPermission("OWNER")) return 0;
+//            if (player.hasPermission("OWNER")) return 0;
             return time;
         }
         return 0;
