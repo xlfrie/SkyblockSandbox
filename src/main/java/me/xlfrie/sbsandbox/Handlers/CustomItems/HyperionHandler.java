@@ -24,6 +24,7 @@ import static me.xlfrie.sbsandbox.SBSandbox.color;
 
 public class HyperionHandler extends CustomItemBase {
     private final double cooldown = 0.1;
+    private CustomItems customItem = CustomItems.SLOT10;
 
     public HyperionHandler(SBSandbox plugin) {
         Bukkit.getPluginManager().registerEvents(this, plugin);
@@ -36,10 +37,10 @@ public class HyperionHandler extends CustomItemBase {
         ItemStack item = event.getItem();
 
         if (!action.equals(Action.RIGHT_CLICK_AIR) && !action.equals(Action.RIGHT_CLICK_BLOCK)) return;
-        if (item == null || !canUse(item, CustomItems.SLOT10, player)) {
+        if (item == null || !canUse(item, customItem, player)) {
             return;
         }
-        double _cooldown = getCooldown(player, cooldown, CustomItems.SLOT10.id);
+        double _cooldown = getCooldown(player, cooldown, customItem.id);
         if (_cooldown > 0) {
             player.sendMessage(color("&cYou can use this ability in " + (long) Math.ceil(_cooldown) + " seconds."));
             return;
@@ -61,7 +62,7 @@ public class HyperionHandler extends CustomItemBase {
         }
         player.teleport(infront);
         player.setVelocity(new Vector(0, 0, 0));
-        abilityRegister(player, CustomItems.SLOT10.id);
+        abilityRegister(player, customItem);
 //              Damage engine
         List<Entity> toDamage = player.getNearbyEntities(6, 6, 6);
         for (Entity entity : toDamage) {

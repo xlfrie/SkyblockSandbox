@@ -54,4 +54,6 @@ public enum CustomItems {
     public String getDeathMsg() {
         return this.deathMsg;
     }
+
+    public List<Object> getAbilityData() { return  ability; }
 }

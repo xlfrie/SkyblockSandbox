@@ -17,6 +17,7 @@ import static me.xlfrie.sbsandbox.SBSandbox.color;
 
 public class TerminatorHandler extends CustomItemBase {
     private final double cooldown = 0.1;
+    private final CustomItems customItem = CustomItems.SLOT11;
 
     public TerminatorHandler(SBSandbox plugin) {
         Bukkit.getPluginManager().registerEvents(this, plugin);
@@ -32,8 +33,8 @@ public class TerminatorHandler extends CustomItemBase {
         if (!action.equals(Action.LEFT_CLICK_BLOCK) && !action.equals(Action.LEFT_CLICK_AIR) && !action.equals(Action.RIGHT_CLICK_BLOCK) && !action.equals(Action.RIGHT_CLICK_AIR)) {
             return;
         }
-        if (item == null || !canUse(item, CustomItems.SLOT11, player)) return;
-        double _cooldown = getCooldown(player, cooldown, CustomItems.SLOT11.id);
+        if (item == null || !canUse(item, customItem, player)) return;
+        double _cooldown = getCooldown(player, cooldown, customItem.id);
         if (_cooldown > 0) {
             player.sendMessage(color("&cWhoa! Slow down!"));
             return;
@@ -54,7 +55,7 @@ public class TerminatorHandler extends CustomItemBase {
         arr1.setBounce(false);
         arr2.setBounce(false);
         arr3.setBounce(false);
-        abilityRegister(player, CustomItems.SLOT11.id);
+        abilityRegister(player, customItem);
         if (action.equals(Action.RIGHT_CLICK_BLOCK) || action.equals(Action.RIGHT_CLICK_AIR)) event.setCancelled(true);
     }
 

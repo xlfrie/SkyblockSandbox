@@ -16,6 +16,7 @@ import static me.xlfrie.sbsandbox.SBSandbox.color;
 
 public class SpidersBootsHandler extends CustomItemBase {
     private final double cooldown = 1;
+    private CustomItems customItem = CustomItems.SLOT16;
 
     public SpidersBootsHandler(SBSandbox plugin) {
         Bukkit.getPluginManager().registerEvents(this, plugin);
@@ -28,8 +29,8 @@ public class SpidersBootsHandler extends CustomItemBase {
 
         if (player.getGameMode() != GameMode.CREATIVE) event.setCancelled(true);
         else return;
-        if (item == null || !canUse(item, CustomItems.SLOT16, player)) return;
-        double _cooldown = getCooldown(player, cooldown, CustomItems.SLOT16.id);
+        if (item == null || !canUse(item, customItem, player)) return;
+        double _cooldown = getCooldown(player, cooldown, customItem.id);
         if (_cooldown > 0) {
             player.sendMessage(color("&cYou can use this ability in " + (long) Math.ceil(_cooldown) + " seconds."));
             return;

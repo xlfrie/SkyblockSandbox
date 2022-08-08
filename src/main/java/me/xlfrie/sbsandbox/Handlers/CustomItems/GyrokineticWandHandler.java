@@ -21,6 +21,7 @@ public class GyrokineticWandHandler extends CustomItemBase {
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
     private final double cooldown = 30.0;
+    private CustomItems customItem = CustomItems.SLOT12;
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void ability(PlayerInteractEvent event) {
@@ -29,8 +30,8 @@ public class GyrokineticWandHandler extends CustomItemBase {
         ItemStack item = event.getItem();
 
         if (!action.equals(Action.LEFT_CLICK_BLOCK) && !action.equals(Action.LEFT_CLICK_AIR)) return;
-        if (item == null || !canUse(item, CustomItems.SLOT12, player)) return;
-        double _cooldown = getCooldown(player, cooldown, CustomItems.SLOT12.id);
+        if (item == null || !canUse(item, customItem, player)) return;
+        double _cooldown = getCooldown(player, cooldown, customItem.id);
         if (_cooldown > 0) {
             player.sendMessage(color("&cYou can use this ability in " + (long) Math.ceil(_cooldown) + " seconds."));
             return;
@@ -39,7 +40,7 @@ public class GyrokineticWandHandler extends CustomItemBase {
         if (ray != null) {
             Vector rift = ray.getHitBlock().getLocation().add(0.5, 0, 0.5).toVector();
             int count = 20;
-            abilityRegister(player, CustomItems.SLOT12.id);
+            abilityRegister(player, customItem);
             BukkitTask task = new GyroCancellation(SBSandbox.getInstance(), count, player, rift).runTaskTimer(SBSandbox.getInstance(), 0, 2);
         } else {
             player.sendMessage("§cYou must aim at the floor.");

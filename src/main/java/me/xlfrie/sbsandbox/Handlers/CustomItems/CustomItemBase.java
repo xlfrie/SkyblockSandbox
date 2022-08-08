@@ -1,6 +1,9 @@
 package me.xlfrie.sbsandbox.Handlers.CustomItems;
 
 import me.xlfrie.sbsandbox.CustomItems;
+import me.xlfrie.sbsandbox.SBSandbox;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
@@ -11,6 +14,7 @@ import java.util.UUID;
 
 public abstract class CustomItemBase implements Listener {
     protected static HashMap<UUID, HashMap<Integer, Long>> cooldownHash = new HashMap<>();
+
     //        TODO Add cooldowns to all items
     public boolean canUse(ItemStack item, CustomItems customItem, Player player) {
         ItemMeta m = item.getItemMeta();
@@ -19,8 +23,11 @@ public abstract class CustomItemBase implements Listener {
                 && player.getWorld().getName().startsWith(customItem.getWorld());
     }
 
-    public void abilityRegister(Player player, int id) {
-        cooldownHash.get(player.getUniqueId()).put(id, System.currentTimeMillis());
+    public void abilityRegister(Player player, CustomItems customItem) {
+        cooldownHash.get(player.getUniqueId()).put(customItem.id, System.currentTimeMillis());
+//        player.sendTitle();
+        if (customItem.getAbilityData().size() >= 1)
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(SBSandbox.color("&b-" + customItem.getAbilityData().get(1) + " Mana (&6" + customItem.getAbilityData().get(0) + "&b)")));
     }
 
     public double getCooldown(Player player, double cooldown, int id) {

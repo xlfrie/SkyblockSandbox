@@ -24,6 +24,7 @@ import static me.xlfrie.sbsandbox.SBSandbox.color;
 
 public class BombDetonatorHandler extends CustomItemBase {
     private final double cooldown = 1;
+    private CustomItems customItem = CustomItems.BOMBDETONATOR;
 
 
     public BombDetonatorHandler(SBSandbox plugin) {
@@ -37,8 +38,8 @@ public class BombDetonatorHandler extends CustomItemBase {
         ItemStack item = event.getItem();
 
         if (!action.equals(Action.RIGHT_CLICK_AIR) && !action.equals(Action.RIGHT_CLICK_BLOCK)) return;
-        if (item == null || !canUse(item, CustomItems.BOMBDETONATOR, player)) return;
-        double _cooldown = getCooldown(player, cooldown, CustomItems.BOMBDETONATOR.id);
+        if (item == null || !canUse(item, customItem, player)) return;
+        double _cooldown = getCooldown(player, cooldown, customItem.id);
         if (_cooldown > 0) {
             player.sendMessage(color("&cYou can use this ability in " + (long) Math.ceil(_cooldown) + " seconds."));
             return;
@@ -47,6 +48,6 @@ public class BombDetonatorHandler extends CustomItemBase {
         if (loc.getBlock().getBlockData().getMaterial() == Material.AIR) return;
         ServerLevel level = ((CraftWorld) player.getWorld()).getHandle();
         level.explode(new Illusioner(EntityType.ILLUSIONER, level), DamageSource.playerAttack(((CraftPlayer) player).getHandle()), new ExplosionDamageCalculator(), loc.getX(), loc.getY() + 1, loc.getZ(), 40, false, Explosion.BlockInteraction.BREAK);
-        abilityRegister(player, CustomItems.BOMBDETONATOR.id);
+        abilityRegister(player, customItem);
     }
 }

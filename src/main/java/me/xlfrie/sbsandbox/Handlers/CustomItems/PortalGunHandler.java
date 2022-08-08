@@ -30,6 +30,7 @@ import static me.xlfrie.sbsandbox.SBSandbox.color;
 
 public class PortalGunHandler extends CustomItemBase {
     private final double cooldown = 0;
+    private CustomItems customItem = CustomItems.SLOT19;
 
     private HashMap<UUID, Tuple<Tuple<Location, FallingBlockEntity[]>, Tuple<Location, FallingBlockEntity[]>>> portals = new HashMap<>();
 
@@ -45,7 +46,7 @@ public class PortalGunHandler extends CustomItemBase {
 
         if (!action.equals(Action.RIGHT_CLICK_AIR) && !action.equals(Action.RIGHT_CLICK_BLOCK) && !action.equals(Action.LEFT_CLICK_AIR) && !action.equals(Action.LEFT_CLICK_BLOCK))
             return;
-        if (item == null || !canUse(item, CustomItems.SLOT19, player)) {
+        if (item == null || !canUse(item, customItem, player)) {
             return;
         }
         if (action.equals(Action.LEFT_CLICK_BLOCK) || action.equals(Action.RIGHT_CLICK_BLOCK)) event.setCancelled(true);
@@ -54,7 +55,7 @@ public class PortalGunHandler extends CustomItemBase {
             item.setType(item.getType() == Material.ORANGE_CANDLE ? Material.BLUE_CANDLE : Material.ORANGE_CANDLE);
             return;
         }
-        double _cooldown = getCooldown(player, cooldown, CustomItems.SLOT19.id);
+        double _cooldown = getCooldown(player, cooldown, customItem.id);
         if (_cooldown > 0) {
             player.sendMessage(color("&cYou can use this ability in " + (long) Math.ceil(_cooldown) + " seconds."));
             return;
@@ -96,7 +97,7 @@ public class PortalGunHandler extends CustomItemBase {
         loc.add(0, 1, 0);
         fbes[7] = spawnFallingBlock(player, loc, Material.BLACK_CONCRETE_POWDER, ray.getHitBlockFace(), -1);
         loc.subtract(0, 1, 0);
-        abilityRegister(player, CustomItems.SLOT19.id);
+        abilityRegister(player, customItem);
         if (color == Material.ORANGE_CONCRETE_POWDER) {
             portals.get(player.getUniqueId()).getA().setA(loc);
             portals.get(player.getUniqueId()).getA().setB(fbes);

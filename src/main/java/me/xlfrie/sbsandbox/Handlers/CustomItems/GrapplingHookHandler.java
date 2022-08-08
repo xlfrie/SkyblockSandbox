@@ -15,6 +15,7 @@ import static me.xlfrie.sbsandbox.SBSandbox.color;
 
 public class GrapplingHookHandler extends CustomItemBase {
     private final double cooldown = 0;
+    private CustomItems customItem = CustomItems.SLOT13;
 
 
     public GrapplingHookHandler(SBSandbox plugin) {
@@ -27,8 +28,8 @@ public class GrapplingHookHandler extends CustomItemBase {
         FishHook hook = event.getHook();
         ItemStack item = player.getInventory().getItemInMainHand();
 
-        if (event.getState().equals(PlayerFishEvent.State.FISHING) || !canUse(item, CustomItems.SLOT13, player)) return;
-        double _cooldown = getCooldown(player, cooldown, CustomItems.SLOT13.id);
+        if (event.getState().equals(PlayerFishEvent.State.FISHING) || !canUse(item, customItem, player)) return;
+        double _cooldown = getCooldown(player, cooldown, customItem.id);
         if (_cooldown > 0) {
             player.sendMessage(color("&cYou can use this ability in " + (long) Math.ceil(_cooldown) + " seconds."));
             return;
@@ -37,6 +38,6 @@ public class GrapplingHookHandler extends CustomItemBase {
         vec.multiply(new Vector(0.5, 0, 0.5));
         vec.setY(1);
         player.setVelocity(vec);
-        abilityRegister(player, CustomItems.SLOT13.id);
+        abilityRegister(player, customItem);
     }
 }

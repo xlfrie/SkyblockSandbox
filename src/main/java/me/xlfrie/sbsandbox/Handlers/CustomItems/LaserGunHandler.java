@@ -23,7 +23,7 @@ import static me.xlfrie.sbsandbox.SBSandbox.color;
 
 public class LaserGunHandler extends CustomItemBase {
     private final double cooldown = 0   ;
-
+    private CustomItems customItem = CustomItems.SLOT15;
     public LaserGunHandler(SBSandbox plugin) {
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
@@ -35,10 +35,10 @@ public class LaserGunHandler extends CustomItemBase {
         ItemStack item = event.getItem();
 
         if (!action.equals(Action.RIGHT_CLICK_AIR) && !action.equals(Action.RIGHT_CLICK_BLOCK)) return;
-        if (item == null || !canUse(item, CustomItems.SLOT15, player)) {
+        if (item == null || !canUse(item, customItem, player)) {
             return;
         }
-        double _cooldown = getCooldown(player, cooldown, CustomItems.SLOT15.id);
+        double _cooldown = getCooldown(player, cooldown, customItem.id);
         if (_cooldown > 0) {
             player.sendMessage(color("&cYou can use this ability in " + (long) Math.ceil(_cooldown) + " seconds."));
             return;
@@ -51,7 +51,7 @@ public class LaserGunHandler extends CustomItemBase {
             endpoint = res.getHitPosition().toLocation(player.getWorld());
             ((Damageable) res.getHitEntity()).damage(100, player);
             player.setVelocity(player.getVelocity().add(recoil));
-            abilityRegister(player, CustomItems.SLOT15.id);
+            abilityRegister(player, customItem);
             player.playSound(player.getLocation(), Sound.ENTITY_WARDEN_ATTACK_IMPACT, 10, 2F);
             UUID beam = GuardianBeam.spawn(player.getEyeLocation().add(0, -0.5, 0).add(player.getEyeLocation().getDirection().multiply(-1)), endpoint);
             player.getServer().getScheduler().scheduleSyncDelayedTask(SBSandbox.getInstance(), new Runnable() {
