@@ -1,11 +1,12 @@
 package me.xlfrie.sbsandbox.Handlers.CustomItems;
 
-import me.xlfrie.sbsandbox.CustomItems;
+import me.xlfrie.sbsandbox.CustomItem;
 import me.xlfrie.sbsandbox.SBSandbox;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -24,7 +25,7 @@ import static me.xlfrie.sbsandbox.SBSandbox.color;
 
 public class HyperionHandler extends CustomItemBase {
     private final double cooldown = 0.1;
-    private CustomItems customItem = CustomItems.SLOT10;
+    private CustomItem customItem = CustomItem.SLOT10;
 
     public HyperionHandler(SBSandbox plugin) {
         Bukkit.getPluginManager().registerEvents(this, plugin);
@@ -83,7 +84,7 @@ public class HyperionHandler extends CustomItemBase {
 
                 public void run() {
                     double change = player.getHealth() + player.getAbsorptionAmount();
-                    player.setHealth(change);
+                    player.setHealth(Math.min(change, player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()));
                     player.setAbsorptionAmount(0);
                     Location hearts = player.getLocation();
                     hearts.add(0, 0.5, 0);

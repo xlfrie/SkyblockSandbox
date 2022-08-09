@@ -1,6 +1,6 @@
 package me.xlfrie.sbsandbox.Handlers.CustomItems;
 
-import me.xlfrie.sbsandbox.CustomItems;
+import me.xlfrie.sbsandbox.CustomItem;
 import me.xlfrie.sbsandbox.SBSandbox;
 import me.xlfrie.sbsandbox.Tasks.GyroCancellation;
 import org.bukkit.Bukkit;
@@ -21,7 +21,7 @@ public class GyrokineticWandHandler extends CustomItemBase {
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
     private final double cooldown = 30.0;
-    private CustomItems customItem = CustomItems.SLOT12;
+    private CustomItem customItem = CustomItem.SLOT12;
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void ability(PlayerInteractEvent event) {

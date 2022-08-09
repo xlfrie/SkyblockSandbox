@@ -9,7 +9,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
-import me.xlfrie.sbsandbox.CustomItems;
+import me.xlfrie.sbsandbox.CustomItem;
 
 public class MenuHandler implements Listener {
     public MenuHandler(SBSandbox plugin) {
@@ -27,9 +27,9 @@ public class MenuHandler implements Listener {
             case "Menu > Items":
                 boolean contains = false;
                 event.setCancelled(true);
-                for (CustomItems it : CustomItems.values()) if (it.name().equals("SLOT" + slot)) contains = true;
+                for (CustomItem it : CustomItem.values()) if (it.name().equals("SLOT" + slot)) contains = true;
                 if (!contains) return;
-                player.getInventory().addItem(CustomItems.valueOf("SLOT" + slot).Item());
+                player.getInventory().addItem(CustomItem.valueOf("SLOT" + slot).Item());
                 break;
             case "Menu > Warps":
                 event.setCancelled(true);

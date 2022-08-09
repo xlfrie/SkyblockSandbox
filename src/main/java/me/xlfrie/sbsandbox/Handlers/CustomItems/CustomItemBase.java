@@ -1,6 +1,6 @@
 package me.xlfrie.sbsandbox.Handlers.CustomItems;
 
-import me.xlfrie.sbsandbox.CustomItems;
+import me.xlfrie.sbsandbox.CustomItem;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
@@ -13,7 +13,7 @@ public abstract class CustomItemBase implements Listener {
     protected static HashMap<UUID, HashMap<Integer, Long>> cooldownHash = new HashMap<>();
 
     //        TODO Add cooldowns to all items
-    public boolean canUse(ItemStack item, CustomItems customItem, Player player) {
+    public boolean canUse(ItemStack item, CustomItem customItem, Player player) {
         ItemMeta m = item.getItemMeta();
         boolean buf = m.hasCustomModelData()
                 && m.getCustomModelData() == customItem.id
@@ -25,7 +25,7 @@ public abstract class CustomItemBase implements Listener {
         return buf;
     }
 
-    public void abilityRegister(Player player, CustomItems customItem) {
+    public void abilityRegister(Player player, CustomItem customItem) {
         cooldownHash.get(player.getUniqueId()).put(customItem.id, System.currentTimeMillis());
 //        if (customItem.getAbilityData().size() >= 1) {
 //            ActionBar.useMana((int) customItem.getAbilityData().get(1), player);
@@ -42,9 +42,8 @@ public abstract class CustomItemBase implements Listener {
             cooldownHash.get(player.getUniqueId()).put(id, 0L);
         }
         if (cooldownHash.get(player.getUniqueId()).get(id) + (cooldown * 1000) - System.currentTimeMillis() > 0) {
-            double time = (cooldownHash.get(player.getUniqueId()).get(id) + (cooldown * 1000) - System.currentTimeMillis()) / 1000;
-//            if (player.hasPermission("OWNER")) return 0;
-            return time;
+            //            if (player.hasPermission("OWNER")) return 0;
+            return (cooldownHash.get(player.getUniqueId()).get(id) + (cooldown * 1000) - System.currentTimeMillis()) / 1000;
         }
         return 0;
     }

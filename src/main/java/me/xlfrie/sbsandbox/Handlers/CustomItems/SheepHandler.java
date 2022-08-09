@@ -1,6 +1,6 @@
 package me.xlfrie.sbsandbox.Handlers.CustomItems;
 
-import me.xlfrie.sbsandbox.CustomItems;
+import me.xlfrie.sbsandbox.CustomItem;
 import me.xlfrie.sbsandbox.SBSandbox;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
@@ -16,7 +16,7 @@ import static me.xlfrie.sbsandbox.SBSandbox.color;
 
 public class SheepHandler extends CustomItemBase {
     private final double cooldown = 0.1;
-    private CustomItems customItem = CustomItems.SLOT14;
+    private CustomItem customItem = CustomItem.SLOT14;
 
     public SheepHandler(SBSandbox plugin) {
         Bukkit.getPluginManager().registerEvents(this, plugin);

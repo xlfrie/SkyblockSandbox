@@ -1,6 +1,6 @@
 package me.xlfrie.sbsandbox.Handlers.CustomItems;
 
-import me.xlfrie.sbsandbox.CustomItems;
+import me.xlfrie.sbsandbox.CustomItem;
 import me.xlfrie.sbsandbox.SBSandbox;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
@@ -24,7 +24,7 @@ import static me.xlfrie.sbsandbox.SBSandbox.color;
 
 public class BombDetonatorHandler extends CustomItemBase {
     private final double cooldown = 1;
-    private CustomItems customItem = CustomItems.BOMBDETONATOR;
+    private CustomItem customItem = CustomItem.BOMBDETONATOR;
 
 
     public BombDetonatorHandler(SBSandbox plugin) {

@@ -1,6 +1,6 @@
 package me.xlfrie.sbsandbox.Handlers.CustomItems;
 
-import me.xlfrie.sbsandbox.CustomItems;
+import me.xlfrie.sbsandbox.CustomItem;
 import me.xlfrie.sbsandbox.SBSandbox;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -16,7 +16,7 @@ import static me.xlfrie.sbsandbox.SBSandbox.color;
 
 public class SpidersBootsHandler extends CustomItemBase {
     private final double cooldown = 1;
-    private CustomItems customItem = CustomItems.SLOT16;
+    private CustomItem customItem = CustomItem.SLOT16;
 
     public SpidersBootsHandler(SBSandbox plugin) {
         Bukkit.getPluginManager().registerEvents(this, plugin);

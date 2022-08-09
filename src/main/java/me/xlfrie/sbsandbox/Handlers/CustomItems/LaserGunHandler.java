@@ -1,6 +1,6 @@
 package me.xlfrie.sbsandbox.Handlers.CustomItems;
 
-import me.xlfrie.sbsandbox.CustomItems;
+import me.xlfrie.sbsandbox.CustomItem;
 import me.xlfrie.sbsandbox.GuardianBeam;
 import me.xlfrie.sbsandbox.SBSandbox;
 import org.bukkit.Bukkit;
@@ -23,7 +23,7 @@ import static me.xlfrie.sbsandbox.SBSandbox.color;
 
 public class LaserGunHandler extends CustomItemBase {
     private final double cooldown = 0   ;
-    private CustomItems customItem = CustomItems.SLOT15;
+    private CustomItem customItem = CustomItem.SLOT15;
     public LaserGunHandler(SBSandbox plugin) {
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }

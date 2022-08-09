@@ -1,6 +1,6 @@
 package me.xlfrie.sbsandbox.Interactions;
 
-import me.xlfrie.sbsandbox.CustomItems;
+import me.xlfrie.sbsandbox.CustomItem;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -22,7 +22,7 @@ public class player {
             menu.setItem(i, new ItemStack(i <= 8 || i >= size - 10 || i % 9 == 0 || (i + 1) % 9 == 0 ? Material.GRAY_STAINED_GLASS_PANE : Material.RED_STAINED_GLASS_PANE, 1));
         }
 
-        for (CustomItems value : CustomItems.values()) {
+        for (CustomItem value : CustomItem.values()) {
             if (!value.toString().startsWith("SLOT")) continue;
             menu.setItem(Integer.parseInt(value.toString().substring(4)), value.Item());
         }

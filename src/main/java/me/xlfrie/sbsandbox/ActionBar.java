@@ -36,7 +36,7 @@ public final class ActionBar {
         ItemStack item = player.getInventory().getItemInMainHand();
         ItemMeta m = item.getItemMeta();
         if (!m.hasCustomModelData() || !plStats.containsKey(player.getUniqueId())) return;
-        for (CustomItems value : CustomItems.values()) {
+        for (CustomItem value : CustomItem.values()) {
             if (value.id == m.getCustomModelData() && value.getStatBoost().size() > 1) {
                 player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(value.getStatBoost().get(0) + 100);
                 plStats.put(player.getUniqueId(), List.of(plStats.get(player.getUniqueId()).get(0), (long) value.getStatBoost().get(1) + 100));

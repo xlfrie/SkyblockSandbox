@@ -7,6 +7,7 @@ import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.EnumWrappers;
+import me.xlfrie.sbsandbox.CustomItems.Weapons.JasonSword;
 import me.xlfrie.sbsandbox.Handlers.*;
 import me.xlfrie.sbsandbox.Handlers.CustomItems.*;
 import me.xlfrie.sbsandbox.Handlers.NPCs.MenuHandler;
@@ -115,6 +116,9 @@ public final class SBSandbox extends JavaPlugin {
         new DeathMessageHandler(this);
         new FancyExplosionHandler(this);
         new ChatHandler(this);
+
+        new JasonSword();
+
 
 //        Register commands
         getCommand("loop").setExecutor(new LoopCommand());

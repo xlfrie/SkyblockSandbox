@@ -1,6 +1,6 @@
 package me.xlfrie.sbsandbox.Handlers.CustomItems;
 
-import me.xlfrie.sbsandbox.CustomItems;
+import me.xlfrie.sbsandbox.CustomItem;
 import me.xlfrie.sbsandbox.Mobs.NGInfFallingBlock;
 import me.xlfrie.sbsandbox.SBSandbox;
 import net.minecraft.core.BlockPos;
@@ -30,7 +30,7 @@ import static me.xlfrie.sbsandbox.SBSandbox.color;
 
 public class PortalGunHandler extends CustomItemBase {
     private final double cooldown = 0;
-    private CustomItems customItem = CustomItems.SLOT19;
+    private CustomItem customItem = CustomItem.SLOT19;
 
     private HashMap<UUID, Tuple<Tuple<Location, FallingBlockEntity[]>, Tuple<Location, FallingBlockEntity[]>>> portals = new HashMap<>();
 

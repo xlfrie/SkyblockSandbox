@@ -9,7 +9,7 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.List;
 import java.util.UUID;
 
-public enum CustomItems {
+public enum CustomItem {
     BOMBDETONATOR(SBSandbox.color("&6&l&kA&r&6&lBOMB DETONATOR&kA&r"), new ItemStack(Material.GOLDEN_HORSE_ARMOR, 1), 1001, "Stinky", List.of("Nuke", 10), List.of(0, 1000), "was nuked by"),
     SLOT10(SBSandbox.color("&6Hyperion"), new ItemStack(Material.IRON_SWORD, 1), 1, "Stinky", List.of("Wither Impact", 300), List.of(0, 350), "was exploded to smithereens by"),
     SLOT11(SBSandbox.color("&6Terminator"), new ItemStack(Material.BOW, 1), 2, "Stinky", List.of(), List.of(0, 0), "was terminated by"),
@@ -28,7 +28,7 @@ public enum CustomItems {
     private final List<Object> ability;
     private final List<Integer> stats;
 
-    CustomItems(String name, ItemStack item, int id, String world, List<Object> ability, List<Integer> stats, String... deathMsg) {
+    CustomItem(String name, ItemStack item, int id, String world, List<Object> ability, List<Integer> stats, String... deathMsg) {
         this.name = name;
         this.item = item;
         this.id = id;

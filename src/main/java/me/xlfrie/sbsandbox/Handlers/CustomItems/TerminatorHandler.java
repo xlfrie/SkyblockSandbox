@@ -1,6 +1,6 @@
 package me.xlfrie.sbsandbox.Handlers.CustomItems;
 
-import me.xlfrie.sbsandbox.CustomItems;
+import me.xlfrie.sbsandbox.CustomItem;
 import me.xlfrie.sbsandbox.SBSandbox;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -17,7 +17,7 @@ import static me.xlfrie.sbsandbox.SBSandbox.color;
 
 public class TerminatorHandler extends CustomItemBase {
     private final double cooldown = 0.1;
-    private final CustomItems customItem = CustomItems.SLOT11;
+    private final CustomItem customItem = CustomItem.SLOT11;
 
     public TerminatorHandler(SBSandbox plugin) {
         Bukkit.getPluginManager().registerEvents(this, plugin);

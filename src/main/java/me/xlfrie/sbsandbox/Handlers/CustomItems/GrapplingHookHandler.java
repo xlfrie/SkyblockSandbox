@@ -1,6 +1,6 @@
 package me.xlfrie.sbsandbox.Handlers.CustomItems;
 
-import me.xlfrie.sbsandbox.CustomItems;
+import me.xlfrie.sbsandbox.CustomItem;
 import me.xlfrie.sbsandbox.SBSandbox;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.FishHook;
@@ -15,7 +15,7 @@ import static me.xlfrie.sbsandbox.SBSandbox.color;
 
 public class GrapplingHookHandler extends CustomItemBase {
     private final double cooldown = 0;
-    private CustomItems customItem = CustomItems.SLOT13;
+    private CustomItem customItem = CustomItem.SLOT13;
 
 
     public GrapplingHookHandler(SBSandbox plugin) {

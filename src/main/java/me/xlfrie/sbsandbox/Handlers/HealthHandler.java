@@ -33,6 +33,6 @@ public class HealthHandler implements Listener {
         Entity e = event.getEntity();
         if (!(e instanceof Damageable) || e instanceof ArmorStand || e.getName().equals("jeb_")) return;
         e.setCustomNameVisible(true);
-        e.setCustomName(e.getName().split(" §c❤")[0] + " §c❤ " + Math.round((((Damageable) e).getHealth() - event.getDamage()) * 100.0) / 100.0 + "/" + Objects.requireNonNull(((Attributable) e).getAttribute(Attribute.GENERIC_MAX_HEALTH)).getValue());
+        e.setCustomName(e.getName().split(" §c❤")[0] + " §c❤ " + Math.round((((Damageable) e).getHealth() - event.getFinalDamage()) * 100.0) / 100.0 + "/" + Objects.requireNonNull(((Attributable) e).getAttribute(Attribute.GENERIC_MAX_HEALTH)).getValue());
     }
 }

@@ -1,6 +1,6 @@
 package me.xlfrie.sbsandbox.Handlers;
 
-import me.xlfrie.sbsandbox.CustomItems;
+import me.xlfrie.sbsandbox.CustomItem;
 import me.xlfrie.sbsandbox.SBSandbox;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -52,7 +52,7 @@ public class DeathMessageHandler implements Listener {
                     break;
                 }
                 if (m.hasCustomModelData()) {
-                    for (CustomItems value : CustomItems.values()) {
+                    for (CustomItem value : CustomItem.values()) {
                         if (m.getCustomModelData() == value.id) {
                             deathMsg += value.getDeathMsg() + " " + killer.getDisplayName();
                             break;
