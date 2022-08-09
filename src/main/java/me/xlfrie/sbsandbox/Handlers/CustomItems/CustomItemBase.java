@@ -1,9 +1,6 @@
 package me.xlfrie.sbsandbox.Handlers.CustomItems;
 
 import me.xlfrie.sbsandbox.CustomItems;
-import me.xlfrie.sbsandbox.SBSandbox;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
@@ -18,16 +15,22 @@ public abstract class CustomItemBase implements Listener {
     //        TODO Add cooldowns to all items
     public boolean canUse(ItemStack item, CustomItems customItem, Player player) {
         ItemMeta m = item.getItemMeta();
-        return m.hasCustomModelData()
+        boolean buf = m.hasCustomModelData()
                 && m.getCustomModelData() == customItem.id
                 && player.getWorld().getName().startsWith(customItem.getWorld());
+//        if (buf && customItem.getAbilityData().size() > 0 && !ActionBar.hasMana((int) customItem.getAbilityData().get(1), player)) {
+//            player.sendMessage("§cNot enough mana!");
+//            buf = false;
+//        }
+        return buf;
     }
 
     public void abilityRegister(Player player, CustomItems customItem) {
         cooldownHash.get(player.getUniqueId()).put(customItem.id, System.currentTimeMillis());
-//        player.sendTitle();
-        if (customItem.getAbilityData().size() >= 1)
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(SBSandbox.color("&b-" + customItem.getAbilityData().get(1) + " Mana (&6" + customItem.getAbilityData().get(0) + "&b)")));
+//        if (customItem.getAbilityData().size() >= 1) {
+//            ActionBar.useMana((int) customItem.getAbilityData().get(1), player);
+//            ActionBar.setMessageBuf(SBSandbox.color("&b-" + customItem.getAbilityData().get(1) + " Mana (&6" + customItem.getAbilityData().get(0) + "&b)"), player);
+//        }
     }
 
     public double getCooldown(Player player, double cooldown, int id) {

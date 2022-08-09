@@ -83,7 +83,6 @@ public class HyperionHandler extends CustomItemBase {
 
                 public void run() {
                     double change = player.getHealth() + player.getAbsorptionAmount();
-                    if (change > 20) change = 20;
                     player.setHealth(change);
                     player.setAbsorptionAmount(0);
                     Location hearts = player.getLocation();
