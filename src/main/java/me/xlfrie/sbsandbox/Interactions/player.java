@@ -1,6 +1,7 @@
 package me.xlfrie.sbsandbox.Interactions;
 
-import me.xlfrie.sbsandbox.CustomItem;
+import me.xlfrie.sbsandbox.CustomItems.CustomItemBase;
+import me.xlfrie.sbsandbox.CustomItems.ItemUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -10,6 +11,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 import static me.xlfrie.sbsandbox.SBSandbox.color;
 
@@ -21,12 +25,16 @@ public class player {
 //            Add border & filler
             menu.setItem(i, new ItemStack(i <= 8 || i >= size - 10 || i % 9 == 0 || (i + 1) % 9 == 0 ? Material.GRAY_STAINED_GLASS_PANE : Material.RED_STAINED_GLASS_PANE, 1));
         }
-
-        for (CustomItem value : CustomItem.values()) {
-            if (!value.toString().startsWith("SLOT")) continue;
-            menu.setItem(Integer.parseInt(value.toString().substring(4)), value.Item());
+        int offset = 0;
+        HashMap<String, CustomItemBase> customItemBaseHashMap = ItemUtils.getRegisteredItems();
+        for (Map.Entry<String, CustomItemBase> stringCustomItemBaseEntry : customItemBaseHashMap.entrySet()) {
+            if (!stringCustomItemBaseEntry.getValue().isFree()) continue;
+            if (Objects.requireNonNull(menu.getItem(offset + 10)).getType() == Material.GRAY_STAINED_GLASS_PANE) {
+                offset += 2;
+            }
+            menu.setItem(offset + 10, stringCustomItemBaseEntry.getValue().genItem());
+            offset++;
         }
-
         player.openInventory(menu);
     }
 

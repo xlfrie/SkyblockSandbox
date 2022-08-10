@@ -1,15 +1,19 @@
 package me.xlfrie.sbsandbox.Handlers.NPCs;
 
+import me.xlfrie.sbsandbox.CustomItems.ItemUtils;
 import me.xlfrie.sbsandbox.SBSandbox;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
-import me.xlfrie.sbsandbox.CustomItem;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 public class MenuHandler implements Listener {
     public MenuHandler(SBSandbox plugin) {
@@ -25,11 +29,13 @@ public class MenuHandler implements Listener {
         if (!event.getView().getTitle().startsWith("Menu")) return;
         switch (event.getView().getTitle()) {
             case "Menu > Items":
-                boolean contains = false;
                 event.setCancelled(true);
-                for (CustomItem it : CustomItem.values()) if (it.name().equals("SLOT" + slot)) contains = true;
-                if (!contains) return;
-                player.getInventory().addItem(CustomItem.valueOf("SLOT" + slot).Item());
+                if (inventory.getItem(slot) == null) return;
+                ItemStack itemStack = inventory.getItem(slot);
+                ItemMeta meta = itemStack.getItemMeta();
+                String id =  meta.getPersistentDataContainer().get(new NamespacedKey(SBSandbox.getInstance(), "sandbox-id"), PersistentDataType.STRING);
+                if (id == null) return;
+                player.getInventory().addItem(ItemUtils.getItemClass(id).genItem());
                 break;
             case "Menu > Warps":
                 event.setCancelled(true);
@@ -42,5 +48,6 @@ public class MenuHandler implements Listener {
                 }
                 break;
         }
+        player.updateInventory();
     }
 }

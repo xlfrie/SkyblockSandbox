@@ -1,5 +1,6 @@
 package me.xlfrie.sbsandbox.CustomItems;
 
+import me.xlfrie.sbsandbox.ActionBar;
 import me.xlfrie.sbsandbox.SBSandbox;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -11,6 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 public abstract class CustomItemBase implements Listener {
@@ -21,12 +23,18 @@ public abstract class CustomItemBase implements Listener {
 
     public abstract String localizedName();
 
-    public abstract int cooldownDelay();
+    public abstract double cooldownDelay();
 
     public abstract Material getMaterial();
 
+    public abstract HashMap<String, Object> itemData();
+
     public String cooldownFormat() {
         return "§cYou can use this ability in %d";
+    }
+
+    public boolean isFree() {
+        return true;
     }
 
     public CustomItemBase() {
@@ -37,10 +45,10 @@ public abstract class CustomItemBase implements Listener {
     public boolean canUse(ItemStack item, Player player) {
         if (item == null) return true;
         NamespacedKey key = new NamespacedKey(SBSandbox.getInstance(), "sandbox-id");
-        boolean buf = item.getItemMeta().getPersistentDataContainer().get(key, PersistentDataType.STRING) == this.getId();
+        boolean buf = Objects.equals(item.getItemMeta().getPersistentDataContainer().get(key, PersistentDataType.STRING), this.getId()) && player.getWorld().getName().startsWith("Stinky");
         if (buf && cooldowns.containsKey(player.getUniqueId()) && cooldowns.get(player.getUniqueId()).containsKey(this.getId()) && cooldowns.get(player.getUniqueId()).get(this.getId()) + this.cooldownDelay() * 1000L >= System.currentTimeMillis()) {
             buf = false;
-            player.sendMessage(String.format("§cYou can use this ability in %d", (cooldowns.get(player.getUniqueId()).get(this.getId()) + this.cooldownDelay() * 1000L - System.currentTimeMillis()) / 1000));
+            player.sendMessage("§cYou can use this ability in " + Math.round((cooldowns.get(player.getUniqueId()).get(this.getId()) + this.cooldownDelay() * 1000L - System.currentTimeMillis()) / 1000));
         } else if (buf && !cooldowns.containsKey(player.getUniqueId())) {
             HashMap<String, Long> tmp = new HashMap<>();
             tmp.put(this.getId(), 0L);
@@ -52,7 +60,10 @@ public abstract class CustomItemBase implements Listener {
     }
 
     public void abilityRegister(Player player) {
-        cooldowns.get(player.getUniqueId()).put(this.getId(), System.currentTimeMillis());
+        if (!player.hasPermission("owner"))
+            cooldowns.get(player.getUniqueId()).put(this.getId(), System.currentTimeMillis());
+        ActionBar.setMessageBuf(SBSandbox.color("&b-" + this.itemData().get("manaCost") + " Mana (&6" + this.itemData().get("abilityName") + "&b)"), player);
+        ActionBar.useMana((Integer) this.itemData().get("manaCost"), player);
     }
 
     public ItemMeta getMetadata(ItemStack itemStack) {

@@ -7,9 +7,8 @@ import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.EnumWrappers;
-import me.xlfrie.sbsandbox.CustomItems.Weapons.JasonSword;
+import me.xlfrie.sbsandbox.CustomItems.Weapons.*;
 import me.xlfrie.sbsandbox.Handlers.*;
-import me.xlfrie.sbsandbox.Handlers.CustomItems.*;
 import me.xlfrie.sbsandbox.Handlers.NPCs.MenuHandler;
 import me.xlfrie.sbsandbox.Handlers.NPCs.NPCHandler;
 import me.xlfrie.sbsandbox.Handlers.NPCs.NPCRotationHandler;
@@ -93,17 +92,17 @@ public final class SBSandbox extends JavaPlugin {
                 npc.spawn(player, true);
             }
         }
-//        Bukkit.getScheduler().runTaskTimerAsynchronously(this, ActionBar::tick, 0L, 20L);
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, ActionBar::tick, 0L, 20L);
 //        Register handlers
-        new HyperionHandler(this);
-        new GyrokineticWandHandler(this);
-        new TerminatorHandler(this);
-        new GrapplingHookHandler(this);
-        new SheepHandler(this);
-        new LaserGunHandler(this);
-        new BombDetonatorHandler(this);
-        new SpidersBootsHandler(this);
-        new PortalGunHandler(this);
+//        new HyperionHandler(this);
+//        new GyrokineticWandHandler(this);
+//        new TerminatorHandler(this);
+//        new GrapplingHookHandler(this);
+//        new SheepHandler(this);
+//        new LaserGunHandler(this);
+//        new BombDetonatorHandler(this);
+//        new SpidersBootsHandler(this);
+//        new PortalGunHandler(this);
 
         new HealthHandler(this);
         new LandProtection(this);
@@ -118,6 +117,18 @@ public final class SBSandbox extends JavaPlugin {
         new ChatHandler(this);
 
         new JasonSword();
+        new Hyperion();
+        new BombDetonator();
+        new GloriousArmor.GloriousHelmet();
+        new GloriousArmor.GloriousChestplate();
+        new GloriousArmor.GloriousLeggings();
+        new GloriousArmor.GloriousBoots();
+        new GrapplingHook();
+        new GyrokineticWand();
+        new LaserGun();
+        new PortalGun();
+        new Sheep();
+        new Terminator();
 
 
 //        Register commands

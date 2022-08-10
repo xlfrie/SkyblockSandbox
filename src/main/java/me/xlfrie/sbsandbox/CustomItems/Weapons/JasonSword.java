@@ -8,6 +8,8 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.HashMap;
+
 public class JasonSword extends CustomItemBase {
     @Override
     public String getId() {
@@ -20,13 +22,30 @@ public class JasonSword extends CustomItemBase {
     }
 
     @Override
-    public int cooldownDelay() {
+    public double cooldownDelay() {
         return 10;
+    }
+
+    @Override
+    public boolean isFree() {
+        return false;
     }
 
     @Override
     public Material getMaterial() {
         return Material.GOLDEN_AXE;
+    }
+
+    private HashMap<String, Object> _itemData = new HashMap<>() {{
+        put("manaCost", 100);
+        put("abilityName", "Jason!");
+        put("health", 100);
+        put("intelligence", 1000);
+    }};
+
+    @Override
+    public HashMap<String, Object> itemData() {
+        return _itemData;
     }
 
     @EventHandler
