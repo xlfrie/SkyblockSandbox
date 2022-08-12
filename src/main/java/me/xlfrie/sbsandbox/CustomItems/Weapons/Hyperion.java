@@ -86,7 +86,7 @@ public class Hyperion extends CustomItemBase {
 //              Damage engine
         List<Entity> toDamage = player.getNearbyEntities(6, 6, 6);
         for (Entity entity : toDamage) {
-            if (entity instanceof Damageable) ((Damageable) entity).damage(200, player);
+            if (entity instanceof Damageable) ((Damageable) entity).damage(50, player);
             else if (entity instanceof Item) entity.remove();
         }
 //              Particles, shield

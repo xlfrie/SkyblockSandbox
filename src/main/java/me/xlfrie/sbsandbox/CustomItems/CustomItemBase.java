@@ -17,7 +17,7 @@ import java.util.UUID;
 
 public abstract class CustomItemBase implements Listener {
 
-    private HashMap<UUID, HashMap<String, Long>> cooldowns = new HashMap<>();
+    public HashMap<UUID, HashMap<String, Long>> cooldowns = new HashMap<>();
 
     public abstract String getId();
 

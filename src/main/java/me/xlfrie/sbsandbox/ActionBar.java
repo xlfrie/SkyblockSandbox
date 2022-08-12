@@ -13,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.UUID;
 
 public final class ActionBar {
@@ -49,13 +50,16 @@ public final class ActionBar {
         ItemStack item = player.getInventory().getItemInMainHand();
         EntityEquipment equipment = player.getEquipment();
         for (ItemStack armorContent : equipment.getArmorContents()) {
-            if (armorContent != null) {
+            if (armorContent != null && armorContent.getItemMeta().getPersistentDataContainer().has(new NamespacedKey(SBSandbox.getInstance(), "sandbox-id"), PersistentDataType.STRING)) {
                 calculatedMaxMana += (int) ItemUtils.getItemClass(armorContent.getItemMeta().getPersistentDataContainer().get(new NamespacedKey(SBSandbox.getInstance(), "sandbox-id"), PersistentDataType.STRING)).itemData().get("intelligence");
             }
         }
-        if (item.hasItemMeta() && item.getItemMeta().getPersistentDataContainer().has(new NamespacedKey(SBSandbox.getInstance(), "sandbox-id"), PersistentDataType.STRING)) {
+        if (item.hasItemMeta() && Objects.requireNonNull(item.getItemMeta()).getPersistentDataContainer().has(new NamespacedKey(SBSandbox.getInstance(), "sandbox-id"), PersistentDataType.STRING)) {
             calculatedMaxMana += (int) ItemUtils.getItemClass(item.getItemMeta().getPersistentDataContainer().get(new NamespacedKey(SBSandbox.getInstance(), "sandbox-id"), PersistentDataType.STRING)).itemData().get("intelligence");
         }
+        player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue((int) plStats.get(player.getUniqueId()).get("maxHealth"));
+        int regenHealth = (int) (player.getHealth() + Math.floor(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() * 0.01 + 1.5 * 1.2));
+        player.setHealth(regenHealth > player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() ? player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() : regenHealth);
         plStats.get(player.getUniqueId()).put("maxMana", calculatedMaxMana);
     }
 

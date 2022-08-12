@@ -92,7 +92,7 @@ public final class SBSandbox extends JavaPlugin {
                 npc.spawn(player, true);
             }
         }
-        Bukkit.getScheduler().runTaskTimerAsynchronously(this, ActionBar::tick, 0L, 20L);
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, ActionBar::tick, 0L, 40L);
 //        Register handlers
 //        new HyperionHandler(this);
 //        new GyrokineticWandHandler(this);
@@ -129,6 +129,7 @@ public final class SBSandbox extends JavaPlugin {
         new PortalGun();
         new Sheep();
         new Terminator();
+        new SoulWhip();
 
 
 //        Register commands
