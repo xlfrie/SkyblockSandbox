@@ -3,6 +3,7 @@ package me.xlfrie.sbsandbox.CustomItems.Weapons;
 import me.xlfrie.sbsandbox.CustomItems.CustomItemBase;
 import me.xlfrie.sbsandbox.SBSandbox;
 import org.bukkit.*;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
@@ -80,7 +81,9 @@ public class SoulWhip extends CustomItemBase {
                     damageLoc.setY(p2.getY()+2);
                     for (Entity nearbyEntity : player.getWorld().getNearbyEntities(damageLoc, 1, 1, 1)) {
                         if (nearbyEntity instanceof Damageable && nearbyEntity.getUniqueId() != player.getUniqueId() && !hitBefore.contains(nearbyEntity.getUniqueId())) {
-                            ((Damageable) nearbyEntity).damage(10, player);
+                            ((Damageable) nearbyEntity).damage(5, player);
+                            double heal = player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue() * 0.1;
+                            player.setHealth(Math.min((player.getHealth() + heal), player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()));
                             hitBefore.add(nearbyEntity.getUniqueId());
                         }
                     }
