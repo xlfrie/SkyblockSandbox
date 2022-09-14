@@ -4,7 +4,6 @@ main: me.xlfrie.sbsandbox.SBSandbox
 api-version: 1.19
 authors: [ XLFrie ]
 description: Skyblock sandbox scuffed edition.
-depend: [ProtocolLib]
 commands:
   giveitem:
     description: Give custom item.

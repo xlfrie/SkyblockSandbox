@@ -1,8 +1,12 @@
 package me.xlfrie.sbsandbox;
 
+import io.netty.channel.*;
+import me.xlfrie.sbsandbox.Events.PacketEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
+import org.bukkit.craftbukkit.v1_19_R1.entity.CraftPlayer;
+import org.bukkit.entity.Player;
 
 import java.io.*;
 
@@ -45,5 +49,33 @@ public final class Utils {
 
         World bukkitWorld = Bukkit.createWorld(new WorldCreator(sandboxFolder.getName()));
         bukkitWorld.setAutoSave(false);
+    }
+
+    public static void injectPacket(Player player) {
+        ChannelDuplexHandler channelDuplexHandler = new ChannelDuplexHandler() {
+            @Override
+            public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+                Bukkit.getScheduler().runTask(SBSandbox.getInstance(), () -> Bukkit.getServer().getPluginManager().callEvent(new PacketEvent(msg, PacketEvent.direction.INBOUND, ctx)));
+//                Bukkit.getServer().getPluginManager().callEvent(new PacketEvent(msg, PacketEvent.direction.INBOUND));
+                super.channelRead(ctx, msg);
+            }
+
+            @Override
+            public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
+//                Bukkit.getServer().getPluginManager().callEvent(new PacketEvent(msg, PacketEvent.direction.OUTBOUND));
+                super.write(ctx, msg, promise);
+            }
+
+        };
+        ChannelPipeline pipeline = ((CraftPlayer) player).getHandle().connection.connection.channel.pipeline();
+        pipeline.addBefore("packet_handler", player.getUniqueId().toString(), channelDuplexHandler);
+    }
+
+    public static void uninjectPacket(Player player) {
+        Channel channel = ((CraftPlayer) player).getHandle().connection.connection.channel;
+        channel.eventLoop().submit(() -> {
+            channel.pipeline().remove(player.getUniqueId().toString());
+            return null;
+        });
     }
 }

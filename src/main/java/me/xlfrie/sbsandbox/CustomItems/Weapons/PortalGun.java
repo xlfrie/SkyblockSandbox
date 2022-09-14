@@ -17,6 +17,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerRegisterChannelEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
@@ -149,5 +150,10 @@ public class PortalGun extends CustomItemBase {
                 event.getPlayer().teleport(portals.get(event.getPlayer().getUniqueId()).getA().getA().clone().add(portals.get(event.getPlayer().getUniqueId()).getA().getA().getDirection().multiply(1.5)).add(0, 0, 0.5));
             }
         }
+    }
+
+    @EventHandler
+    public void channel(PlayerRegisterChannelEvent event) {
+
     }
 }

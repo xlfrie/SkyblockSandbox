@@ -1,34 +1,23 @@
 package me.xlfrie.sbsandbox;
 
-import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.ProtocolManager;
-import com.comphenix.protocol.events.PacketAdapter;
-import com.comphenix.protocol.events.PacketContainer;
-import com.comphenix.protocol.events.PacketEvent;
-import com.comphenix.protocol.wrappers.EnumWrappers;
 import me.xlfrie.sbsandbox.CustomItems.Weapons.Terminator;
 import me.xlfrie.sbsandbox.CustomItems.Weapons.*;
 import me.xlfrie.sbsandbox.Handlers.*;
 import me.xlfrie.sbsandbox.Handlers.NPCs.MenuHandler;
 import me.xlfrie.sbsandbox.Handlers.NPCs.NPCHandler;
 import me.xlfrie.sbsandbox.Handlers.NPCs.NPCRotationHandler;
-import me.xlfrie.sbsandbox.Interactions.player;
+import me.xlfrie.sbsandbox.Handlers.Packets.NpcClick;
 import me.xlfrie.sbsandbox.Mobs.CustomNpc;
 import me.xlfrie.sbsandbox.commands.*;
-import net.minecraft.network.protocol.game.*;
+import net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import net.minecraft.util.Tuple;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.craftbukkit.v1_19_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_19_R1.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_19_R1.entity.CraftPlayer;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -120,6 +109,8 @@ public final class SBSandbox extends JavaPlugin {
         new DeathMessageHandler(this);
         new FancyExplosionHandler(this);
         new ChatHandler(this);
+        new PacketHandler(this);
+        new NpcClick(this);
 
         new JasonSword();
         new Hyperion();
@@ -148,6 +139,11 @@ public final class SBSandbox extends JavaPlugin {
         getCommand("rank").setExecutor(new RankCommand());
         getCommand("giveitem").setExecutor(new GiveItemCommand());
 
+// Inject into channel pipeline
+        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+            Utils.injectPacket(onlinePlayer);
+        }
+
         if (Bukkit.getWorlds().size() < 2) {
             for (File file : Bukkit.getWorld("world").getWorldFolder().getParentFile().listFiles()) {
                 if (file != null && file.isDirectory() && file.getName().startsWith("Stinky_active_")) {
@@ -160,52 +156,6 @@ public final class SBSandbox extends JavaPlugin {
             }
             Utils.sandboxWorld();
         }
-
-        ProtocolManager manager = ProtocolLibrary.getProtocolManager();
-
-        manager.addPacketListener(new PacketAdapter(this, PacketType.Play.Server.SPAWN_ENTITY) {
-            @Override
-            public void onPacketSending(PacketEvent event) {
-                if (((ClientboundAddEntityPacket) event.getPacket().getHandle()).getType().equals(EntityType.ZOMBIE)) {
-                    ClientboundAddEntityPacket modPack = ((ClientboundAddEntityPacket) event.getPacket().deepClone().getHandle());
-                    CraftEntity entity = ((CraftWorld) event.getPlayer().getWorld()).getHandle().getEntity(modPack.getUUID()).getBukkitEntity();
-                    ServerPlayer serverPlayer = StonkCommand.integerServerPlayerHashMap.get(entity.getEntityId());
-                    if (serverPlayer == null) return;
-                    serverPlayer.setHealth((float) ((LivingEntity) entity).getHealth());
-                    serverPlayer.setPos(entity.getLocation().getX(), entity.getLocation().getY(), entity.getLocation().getZ());
-                    ClientboundAddPlayerPacket playerPacket = new ClientboundAddPlayerPacket(serverPlayer);
-                    ClientboundSetEntityDataPacket playerInfoPacket = new ClientboundSetEntityDataPacket(serverPlayer.getId(), serverPlayer.getEntityData(), true);
-                    ((CraftPlayer) event.getPlayer()).getHandle().connection.send(playerPacket);
-                    event.setPacket(PacketContainer.fromPacket(playerInfoPacket));
-                }
-            }
-        });
-
-        manager.addPacketListener(new PacketAdapter(this, PacketType.Play.Client.USE_ENTITY) {
-            @Override
-            public void onPacketReceiving(PacketEvent event) {
-                PacketContainer packet = event.getPacket();
-                int entityID = packet.getIntegers().read(0);
-                for (Map.Entry<Integer, Tuple<CustomNpc, ServerPlayer>> integerTupleEntry : npcClazz.entrySet()) {
-                    if (integerTupleEntry.getKey() != entityID) continue;
-                    EnumWrappers.EntityUseAction action = packet.getEnumEntityUseActions().read(0).getAction();
-                    if ((action == EnumWrappers.EntityUseAction.INTERACT && packet.getEnumEntityUseActions().read(0).getHand() == EnumWrappers.Hand.MAIN_HAND) || action == EnumWrappers.EntityUseAction.ATTACK) {
-                        switch (npcClazz.get(entityID).getA()) {
-                            case XLFRIE:
-                                Bukkit.getScheduler().runTask(plugin, () -> player.xlfrieMenu(event.getPlayer()));
-                                break;
-                            case HYPIXEL:
-                                Bukkit.getScheduler().runTask(plugin, () -> player.hypixelMenu(event.getPlayer()));
-                                break;
-                            case LTT:
-                            case LTT2:
-                                Bukkit.getScheduler().runTask(plugin, () -> player.bodyguard(event.getPlayer()));
-                                break;
-                        }
-                    }
-                }
-            }
-        });
     }
 
     @Override
@@ -222,6 +172,9 @@ public final class SBSandbox extends JavaPlugin {
         }
         npcs.clear();
         saveConfig();
+        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+            Utils.uninjectPacket(onlinePlayer);
+        }
         Bukkit.getLogger().info("Shutting down");
     }
 

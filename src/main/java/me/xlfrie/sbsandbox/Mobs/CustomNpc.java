@@ -3,6 +3,7 @@ package me.xlfrie.sbsandbox.Mobs;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.mojang.datafixers.util.Pair;
+import me.xlfrie.sbsandbox.Interactions.player;
 import me.xlfrie.sbsandbox.SBSandbox;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
@@ -42,7 +43,8 @@ public enum CustomNpc {
             -0.5,
             0,
             -0.5,
-            "Stinky"),
+            "Stinky",
+            player::hypixelMenu),
     LTT(color("&6Bodyguard"),
             "mP8WAGFyhORY92DsAMWqYCWCAf/dU9mFQ5OoM2ZjAWOayiT5VdyUU5QiU3HAMot7Dj2e5beIAhGPRw7FkyfI4npCMJ/9CtK4lBZbttImyLROmsftJhnd4oHoqfl+z32R6TGXvN1u4hGD9Kl8D4JlcqM9OB/wbWTJA+OY3dL5wIr3mu/vW0T3Zj3o7MBE+KkMXLRhCDW911YwAXBQ5gVeuvv0/YqVCxpnzpgiJZcaFL4dvp0+zWBy+N9bBTZ0gPDwNgKwh8tEOjBcXLXW/8OdltHHRKWqif2etAtId/krg5h/Uz+q++Fld1TwXL5QWahBMSxhVYC9JOlYqNHoqmJ8dh2lHHGzztoc1Ch+CdITGeQQyMcRiCGhi/wTlbjBQvqCNG6gd0PwmqqWANsV+7hgVjAVRuiZWo2a6kxZKYQotywkQ+xJyoKTS/+cGU2Wv6FwYseXM7Ah3Yz09jtFw0Bb3+2mXjjUrZPIs3ItDF5DogyFG1fbbv+dKOjLiEp/eeBnVxmptUvo+L48S6aMUcx+4nsSbaFtkpD/uvOZzTOV3Tzjei3VPN9DTHNZLuBAIl2FhhgoUEMBTL71vf3tBPG8QYKZtQBAji6SiHMjbnDwLReUnBTLeZ0SVTaOVCydZWYXx1OgHD6YCy+1mWv3ZXfeovUWdO316VJ+E1vDGhNm3WU=",
             "ewogICJ0aW1lc3RhbXAiIDogMTY1OTU0NDc2NzcwMywKICAicHJvZmlsZUlkIiA6ICI4NGFkNDI5NzhmMjI0MDQzODkxZWY4Zjg2ZDBiYzhmOCIsCiAgInByb2ZpbGVOYW1lIiA6ICJNck92YWwiLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzY5YmQ2ODkwODExYTlmNzdkOGIzZGM0NTk1NDdlNmE1MWU3MGUyZGZiOGY3NjgzYzIyOGIxZmExMjNkZGM5YyIKICAgIH0sCiAgICAiQ0FQRSIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjM0MGMwZTAzZGQyNGExMWIxNWE4YjMzYzJhN2U5ZTMyYWJiMjA1MWIyNDgxZDBiYTdkZWZkNjM1Y2E3YTkzMyIKICAgIH0KICB9Cn0=",
@@ -50,7 +52,8 @@ public enum CustomNpc {
             -2.5,
             0,
             -1,
-            "Stinky"),
+            "Stinky",
+            player::bodyguard),
     LTT2(color("&6Bodyguard"),
             "mP8WAGFyhORY92DsAMWqYCWCAf/dU9mFQ5OoM2ZjAWOayiT5VdyUU5QiU3HAMot7Dj2e5beIAhGPRw7FkyfI4npCMJ/9CtK4lBZbttImyLROmsftJhnd4oHoqfl+z32R6TGXvN1u4hGD9Kl8D4JlcqM9OB/wbWTJA+OY3dL5wIr3mu/vW0T3Zj3o7MBE+KkMXLRhCDW911YwAXBQ5gVeuvv0/YqVCxpnzpgiJZcaFL4dvp0+zWBy+N9bBTZ0gPDwNgKwh8tEOjBcXLXW/8OdltHHRKWqif2etAtId/krg5h/Uz+q++Fld1TwXL5QWahBMSxhVYC9JOlYqNHoqmJ8dh2lHHGzztoc1Ch+CdITGeQQyMcRiCGhi/wTlbjBQvqCNG6gd0PwmqqWANsV+7hgVjAVRuiZWo2a6kxZKYQotywkQ+xJyoKTS/+cGU2Wv6FwYseXM7Ah3Yz09jtFw0Bb3+2mXjjUrZPIs3ItDF5DogyFG1fbbv+dKOjLiEp/eeBnVxmptUvo+L48S6aMUcx+4nsSbaFtkpD/uvOZzTOV3Tzjei3VPN9DTHNZLuBAIl2FhhgoUEMBTL71vf3tBPG8QYKZtQBAji6SiHMjbnDwLReUnBTLeZ0SVTaOVCydZWYXx1OgHD6YCy+1mWv3ZXfeovUWdO316VJ+E1vDGhNm3WU=",
             "ewogICJ0aW1lc3RhbXAiIDogMTY1OTU0NDc2NzcwMywKICAicHJvZmlsZUlkIiA6ICI4NGFkNDI5NzhmMjI0MDQzODkxZWY4Zjg2ZDBiYzhmOCIsCiAgInByb2ZpbGVOYW1lIiA6ICJNck92YWwiLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzY5YmQ2ODkwODExYTlmNzdkOGIzZGM0NTk1NDdlNmE1MWU3MGUyZGZiOGY3NjgzYzIyOGIxZmExMjNkZGM5YyIKICAgIH0sCiAgICAiQ0FQRSIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjM0MGMwZTAzZGQyNGExMWIxNWE4YjMzYzJhN2U5ZTMyYWJiMjA1MWIyNDgxZDBiYTdkZWZkNjM1Y2E3YTkzMyIKICAgIH0KICB9Cn0=",
@@ -58,7 +61,8 @@ public enum CustomNpc {
             1.5,
             0,
             -1,
-            "Stinky"),
+            "Stinky",
+            player::bodyguard),
     XLFRIE(color("&6XLFrie"),
             "d+8i54Ha0srY2mT+UkSlUe3XcH19Vef1iCd8OWupt83nVQQ0xbXJVH0hgxOhZbOql3vyjrfAGNqVZA32/KaX70+K3ee+3KVZmg6pd3MkMAlLaXNejgjL6i6Bl5pTtqPFg0LmESH9plNqM7WD1M2yoPK5srJEtwaapUEZlQtvuyJVjjXP7fx53GspS0dlTv+WDMNzucF0AdjQ8qSJlJmcdxWHyoAaqNN/PbOeqGxNIWw/akixFhJEc9hZHXjrdQ12HYZExRHdyUOCMWOLyBPVSC7oR5Hsxd34F4QSTn0Hk8gkFS9aXfhx8qS4EQUjyhFy6EuoogP0gk3UG5pFUT7oPOJnckcwssrkOJJvO8wEnhgiXdkU+t2YD7rWSOapOXG05++dmzQ3SbRlo1b7WyytGCSoZ28AnDYXhEigh5IowcWr2GtR7hj/oZMbBxlFlVZzWSAYqvPwM9HYraJXZkosYiIxaiWGzmdReVG96cErCcoZe16Ke4GHpWGXyjFlhxmnk77LExSjv0zhKJGUVX7jFbVhO7qO9Wfaut5kzVDSee+BWmOpA6bBJHGpKdC/MhIfeA8tMrGGaROPnWAYyri5R2uJp2BpRQq9jtTP6YRc+Y9aEPL4cSeqobHLIxweGMYqJVNKkN8XZnOksuLuO/2yRTCrs+osdWuWBgmRyZ0scvE=",
             "ewogICJ0aW1lc3RhbXAiIDogMTY1OTQ3OTIxODYxMSwKICAicHJvZmlsZUlkIiA6ICI3MWQ0OGQ4Mjg4MzE0ZmQwYmUxYWE2NzNjY2RhMmY5MiIsCiAgInByb2ZpbGVOYW1lIiA6ICJYTEZyaWUiLAogICJzaWduYXR1cmVSZXF1aXJlZCIgOiB0cnVlLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzBiYmFiZjVkZmRhZTkzYWJlZGUzZmFmMTQ0NjI3ODY3YWEzZWFiMGIxZjFiMWI4YjkyNzIyMmM3ZDhmODUwZiIKICAgIH0KICB9Cn0=",
@@ -66,7 +70,8 @@ public enum CustomNpc {
             -0.5,
             0,
             -0.5,
-            "world");
+            "world",
+            player::xlfrieMenu);
 
     public final String name;
     private final String signature;
@@ -76,8 +81,9 @@ public enum CustomNpc {
     private final double y;
     private final double z;
     public final String world;
+    private final InteractFunc function;
 
-    CustomNpc(String name, String signature, String texture, List<Pair<EquipmentSlot, net.minecraft.world.item.ItemStack>> items, double x, double y, double z, String world) {
+    CustomNpc(String name, String signature, String texture, List<Pair<EquipmentSlot, net.minecraft.world.item.ItemStack>> items, double x, double y, double z, String world, InteractFunc function) {
         this.name = name;
         this.signature = signature;
         this.texture = texture;
@@ -86,6 +92,15 @@ public enum CustomNpc {
         this.y= y;
         this.z = z;
         this.world = world;
+        this.function = function;
+    }
+
+    public interface InteractFunc {
+        void func(Player p);
+    }
+
+    public void interact(Player p) {
+        Bukkit.getScheduler().runTask(SBSandbox.getInstance(), () -> this.function.func(p));
     }
 
     public void spawn(Player p, boolean add) {

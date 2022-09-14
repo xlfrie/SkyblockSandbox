@@ -30,6 +30,7 @@ public class MenuHandler implements Listener {
         switch (event.getView().getTitle()) {
             case "Menu > Items":
                 event.setCancelled(true);
+                
                 if (inventory.getItem(slot) == null) return;
                 ItemStack itemStack = inventory.getItem(slot);
                 ItemMeta meta = itemStack.getItemMeta();

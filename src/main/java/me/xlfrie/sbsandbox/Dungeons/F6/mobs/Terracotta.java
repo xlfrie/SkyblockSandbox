@@ -1,4 +1,4 @@
-package me.xlfrie.sbsandbox.Mobs;
+package me.xlfrie.sbsandbox.Dungeons.F6.mobs;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
@@ -18,16 +18,18 @@ import org.bukkit.craftbukkit.v1_19_R1.CraftWorld;
 
 import java.util.EnumSet;
 
-public class CustomZombie extends Zombie {
-    public CustomZombie(Location loc, Component name) {
+public class Terracotta extends Zombie {
+    public Terracotta(Location loc, Component name) {
         super(EntityType.ZOMBIE, ((CraftWorld) loc.getWorld()).getHandle());
 
+        this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0.65);
+        this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(0.5);
         this.setPos(loc.getX(), loc.getY(), loc.getZ());
         this.setCustomName(name);
         this.goalSelector.removeAllGoals();
         this.targetSelector.removeAllGoals();
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, false));
-        this.goalSelector.addGoal(1, new TerracottaAttack(this, 1.0, true));
+        this.goalSelector.addGoal(1, new TerracottaAttack(this, this.getAttribute(Attributes.MOVEMENT_SPEED).getBaseValue(), true));
         this.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(48);
         this.setSprinting(true);
     }
@@ -84,13 +86,14 @@ public class CustomZombie extends Zombie {
         @Override
         public void tick() {
             if (this.mob.getTarget() == null) return;
-            this.mob.getNavigation().moveTo(this.mob.getTarget(), this.speedModifier);
-            if (this.mob.onGround) {
-                this.mob.getJumpControl().jump();
-            }
-            if(!this.mob.isSprinting()) this.mob.setSprinting(true);
-            this.mob.getLookControl().setLookAt(this.mob.getTarget());
             this.checkAndPerformAttack(this.mob.getTarget(), this.mob.distanceToSqr(this.mob.getTarget().getX(), this.mob.getTarget().getY(), this.mob.getTarget().getZ()));
+            if (this.mob.onGround && this.mob.distanceToSqr(this.mob.getTarget().getX(), this.mob.getTarget().getY(), this.mob.getTarget().getZ()) >= 7) {
+                this.mob.getJumpControl().jump();
+                this.mob.getNavigation().moveTo(this.mob.getTarget(), this.mob.getAttribute(Attributes.MOVEMENT_SPEED).getBaseValue());
+            } else if (this.mob.distanceToSqr(this.mob.getTarget().getX(), this.mob.getTarget().getY(), this.mob.getTarget().getZ()) < 7)
+                this.mob.getNavigation().moveTo(this.mob.getTarget(), this.mob.getAttribute(Attributes.MOVEMENT_SPEED).getBaseValue() * 0.75);
+            if (!this.mob.isSprinting()) this.mob.setSprinting(true);
+            this.mob.getLookControl().setLookAt(this.mob.getTarget());
             this.ticksUntilNextAttack++;
         }
 
