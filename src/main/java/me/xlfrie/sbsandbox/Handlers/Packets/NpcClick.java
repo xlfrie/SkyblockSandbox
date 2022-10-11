@@ -22,7 +22,10 @@ public class NpcClick implements Listener {
             Field field = serverboundInteractPacket.getClass().getDeclaredField("a");
             field.setAccessible(true);
             int eid = field.getInt(serverboundInteractPacket);
-            SBSandbox.npcClazz.get(eid).getA().interact(Bukkit.getPlayer(UUID.fromString(event.getCtx().name())));
+
+            if (SBSandbox.npcClazz.get(eid) == null) {
+                Bukkit.getLogger().info("Stinky");
+            } else SBSandbox.npcClazz.get(eid).getA().interact(Bukkit.getPlayer(UUID.fromString(event.getCtx().name())));
         }
     }
 }

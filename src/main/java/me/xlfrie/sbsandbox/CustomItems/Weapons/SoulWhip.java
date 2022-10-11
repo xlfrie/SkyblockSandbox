@@ -40,7 +40,6 @@ public class SoulWhip extends CustomItemBase {
 
     @Override
     public void abilityRegister(Player player) {
-        if (!player.hasPermission("owner"))
             cooldowns.get(player.getUniqueId()).put(this.getId(), System.currentTimeMillis());
     }
 
@@ -56,8 +55,8 @@ public class SoulWhip extends CustomItemBase {
 
     @EventHandler
     public void cast(PlayerFishEvent event) {
+        if (isItem(event.getPlayer().getInventory().getItemInMainHand(), event.getPlayer())) event.setCancelled(true);
         if (canUse(event.getPlayer().getInventory().getItemInMainHand(), event.getPlayer())) return;
-        event.setCancelled(true);
         int height = 1;
         int dist = 15;
         Player player = event.getPlayer();

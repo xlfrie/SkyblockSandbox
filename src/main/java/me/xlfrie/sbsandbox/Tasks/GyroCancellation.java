@@ -47,7 +47,7 @@ public class GyroCancellation extends BukkitRunnable {
         stand.setInvisible(true);
         stand.setInvulnerable(true);
 
-        FallingBlock fallingBlock = player.getWorld().spawnFallingBlock(new Location(player.getWorld(), rift.toLocation(player.getWorld()).getX(), (double) -66, rift.toLocation(player.getWorld()).getZ()), material.createBlockData());
+        FallingBlock fallingBlock = player.getWorld().spawnFallingBlock(new Location(player.getWorld(), rift.toLocation(player.getWorld()).getX(), -66, rift.toLocation(player.getWorld()).getZ()), material.createBlockData());
         fallingBlock.setDropItem(false);
         stand.addPassenger(fallingBlock);
         stand.setVelocity(new Vector(0, 0.3, 0));
@@ -89,10 +89,10 @@ public class GyroCancellation extends BukkitRunnable {
     @Override
     public void run() {
         count--;
-        if ((count / 2.5)  == (double) (int) count / 2.5 && (int) count / 2.5 != 0) {
+        if ((count / 2.5)  == (double) count / 2.5 && count / 2.5 != 0) {
             for (double i = 0.0; i < 360.0; i += 0.1) {
                 double angle = i * Math.PI / 180;
-                Location loc = new Location(player.getWorld(), Math.round((int) count / 2.5 * Math.sin(angle) * 2) / 2.0, -0.9, Math.round((int) count / 2.5 * Math.cos(angle) * 2) / 2.0);
+                Location loc = new Location(player.getWorld(), Math.round(count / 2.5 * Math.sin(angle) * 2) / 2.0, -0.9, Math.round(count / 2.5 * Math.cos(angle) * 2) / 2.0);
                 if (!usedLocs.contains(center(loc))) {
                     usedLocs.add(center(loc));
                     spawnBlock(center(loc));

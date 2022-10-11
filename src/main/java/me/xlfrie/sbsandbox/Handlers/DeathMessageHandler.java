@@ -1,6 +1,5 @@
 package me.xlfrie.sbsandbox.Handlers;
 
-import me.xlfrie.sbsandbox.CustomItem;
 import me.xlfrie.sbsandbox.SBSandbox;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -9,8 +8,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class DeathMessageHandler implements Listener {
     public DeathMessageHandler(SBSandbox plugin) {
@@ -45,21 +42,8 @@ public class DeathMessageHandler implements Listener {
                 deathMsg += "forgot they were a fish.";
                 break;
             case ENTITY_ATTACK:
-                ItemStack item = killer.getInventory().getItemInMainHand();
-                ItemMeta m = item.getItemMeta();
-                if (m == null) {
                     deathMsg += "got ez'd on by " + killer.getDisplayName();
                     break;
-                }
-                if (m.hasCustomModelData()) {
-                    for (CustomItem value : CustomItem.values()) {
-                        if (m.getCustomModelData() == value.id) {
-                            deathMsg += value.getDeathMsg() + " " + killer.getDisplayName();
-                            break;
-                        }
-                    }
-                } else deathMsg += "got ez'd on by " + killer.getDisplayName();
-                break;
             case ENTITY_EXPLOSION:
                 deathMsg += "was blasted to Uranus by " + killer.getDisplayName();
                 break;

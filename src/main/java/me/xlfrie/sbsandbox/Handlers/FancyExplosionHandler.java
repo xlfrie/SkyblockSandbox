@@ -15,13 +15,14 @@ public class FancyExplosionHandler implements Listener {
     public FancyExplosionHandler(SBSandbox plugin) {
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
+    private double chance = 5;
 
     @EventHandler
     public void explosion(EntityExplodeEvent event) {
         if (!(event.getEntity() instanceof Illusioner)) return;
         Location loc = event.getLocation();
         for (Block block : event.blockList()) {
-            if (Math.random() >= 0.05) continue;
+            if (Math.random() >= chance * 0.01) continue;
             Vector vec = block.getLocation().toVector().subtract(loc.toVector()).multiply(Math.random() / 2);
             vec.setY(Math.random() * 2);
             FallingBlock fb = loc.getWorld().spawnFallingBlock(block.getLocation().add(0, 1, 0), block.getBlockData());

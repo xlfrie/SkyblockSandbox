@@ -14,6 +14,7 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 public abstract class CustomItemBase implements Listener {
 
@@ -33,6 +34,10 @@ public abstract class CustomItemBase implements Listener {
         return "§cYou can use this ability in %d";
     }
 
+    public Pattern getBlackListPattern() {
+        return Pattern.compile("world");
+    }
+
     public boolean isFree() {
         return true;
     }
@@ -45,7 +50,11 @@ public abstract class CustomItemBase implements Listener {
     public boolean canUse(ItemStack item, Player player) {
         if (item == null) return true;
         NamespacedKey key = new NamespacedKey(SBSandbox.getInstance(), "sandbox-id");
-        boolean buf = Objects.equals(item.getItemMeta().getPersistentDataContainer().get(key, PersistentDataType.STRING), this.getId()) && player.getWorld().getName().startsWith("Stinky");
+        boolean buf = Objects.equals(item.getItemMeta().getPersistentDataContainer().get(key, PersistentDataType.STRING), this.getId());
+        if (this.getBlackListPattern().matcher(player.getWorld().getName()).find() && buf) {
+            player.sendMessage("§cYou cannot use this in this world!");
+            buf = false;
+        }
         if (buf && cooldowns.containsKey(player.getUniqueId()) && cooldowns.get(player.getUniqueId()).containsKey(this.getId()) && cooldowns.get(player.getUniqueId()).get(this.getId()) + this.cooldownDelay() * 1000L >= System.currentTimeMillis()) {
             buf = false;
             player.sendMessage("§cYou can use this ability in " + Math.round((cooldowns.get(player.getUniqueId()).get(this.getId()) + this.cooldownDelay() * 1000L - System.currentTimeMillis()) / 1000));
@@ -59,8 +68,13 @@ public abstract class CustomItemBase implements Listener {
         return !buf;
     }
 
+    public boolean isItem(ItemStack itemStack, Player player) {
+        NamespacedKey key = new NamespacedKey(SBSandbox.getInstance(), "sandbox-id");
+        return Objects.equals(itemStack.getItemMeta().getPersistentDataContainer().get(key, PersistentDataType.STRING), this.getId()) && player.getWorld().getName().startsWith("Stinky");
+    }
+
     public void abilityRegister(Player player) {
-        if (!player.hasPermission("owner"))
+//        if (!player.hasPermission("owner"))
             cooldowns.get(player.getUniqueId()).put(this.getId(), System.currentTimeMillis());
         ActionBar.setMessageBuf(SBSandbox.color("&b-" + this.itemData().get("manaCost") + " Mana (&6" + this.itemData().get("abilityName") + "&b)"), player);
         ActionBar.useMana((Integer) this.itemData().get("manaCost"), player);

@@ -55,8 +55,8 @@ public final class Utils {
         ChannelDuplexHandler channelDuplexHandler = new ChannelDuplexHandler() {
             @Override
             public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-                Bukkit.getScheduler().runTask(SBSandbox.getInstance(), () -> Bukkit.getServer().getPluginManager().callEvent(new PacketEvent(msg, PacketEvent.direction.INBOUND, ctx)));
-//                Bukkit.getServer().getPluginManager().callEvent(new PacketEvent(msg, PacketEvent.direction.INBOUND));
+                if (SBSandbox.getInstance().isEnabled())
+                    Bukkit.getScheduler().runTask(SBSandbox.getInstance(), () -> Bukkit.getServer().getPluginManager().callEvent(new PacketEvent(msg, PacketEvent.direction.INBOUND, ctx)));
                 super.channelRead(ctx, msg);
             }
 

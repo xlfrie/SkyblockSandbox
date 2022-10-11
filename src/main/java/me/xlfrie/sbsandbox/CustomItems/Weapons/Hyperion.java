@@ -7,10 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.entity.Damageable;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Item;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
@@ -86,7 +83,7 @@ public class Hyperion extends CustomItemBase {
 //              Damage engine
         List<Entity> toDamage = player.getNearbyEntities(6, 6, 6);
         for (Entity entity : toDamage) {
-            if (entity instanceof Damageable) ((Damageable) entity).damage(50, player);
+            if (entity instanceof Damageable && !(entity instanceof ArmorStand)) ((Damageable) entity).damage(50, player);
             else if (entity instanceof Item) entity.remove();
         }
 //              Particles, shield
