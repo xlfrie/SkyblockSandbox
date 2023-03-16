@@ -1,19 +1,20 @@
 package me.xlfrie.sbsandbox.Handlers.NPCs;
 
+import me.xlfrie.sbsandbox.Mobs.CustomNpc;
 import me.xlfrie.sbsandbox.SBSandbox;
-import net.minecraft.network.protocol.game.ClientboundPlayerInfoPacket;
+import net.minecraft.network.protocol.game.ClientboundPlayerInfoRemovePacket;
 import net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_19_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_19_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import me.xlfrie.sbsandbox.Mobs.CustomNpc;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.UUID;
 
@@ -41,7 +42,7 @@ public class NPCHandler implements Listener {
             if (serverPlayerUUIDEntry.getValue() == player.getUniqueId()) {
                 ServerPlayer npc = serverPlayerUUIDEntry.getKey();
                 ServerGamePacketListenerImpl ps = ((CraftPlayer) player).getHandle().connection;
-                ps.send(new ClientboundPlayerInfoPacket(ClientboundPlayerInfoPacket.Action.REMOVE_PLAYER, npc));
+                ps.send(new ClientboundPlayerInfoRemovePacket(Collections.singletonList(npc.getUUID())));
                 ps.send(new ClientboundRemoveEntitiesPacket(npc.getId()));
                 ps.send(new ClientboundRemoveEntitiesPacket(clickMeStands.get(npc.getId()).getId()));
             }

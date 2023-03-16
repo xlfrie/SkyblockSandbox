@@ -17,7 +17,7 @@ import net.minecraft.world.entity.decoration.ArmorStand;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.craftbukkit.v1_19_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_19_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -111,6 +111,7 @@ public final class SBSandbox extends JavaPlugin {
         new ChatHandler(this);
         new PacketHandler(this);
         new NpcClick(this);
+        new MiscHandler(this);
 
         new JasonSword();
         new Hyperion();
@@ -121,6 +122,7 @@ public final class SBSandbox extends JavaPlugin {
         new GloriousArmor.GloriousBoots();
         new GrapplingHook();
         new GyrokineticWand();
+        new GyrokineticWand2();
         new LaserGun();
         new PortalGun();
         new Sheep();

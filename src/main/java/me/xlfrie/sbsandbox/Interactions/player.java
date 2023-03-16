@@ -2,6 +2,7 @@ package me.xlfrie.sbsandbox.Interactions;
 
 import me.xlfrie.sbsandbox.CustomItems.CustomItemBase;
 import me.xlfrie.sbsandbox.CustomItems.ItemUtils;
+import net.minecraft.network.protocol.game.ServerboundInteractPacket;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -18,7 +19,7 @@ import java.util.Objects;
 import static me.xlfrie.sbsandbox.SBSandbox.color;
 
 public class player {
-    public static void hypixelMenu(Player player) {
+    public static void hypixelMenu(Player player, ServerboundInteractPacket dat) {
         int size = 54;
         Inventory menu = Bukkit.createInventory(null, size, "Menu > Items");
         for (int i = 0; i < size; i++) {
@@ -38,7 +39,7 @@ public class player {
         player.openInventory(menu);
     }
 
-    public static void xlfrieMenu(Player player) {
+    public static void xlfrieMenu(Player player, ServerboundInteractPacket dat) {
         Inventory menu = Bukkit.createInventory(null, 27, "Menu > Warps");
         ItemStack item = new ItemStack(Material.SAND, 1);
         ItemMeta m = item.getItemMeta();
@@ -78,7 +79,7 @@ public class player {
         player.openInventory(menu);
     }
 
-    public static void bodyguard(Player player) {
+    public static void bodyguard(Player player, ServerboundInteractPacket dat) {
         player.sendMessage(color("&e[NPC] &6Bodyguard&f: Bah humbug!"));
         player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 10, 0.65F);
     }

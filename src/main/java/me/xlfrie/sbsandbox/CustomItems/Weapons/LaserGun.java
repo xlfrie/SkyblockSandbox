@@ -59,6 +59,7 @@ public class LaserGun extends CustomItemBase {
         Player player = event.getPlayer();
         Action action = event.getAction();
         ItemStack item = event.getItem();
+        player.getLocation().getBlockX();
 
         if (!action.equals(Action.RIGHT_CLICK_AIR) && !action.equals(Action.RIGHT_CLICK_BLOCK)) return;
         if (canUse(item, player)) {

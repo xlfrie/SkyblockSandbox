@@ -5,7 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attributable;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.craftbukkit.v1_19_R1.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_19_R2.entity.CraftEntity;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -32,7 +32,7 @@ public class HealthHandler implements Listener {
         if (!(e instanceof Damageable) || e instanceof ArmorStand || !((CraftEntity) e).getHandle().isAttackable() || (e.getCustomName() != null && Objects.equals(e.getCustomName(), "jeb_")) || Objects.equals(e.getCustomName(), "Sleeping Golem"))
             return;
         e.setCustomNameVisible(true);
-        e.setCustomName(e.getName() + " §c❤ " + ((Damageable) e).getHealth() + "/" + Objects.requireNonNull(((Attributable) e).getAttribute(Attribute.GENERIC_MAX_HEALTH)).getValue() + "");
+        e.setCustomName("§c" + e.getName() + "§a " + ((Damageable) e).getHealth() + "§f/§a" + Objects.requireNonNull(((Attributable) e).getAttribute(Attribute.GENERIC_MAX_HEALTH)).getValue() + "§c❤");
     }
 
     @EventHandler
@@ -41,7 +41,7 @@ public class HealthHandler implements Listener {
         if (!(e instanceof Damageable) || e instanceof ArmorStand || e.getName().equals("jeb_")) return;
         ((LivingEntity) e).setMaximumNoDamageTicks(0);
         e.setCustomNameVisible(true);
-        e.setCustomName(e.getName().split(" §c❤")[0] + " §c❤ " + new DecimalFormat("#,###.00").format(Math.round((((Damageable) e).getHealth() - event.getFinalDamage()) * 100.0) / 100.0) + "/" + new DecimalFormat("#,###.00").format(Objects.requireNonNull(((Attributable) e).getAttribute(Attribute.GENERIC_MAX_HEALTH)).getValue()));
+        e.setCustomName(e.getName().split("§a ")[0] + "§a " + new DecimalFormat("#,###.00").format(Math.round((((Damageable) e).getHealth() - event.getFinalDamage()) * 100.0) / 100.0) + "§f/§a" + new DecimalFormat("#,###.00").format(Objects.requireNonNull(((Attributable) e).getAttribute(Attribute.GENERIC_MAX_HEALTH)).getValue()) + "§c❤");
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)

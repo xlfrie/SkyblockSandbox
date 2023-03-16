@@ -14,15 +14,15 @@ import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_19_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_19_R2.CraftWorld;
 import org.bukkit.event.entity.EntityCombustByEntityEvent;
 
 public class ErroneousSoul extends Creeper implements CustomBossTemplate {
     public ErroneousSoul(Location location) {
         super(EntityType.CREEPER, ((CraftWorld) location.getWorld()).getHandle());
         this.setPos(location.getX(), location.getY(), location.getZ());
-        this.goalSelector.removeAllGoals();
-        this.targetSelector.removeAllGoals();
+        this.goalSelector.getAvailableGoals().forEach((goal) -> this.goalSelector.removeGoal(goal));
+        this.targetSelector.getAvailableGoals().forEach((goal) -> this.targetSelector.removeGoal(goal));
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Warden.class, true));
         this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 2, true));

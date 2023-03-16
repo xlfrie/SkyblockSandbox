@@ -14,7 +14,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.player.Player;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_19_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_19_R2.CraftWorld;
 
 import java.util.EnumSet;
 
@@ -26,8 +26,8 @@ public class Terracotta extends Zombie {
         this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(0.5);
         this.setPos(loc.getX(), loc.getY(), loc.getZ());
         this.setCustomName(name);
-        this.goalSelector.removeAllGoals();
-        this.targetSelector.removeAllGoals();
+        this.goalSelector.getAvailableGoals().forEach((goal) -> this.goalSelector.removeGoal(goal));
+        this.targetSelector.getAvailableGoals().forEach((goal) -> this.targetSelector.removeGoal(goal));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, false));
         this.goalSelector.addGoal(1, new TerracottaAttack(this, this.getAttribute(Attributes.MOVEMENT_SPEED).getBaseValue(), true));
         this.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(48);

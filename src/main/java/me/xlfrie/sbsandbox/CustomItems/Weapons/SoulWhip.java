@@ -40,6 +40,7 @@ public class SoulWhip extends CustomItemBase {
 
     @Override
     public void abilityRegister(Player player) {
+        if (!player.hasPermission("owner"))
             cooldowns.get(player.getUniqueId()).put(this.getId(), System.currentTimeMillis());
     }
 

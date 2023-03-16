@@ -5,10 +5,11 @@ import me.xlfrie.sbsandbox.Events.PacketEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
-import org.bukkit.craftbukkit.v1_19_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_19_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import java.io.*;
+import java.lang.reflect.Field;
 
 public final class Utils {
     public static void copy(File in, File out) throws IOException {
@@ -77,5 +78,16 @@ public final class Utils {
             channel.pipeline().remove(player.getUniqueId().toString());
             return null;
         });
+    }
+
+    public static Object getValue(Object obj, String str) {
+        Field field;
+        try {
+            field = obj.getClass().getDeclaredField(str);
+            field.setAccessible(true);
+            return field.get(obj);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            return  null;
+        }
     }
 }

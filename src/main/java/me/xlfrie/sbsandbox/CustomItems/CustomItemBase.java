@@ -74,7 +74,7 @@ public abstract class CustomItemBase implements Listener {
     }
 
     public void abilityRegister(Player player) {
-//        if (!player.hasPermission("owner"))
+        if (!player.hasPermission("owner"))
             cooldowns.get(player.getUniqueId()).put(this.getId(), System.currentTimeMillis());
         ActionBar.setMessageBuf(SBSandbox.color("&b-" + this.itemData().get("manaCost") + " Mana (&6" + this.itemData().get("abilityName") + "&b)"), player);
         ActionBar.useMana((Integer) this.itemData().get("manaCost"), player);

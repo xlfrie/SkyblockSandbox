@@ -16,7 +16,7 @@ public class RankCommand implements TabExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) return true;
         Player player = ((Player) sender);
-        if (args.length == 0 && player.hasPermission("sbsandbox.admin")) {
+        if (args.length == 0 ) {
             for (Player p : Bukkit.getOnlinePlayers()) {
                 Rank.NONE.loadRank(p);
             }

@@ -11,7 +11,7 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.IronGolem;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_19_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_19_R2.CraftWorld;
 
 import java.util.EnumSet;
 
@@ -23,8 +23,8 @@ public class WokeGolem extends IronGolem {
         this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(0.5);
         this.setPos(loc.getX(), loc.getY(), loc.getZ());
         this.setCustomName(name);
-        this.goalSelector.removeAllGoals();
-        this.targetSelector.removeAllGoals();
+        this.goalSelector.getAvailableGoals().forEach((goal) -> this.goalSelector.removeGoal(goal));
+        this.targetSelector.getAvailableGoals().forEach((goal) -> this.targetSelector.removeGoal(goal));
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this, new Class[0]));
         this.goalSelector.addGoal(1, new GolemAttack(this, this.getAttribute(Attributes.MOVEMENT_SPEED).getBaseValue(), true));
         this.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(48);

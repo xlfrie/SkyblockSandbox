@@ -21,13 +21,14 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_19_R1.CraftServer;
-import org.bukkit.craftbukkit.v1_19_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_19_R1.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_19_R1.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_19_R2.CraftServer;
+import org.bukkit.craftbukkit.v1_19_R2.CraftWorld;
+import org.bukkit.craftbukkit.v1_19_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_19_R2.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -96,11 +97,11 @@ public enum CustomNpc {
     }
 
     public interface InteractFunc {
-        void func(Player p);
+        void func(Player p, ServerboundInteractPacket dat);
     }
 
-    public void interact(Player p) {
-        Bukkit.getScheduler().runTask(SBSandbox.getInstance(), () -> this.function.func(p));
+    public void interact(Player p, ServerboundInteractPacket dat) {
+        Bukkit.getScheduler().runTask(SBSandbox.getInstance(), () -> this.function.func(p, dat));
     }
 
     public void spawn(Player p, boolean add) {
@@ -113,28 +114,28 @@ public enum CustomNpc {
 
         gameProfile.getProperties().put("textures", new Property("textures", texture, signature));
 
-        ServerPlayer serverPlayer = new ServerPlayer(minecraftServer, serverLevel, gameProfile, null);
+        ServerPlayer serverPlayer = new ServerPlayer(minecraftServer, serverLevel, gameProfile);
         serverPlayer.setPos(x, y, z);
         serverPlayer.level = serverLevel;
         collision.addEntry(serverPlayer.getName().getString());
 
         ServerGamePacketListenerImpl ps = craftPlayer.getHandle().connection;
         serverPlayer.connection = new ServerGamePacketListenerImpl(serverPlayer.server, new Connection(PacketFlow.CLIENTBOUND), serverPlayer);
-        ps.send(new ClientboundPlayerInfoPacket(ClientboundPlayerInfoPacket.Action.ADD_PLAYER, serverPlayer));
+        ps.send(new ClientboundPlayerInfoUpdatePacket(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER, serverPlayer));
         ps.send(new ClientboundAddPlayerPacket(serverPlayer));
         ps.send(new ClientboundSetEquipmentPacket(serverPlayer.getBukkitEntity().getEntityId(), items));
         SynchedEntityData data = serverPlayer.getEntityData();
         data.set(new EntityDataAccessor<>(17, EntityDataSerializers.BYTE), (byte) 127);
-        ps.send(new ClientboundSetEntityDataPacket(serverPlayer.getId(), data, true ));
+        ps.send(new ClientboundSetEntityDataPacket(serverPlayer.getId(), data.packDirty()));
         ArmorStand clickMeStand = new ArmorStand(EntityType.ARMOR_STAND, serverLevel);
         clickMeStand.setPos(x, y+0.1, z);
         clickMeStand.setCustomName(Component.literal(name));
         clickMeStand.setCustomNameVisible(true);
         clickMeStand.setInvisible(true);
         ps.send(new ClientboundAddEntityPacket(clickMeStand));
-        ps.send(new ClientboundSetEntityDataPacket(clickMeStand.getId(), clickMeStand.getEntityData(), true));
+        ps.send(new ClientboundSetEntityDataPacket(clickMeStand.getId(), clickMeStand.getEntityData().packDirty()));
         Bukkit.getScheduler().runTaskLater(SBSandbox.getInstance(), () -> {
-            ps.send(new ClientboundPlayerInfoPacket(ClientboundPlayerInfoPacket.Action.REMOVE_PLAYER, serverPlayer));
+            ps.send(new ClientboundPlayerInfoRemovePacket(Collections.singletonList(serverPlayer.getUUID())));
         }, 200L);
         if (!add) return;
         SBSandbox.addNpc(serverPlayer, serverPlayer.getId(), craftPlayer.getHandle().getUUID(), this, clickMeStand);

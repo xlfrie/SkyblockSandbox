@@ -5,7 +5,6 @@ import net.minecraft.CrashReportCategory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
-import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -25,7 +24,7 @@ import net.minecraft.world.level.block.Fallable;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
-import org.bukkit.craftbukkit.v1_19_R1.event.CraftEventFactory;
+import org.bukkit.craftbukkit.v1_19_R2.event.CraftEventFactory;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.slf4j.Logger;
 
@@ -142,10 +141,10 @@ public class NGInfFallingBlock extends FallingBlockEntity {
                 if (this.blockState.getBlock() instanceof Fallable) {
                     Fallable fallable = (Fallable) this.blockState.getBlock();
                     predicate = fallable.getHurtsEntitySelector();
-                    damagesource1 = fallable.getFallDamageSource();
+                    damagesource1 = fallable.getFallDamageSource(this);
                 } else {
                     predicate = EntitySelector.NO_SPECTATORS;
-                    damagesource1 = DamageSource.FALLING_BLOCK;
+                    damagesource1 = DamageSource.fallingBlock(this);
                 }
 
                 float f2 = (float) Math.min(Mth.floor((float) i * this.fallDamagePerDistance), this.fallDamageMax);
@@ -173,29 +172,6 @@ public class NGInfFallingBlock extends FallingBlockEntity {
 
     }
 
-    protected void readAdditionalSaveData(CompoundTag nbttagcompound) {
-        this.blockState = NbtUtils.readBlockState(nbttagcompound.getCompound("BlockState"));
-        this.time = nbttagcompound.getInt("Time");
-        if (nbttagcompound.contains("HurtEntities", 99)) {
-            this.hurtEntities = nbttagcompound.getBoolean("HurtEntities");
-            this.fallDamagePerDistance = nbttagcompound.getFloat("FallHurtAmount");
-            this.fallDamageMax = nbttagcompound.getInt("FallHurtMax");
-        }
-
-        if (nbttagcompound.contains("DropItem", 99)) {
-            this.dropItem = nbttagcompound.getBoolean("DropItem");
-        }
-
-        if (nbttagcompound.contains("TileEntityData", 10)) {
-            this.blockData = nbttagcompound.getCompound("TileEntityData");
-        }
-
-        if (this.blockState.isAir()) {
-            this.blockState = Blocks.SAND.defaultBlockState();
-        }
-
-    }
-
     public void setHurtsEntities(float f, int i) {
         this.hurtEntities = true;
         this.fallDamagePerDistance = f;
@@ -217,10 +193,6 @@ public class NGInfFallingBlock extends FallingBlockEntity {
 
     public boolean onlyOpCanSetNbt() {
         return true;
-    }
-
-    public Packet<?> getAddEntityPacket() {
-        return new ClientboundAddEntityPacket(this, Block.getId(this.getBlockState()));
     }
 
     public void recreateFromPacket(ClientboundAddEntityPacket packetplayoutspawnentity) {
