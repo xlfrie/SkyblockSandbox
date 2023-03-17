@@ -30,7 +30,7 @@ import java.util.UUID;
 import static me.xlfrie.sbsandbox.SBSandbox.color;
 
 public class StonkCommand implements TabExecutor {
-    private Material[] mats = {
+    private final Material[] mats = {
             Material.WHITE_STAINED_GLASS,
             Material.RED_STAINED_GLASS,
             Material.ORANGE_STAINED_GLASS,

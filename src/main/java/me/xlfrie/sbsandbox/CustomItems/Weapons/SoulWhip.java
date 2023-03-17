@@ -44,7 +44,7 @@ public class SoulWhip extends CustomItemBase {
             cooldowns.get(player.getUniqueId()).put(this.getId(), System.currentTimeMillis());
     }
 
-    private HashMap<String, Object> _itemData = new HashMap<>() {{
+    private final HashMap<String, Object> _itemData = new HashMap<>() {{
         put("health", 0);
         put("intelligence", 10000000);
     }};
@@ -71,7 +71,7 @@ public class SoulWhip extends CustomItemBase {
         abilityRegister(player);
         new BukkitRunnable() {
             int ticks = 0;
-            List<UUID> hitBefore = new ArrayList<>();
+            final List<UUID> hitBefore = new ArrayList<>();
             @Override
             public void run() {
                 if (ticks >= 10) this.cancel();
@@ -99,8 +99,7 @@ public class SoulWhip extends CustomItemBase {
         float b = 2 * (1 - t) * t;
         float c = t * t;
 
-        Location p = p0.clone().multiply(a).add(p1.clone().multiply(b)).add(p2.clone().multiply(c));
-        return p;
+        return p0.clone().multiply(a).add(p1.clone().multiply(b)).add(p2.clone().multiply(c));
     }
 
 }

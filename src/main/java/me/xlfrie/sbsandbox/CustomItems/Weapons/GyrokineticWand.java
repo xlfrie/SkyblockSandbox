@@ -57,7 +57,7 @@ public class GyrokineticWand extends CustomItemBase {
         return Material.BLAZE_ROD;
     }
 
-    private HashMap<String, Object> _itemData = new HashMap<>() {{
+    private final HashMap<String, Object> _itemData = new HashMap<>() {{
         put("manaCost", 1200);
         put("abilityName", "Gravity Storm");
         put("health", 0);

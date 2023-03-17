@@ -36,7 +36,7 @@ public class JasonSword extends CustomItemBase {
         return Material.GOLDEN_AXE;
     }
 
-    private HashMap<String, Object> _itemData = new HashMap<>() {{
+    private final HashMap<String, Object> _itemData = new HashMap<>() {{
         put("manaCost", 100);
         put("abilityName", "Jason!");
         put("health", 100);

@@ -33,13 +33,13 @@ public final class SBSandbox extends JavaPlugin {
     public static final List<Integer> npcIDs = new ArrayList<>();
     private static final HashMap<ServerPlayer, UUID> npcs = new HashMap<ServerPlayer, UUID>();
     public static SBSandbox instance = null;
-    public static HashMap<Integer, Tuple<CustomNpc, ServerPlayer>> npcClazz = new HashMap<Integer, Tuple<CustomNpc, ServerPlayer>>();
-    public static HashMap<Integer, ArmorStand> clickMeStands = new HashMap<Integer, ArmorStand>();
-    public static String sandboxName = "Stinky";
+    public static final HashMap<Integer, Tuple<CustomNpc, ServerPlayer>> npcClazz = new HashMap<Integer, Tuple<CustomNpc, ServerPlayer>>();
+    public static final HashMap<Integer, ArmorStand> clickMeStands = new HashMap<Integer, ArmorStand>();
+    public static final String sandboxName = "Stinky";
     public static Scoreboard board;
     public static Team collision;
-    public static HashMap<Rank, Team> rankTeams = new HashMap<>();
-    public static HashMap<UUID, PermissionAttachment> attachments = new HashMap<>();
+    public static final HashMap<Rank, Team> rankTeams = new HashMap<>();
+    public static final HashMap<UUID, PermissionAttachment> attachments = new HashMap<>();
     static ScoreboardManager manager;
 
     public static String color(String string) {
@@ -88,15 +88,6 @@ public final class SBSandbox extends JavaPlugin {
         }
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, ActionBar::tick, 0L, 40L);
 //        Register handlers
-//        new HyperionHandler(this);
-//        new GyrokineticWandHandler(this);
-//        new TerminatorHandler(this);
-//        new GrapplingHookHandler(this);
-//        new SheepHandler(this);
-//        new LaserGunHandler(this);
-//        new BombDetonatorHandler(this);
-//        new SpidersBootsHandler(this);
-//        new PortalGunHandler(this);
 
         new HealthHandler(this);
         new LandProtection(this);

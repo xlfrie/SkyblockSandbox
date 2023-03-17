@@ -17,6 +17,7 @@ import org.bukkit.event.world.WorldInitEvent;
 
 import java.util.List;
 
+@SuppressWarnings({"CommentedOutCode", "EmptyMethod"})
 public class LandProtection implements Listener {
     private final List<List<Integer>> protectedChunks = List.of(
             List.of(-1, 0),

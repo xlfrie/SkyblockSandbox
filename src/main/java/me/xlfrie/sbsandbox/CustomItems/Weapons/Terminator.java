@@ -37,7 +37,7 @@ public class Terminator extends CustomItemBase {
     }
 
 
-    private HashMap<String, Object> _itemData = new HashMap<>() {{
+    private final HashMap<String, Object> _itemData = new HashMap<>() {{
         put("manaCost", 0);
         put("abilityName", "Terminate");
         put("intelligence", 0);

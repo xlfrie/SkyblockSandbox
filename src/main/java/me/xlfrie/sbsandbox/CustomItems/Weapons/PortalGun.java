@@ -17,7 +17,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerRegisterChannelEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
@@ -48,7 +47,7 @@ public class PortalGun extends CustomItemBase {
         return Material.ORANGE_CANDLE;
     }
 
-    private HashMap<String, Object> _itemData = new HashMap<>() {{
+    private final HashMap<String, Object> _itemData = new HashMap<>() {{
         put("manaCost", 100);
         put("abilityName", "Portal Cast");
         put("health", 0);
@@ -59,7 +58,7 @@ public class PortalGun extends CustomItemBase {
     public HashMap<String, Object> itemData() {
         return _itemData;
     }
-    private HashMap<UUID, Tuple<Tuple<Location, FallingBlockEntity[]>, Tuple<Location, FallingBlockEntity[]>>> portals = new HashMap<>();
+    private final HashMap<UUID, Tuple<Tuple<Location, FallingBlockEntity[]>, Tuple<Location, FallingBlockEntity[]>>> portals = new HashMap<>();
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void ability(PlayerInteractEvent event) {
@@ -152,8 +151,4 @@ public class PortalGun extends CustomItemBase {
         }
     }
 
-    @EventHandler
-    public void channel(PlayerRegisterChannelEvent event) {
-
-    }
 }

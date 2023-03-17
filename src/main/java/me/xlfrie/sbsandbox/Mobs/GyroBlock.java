@@ -15,7 +15,7 @@ import java.util.Random;
 
 public class GyroBlock {
 
-    private static Material[] blocks = new Material[6];
+    private static final Material[] blocks = new Material[6];
 
     static {
         blocks[0] = Material.OBSIDIAN;

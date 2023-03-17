@@ -7,10 +7,9 @@ import org.bukkit.event.HandlerList;
 
 public class PacketEvent extends Event implements Cancellable {
     private final PacketEvent.direction direction;
-    protected Object packet;
-    private static HandlerList handlers = new HandlerList();
-    private ChannelHandlerContext ctx;
-    private boolean cancel;
+    protected final Object packet;
+    private static final HandlerList handlers = new HandlerList();
+    private final ChannelHandlerContext ctx;
 
     public HandlerList getHandlers() {
         return handlers;
@@ -26,7 +25,6 @@ public class PacketEvent extends Event implements Cancellable {
     }
 
     public void setCancelled(boolean cancel) {
-        this.cancel = cancel;
     }
 
     public PacketEvent(Object packet, PacketEvent.direction direction, ChannelHandlerContext ctx) {

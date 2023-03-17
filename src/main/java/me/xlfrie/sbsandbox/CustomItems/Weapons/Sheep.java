@@ -34,7 +34,7 @@ public class Sheep extends CustomItemBase {
         return Material.MANGROVE_PROPAGULE;
     }
 
-    private HashMap<String, Object> _itemData = new HashMap<>() {{
+    private final HashMap<String, Object> _itemData = new HashMap<>() {{
         put("manaCost", 10);
         put("abilityName", "Jeb!");
         put("health", 0);

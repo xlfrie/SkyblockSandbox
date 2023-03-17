@@ -45,7 +45,7 @@ public class GrapplingHook extends CustomItemBase {
     public Material getMaterial() {
         return Material.FISHING_ROD;
     }
-    private HashMap<String, Object> _itemData = new HashMap<>() {{
+    private final HashMap<String, Object> _itemData = new HashMap<>() {{
         put("manaCost", 0);
         put("abilityName", "Grapple");
         put("health", 0);

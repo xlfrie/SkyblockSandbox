@@ -39,7 +39,6 @@ public class WokeGolem extends IronGolem {
     }
 
     public class GolemAttack extends Goal {
-        private final boolean followingTargetEvenIfNotSeen;
         private final PathfinderMob mob;
         private int ticksUntilNextAttack;
         private int ticksUntilReCalc;
@@ -48,7 +47,6 @@ public class WokeGolem extends IronGolem {
 
         public GolemAttack(PathfinderMob var0, double var1, boolean var3) {
             this.mob = var0;
-            this.followingTargetEvenIfNotSeen = var3;
             this.ticksUntilNextAttack = 0;
             this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
         }

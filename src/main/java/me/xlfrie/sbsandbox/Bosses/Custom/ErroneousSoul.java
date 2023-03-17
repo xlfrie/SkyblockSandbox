@@ -33,11 +33,6 @@ public class ErroneousSoul extends Creeper implements CustomBossTemplate {
     }
 
     @Override
-    public void tick() {
-        super.tick();
-    }
-
-    @Override
     public int phases() {
         return 3;
     }

@@ -42,7 +42,7 @@ public class Hyperion extends CustomItemBase {
         return Material.IRON_SWORD;
     }
 
-    private HashMap<String, Object> _itemData = new HashMap<>() {{
+    private final HashMap<String, Object> _itemData = new HashMap<>() {{
         put("manaCost", 150);
         put("abilityName", "Wither Impact");
         put("health", 100);

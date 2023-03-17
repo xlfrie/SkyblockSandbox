@@ -35,6 +35,7 @@ import java.util.UUID;
 import static me.xlfrie.sbsandbox.SBSandbox.collision;
 import static me.xlfrie.sbsandbox.SBSandbox.color;
 
+@SuppressWarnings("SameParameterValue")
 public enum CustomNpc {
 
     HYPIXEL(color("&cHypixel"),

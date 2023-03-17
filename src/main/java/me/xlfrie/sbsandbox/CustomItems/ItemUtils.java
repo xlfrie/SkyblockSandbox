@@ -3,7 +3,7 @@ package me.xlfrie.sbsandbox.CustomItems;
 import java.util.HashMap;
 
 public class ItemUtils {
-    private static HashMap<String, CustomItemBase> registeredItems = new HashMap<>();
+    private static final HashMap<String, CustomItemBase> registeredItems = new HashMap<>();
 
     public static void registerItem(CustomItemBase clazz) {
         registeredItems.put(clazz.getId(), clazz);

@@ -42,7 +42,7 @@ public class LaserGun extends CustomItemBase {
     }
 
 
-    private HashMap<String, Object> _itemData = new HashMap<>() {{
+    private final HashMap<String, Object> _itemData = new HashMap<>() {{
         put("manaCost", 100);
         put("abilityName", "Beam");
         put("health", 0);

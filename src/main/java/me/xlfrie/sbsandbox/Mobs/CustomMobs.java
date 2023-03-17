@@ -5,6 +5,7 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 
+@SuppressWarnings("SameParameterValue")
 public enum CustomMobs {
     ENDERMAN("Enderman", 2000, EntityType.ENDERMAN);
 

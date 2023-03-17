@@ -65,15 +65,11 @@ public class Terracotta extends Zombie {
     }
 
     public class TerracottaAttack extends Goal {
-        private final boolean followingTargetEvenIfNotSeen;
-        private final double speedModifier;
         private final PathfinderMob mob;
         private int ticksUntilNextAttack;
 
         public TerracottaAttack(PathfinderMob var0, double var1, boolean var3) {
             this.mob = var0;
-            this.speedModifier = var1;
-            this.followingTargetEvenIfNotSeen = var3;
             this.ticksUntilNextAttack = 0;
             this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
         }

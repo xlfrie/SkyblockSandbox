@@ -16,9 +16,10 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
+@SuppressWarnings("SameReturnValue")
 public abstract class CustomItemBase implements Listener {
 
-    public HashMap<UUID, HashMap<String, Long>> cooldowns = new HashMap<>();
+    public final HashMap<UUID, HashMap<String, Long>> cooldowns = new HashMap<>();
 
     public abstract String getId();
 

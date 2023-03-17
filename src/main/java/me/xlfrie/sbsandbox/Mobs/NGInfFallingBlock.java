@@ -133,9 +133,7 @@ public class NGInfFallingBlock extends FallingBlockEntity {
             return false;
         } else {
             int i = Mth.ceil(f - 1.0F);
-            if (i < 0) {
-                return false;
-            } else {
+            if (i >= 0) {
                 Predicate<Entity> predicate;
                 DamageSource damagesource1;
                 if (this.blockState.getBlock() instanceof Fallable) {
@@ -154,8 +152,8 @@ public class NGInfFallingBlock extends FallingBlockEntity {
                     CraftEventFactory.entityDamage = null;
                 });
 
-                return false;
             }
+            return false;
         }
     }
 

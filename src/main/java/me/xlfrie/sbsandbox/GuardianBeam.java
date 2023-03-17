@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class GuardianBeam {
-    public static HashMap<UUID, Tuple<ArmorStand, CustomGuardian>> customEntities = new HashMap<UUID, Tuple<ArmorStand, CustomGuardian>>();
+    public static final HashMap<UUID, Tuple<ArmorStand, CustomGuardian>> customEntities = new HashMap<UUID, Tuple<ArmorStand, CustomGuardian>>();
     public static UUID spawn(Location locFrom, Location locTo) {
         ServerLevel serverLevel = ((CraftWorld) locFrom.getWorld()).getHandle();
         ArmorStand stand = new ArmorStand(EntityType.ARMOR_STAND, serverLevel);

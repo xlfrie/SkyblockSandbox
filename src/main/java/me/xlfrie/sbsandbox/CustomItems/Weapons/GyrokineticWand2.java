@@ -23,7 +23,7 @@ import java.util.Collection;
 import java.util.HashMap;
 
 public class GyrokineticWand2 extends CustomItemBase {
-    private HashMap<String, Object> _itemData = new HashMap<>() {{
+    private final HashMap<String, Object> _itemData = new HashMap<>() {{
         put("manaCost", 1200);
         put("abilityName", "Gravity Storm");
         put("health", 0);
@@ -99,8 +99,8 @@ public class GyrokineticWand2 extends CustomItemBase {
 
     public class GyroTask extends BukkitRunnable {
         int i = 8;
-        Player player;
-        RayTraceResult ray;
+        final Player player;
+        final RayTraceResult ray;
         Location rift;
         Collection<Entity> pulling;
 

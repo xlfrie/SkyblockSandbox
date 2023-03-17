@@ -17,9 +17,8 @@ import java.util.Objects;
 import java.util.UUID;
 
 public final class ActionBar {
-    private static HashMap<UUID, HashMap<String, Object>> plStats = new HashMap<>();
-    private static HashMap<UUID, String> msgBuf = new HashMap<>();
-    private static String space = "    ";
+    private static final HashMap<UUID, HashMap<String, Object>> plStats = new HashMap<>();
+    private static final HashMap<UUID, String> msgBuf = new HashMap<>();
 
     private static final HashMap<String, Object> defaults = new HashMap<>() {{
         put("maxHealth", 100);
@@ -65,6 +64,7 @@ public final class ActionBar {
 
     private static String genActionBar(UUID plUUID, double health, double maxHealth, int mana, int maxMana) {
         String buf = "";
+        String space = "    ";
         buf += ChatColor.RED + String.format("%d/%d♥%s", (int) health, (int) maxHealth, space);
         if (msgBuf.containsKey(plUUID)) {
             buf += msgBuf.get(plUUID) + space;

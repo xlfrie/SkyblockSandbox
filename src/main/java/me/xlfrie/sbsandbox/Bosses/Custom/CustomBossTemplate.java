@@ -1,5 +1,6 @@
 package me.xlfrie.sbsandbox.Bosses.Custom;
 
+@SuppressWarnings("SameReturnValue")
 public interface CustomBossTemplate {
     int phases();
 

@@ -69,18 +69,6 @@ public class MobUtils {
     public static void dragonDeathEffect(Location location) {
         EnderDragon ed = new EnderDragon(EntityType.ENDER_DRAGON, ((CraftWorld) location.getWorld()).getHandle(), location);
         ed.level.addFreshEntity(ed);
-//        SynchedEntityData synchedEntityData = ed.getEntityData();
-//        synchedEntityData.set(new EntityDataAccessor<>(0,  EntityDataSerializers.BYTE), (byte) 32);
-//        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-//            ((CraftPlayer) onlinePlayer).getHandle().connection.send(new ClientboundAddEntityPacket(ed));
-//            ((CraftPlayer) onlinePlayer).getHandle().connection.send(new ClientboundSetEntityDataPacket(ed.getId(), synchedEntityData, true));
-//            ((CraftPlayer) onlinePlayer).getHandle().connection.send(new ClientboundEntityEventPacket(ed, (byte) 3));
-//        }
-//        Bukkit.getScheduler().runTaskLater(SBSandbox.getInstance(), () -> {
-//            for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-//                ((CraftPlayer) onlinePlayer).getHandle().connection.send(new ClientboundRemoveEntitiesPacket(ed.getId()));
-//            }
-//        }, 1);
     }
 
 }
