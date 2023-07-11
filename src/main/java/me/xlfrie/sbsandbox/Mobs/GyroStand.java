@@ -18,7 +18,7 @@ public class GyroStand extends ArmorStand {
     @Override
     public void tick() {
         super.tick();
-        if (this.tickCount > 20) {
+        if (this.tickCount > 15) {
             Objects.requireNonNull(this.getFirstPassenger()).kill();
             this.kill();
         }

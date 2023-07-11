@@ -36,14 +36,14 @@ public class EnderDragon extends net.minecraft.world.entity.boss.enderdragon.End
         ++this.dragonDeathTime;
 
         int short0 = this.expToDrop;
-        if (this.level instanceof ServerLevel) {
+        if (this.level() instanceof ServerLevel) {
             if (this.dragonDeathTime > 150 && this.dragonDeathTime % 5 == 0) {
-                ExperienceOrb.award((ServerLevel) this.level, this.position(), Mth.floor((float) short0 * 0.08F));
+                ExperienceOrb.award((ServerLevel) this.level(), this.position(), Mth.floor((float) short0 * 0.08F));
             }
 
             if (this.dragonDeathTime == 1 && !this.isSilent()) {
-                int viewDistance = this.level.getCraftServer().getViewDistance() * 16;
-                Iterator var4 = this.level.getServer().getPlayerList().players.iterator();
+                int viewDistance = this.level().getCraftServer().getViewDistance() * 16;
+                Iterator var4 = this.level().getServer().getPlayerList().players.iterator();
 
                 label48:
                 while (true) {
@@ -60,7 +60,7 @@ public class EnderDragon extends net.minecraft.world.entity.boss.enderdragon.End
                         deltaX = this.getX() - player.getX();
                         deltaZ = this.getZ() - player.getZ();
                         distanceSquared = deltaX * deltaX + deltaZ * deltaZ;
-                    } while (this.level.spigotConfig.dragonDeathSoundRadius > 0 && distanceSquared > (double) (this.level.spigotConfig.dragonDeathSoundRadius * this.level.spigotConfig.dragonDeathSoundRadius));
+                    } while (this.level().spigotConfig.dragonDeathSoundRadius > 0 && distanceSquared > (double) (this.level().spigotConfig.dragonDeathSoundRadius * this.level().spigotConfig.dragonDeathSoundRadius));
 
                     if (distanceSquared > (double) (viewDistance * viewDistance)) {
                         double deltaLength = Math.sqrt(distanceSquared);
@@ -75,8 +75,8 @@ public class EnderDragon extends net.minecraft.world.entity.boss.enderdragon.End
         }
         this.setYRot(this.getYRot() + 20.0F);
         this.yBodyRot = this.getYRot();
-        if (this.dragonDeathTime == 200 && this.level instanceof ServerLevel) {
-            ExperienceOrb.award((ServerLevel) this.level, this.position(), Mth.floor((float) short0 * 0.2F));
+        if (this.dragonDeathTime == 200 && this.level() instanceof ServerLevel) {
+            ExperienceOrb.award((ServerLevel) this.level(), this.position(), Mth.floor((float) short0 * 0.2F));
             if (this.getDragonFight() != null) {
                 this.getDragonFight().setDragonKilled(this);
             }

@@ -9,10 +9,7 @@ import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.util.Mth;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.item.FallingBlockEntity;
@@ -24,12 +21,11 @@ import net.minecraft.world.level.block.Fallable;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
-import org.bukkit.craftbukkit.v1_19_R2.event.CraftEventFactory;
+import org.bukkit.craftbukkit.v1_20_R1.event.CraftEventFactory;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.slf4j.Logger;
 
 import javax.annotation.Nullable;
-import java.util.function.Predicate;
 
 public class NGInfFallingBlock extends FallingBlockEntity {
     protected static final EntityDataAccessor<BlockPos> DATA_START_POS;
@@ -65,7 +61,7 @@ public class NGInfFallingBlock extends FallingBlockEntity {
         this.xo = d0;
         this.yo = d1;
         this.zo = d2;
-        this.setStartPos(new BlockPos(xo, yo, zo));
+        this.setStartPos(new BlockPos((int) xo, (int) yo, (int) zo));
     }
 
     public static FallingBlockEntity fall(Level world, BlockPos blockposition, BlockState iblockdata) {
@@ -113,7 +109,7 @@ public class NGInfFallingBlock extends FallingBlockEntity {
             ++this.time;
             this.setDeltaMovement(Vec3.ZERO);
             this.move(MoverType.SELF, Vec3.ZERO);
-            if (!this.level.isClientSide) {
+            if (!this.level().isClientSide) {
                 boolean flag = this.blockState.getBlock() instanceof ConcretePowderBlock;
                 double d0 = this.getDeltaMovement().lengthSqr();
             }
@@ -123,38 +119,9 @@ public class NGInfFallingBlock extends FallingBlockEntity {
 
     public void callOnBrokenAfterFall(Block block, BlockPos blockposition) {
         if (block instanceof Fallable) {
-            ((Fallable) block).onBrokenAfterFall(this.level, blockposition, this);
+            ((Fallable) block).onBrokenAfterFall(this.level(), blockposition, this);
         }
 
-    }
-
-    public boolean causeFallDamage(float f, float f1, DamageSource damagesource) {
-        if (!this.hurtEntities) {
-            return false;
-        } else {
-            int i = Mth.ceil(f - 1.0F);
-            if (i >= 0) {
-                Predicate<Entity> predicate;
-                DamageSource damagesource1;
-                if (this.blockState.getBlock() instanceof Fallable) {
-                    Fallable fallable = (Fallable) this.blockState.getBlock();
-                    predicate = fallable.getHurtsEntitySelector();
-                    damagesource1 = fallable.getFallDamageSource(this);
-                } else {
-                    predicate = EntitySelector.NO_SPECTATORS;
-                    damagesource1 = DamageSource.fallingBlock(this);
-                }
-
-                float f2 = (float) Math.min(Mth.floor((float) i * this.fallDamagePerDistance), this.fallDamageMax);
-                this.level.getEntities(this, this.getBoundingBox(), predicate).forEach((entity) -> {
-                    CraftEventFactory.entityDamage = this;
-                    entity.hurt(damagesource1, f2);
-                    CraftEventFactory.entityDamage = null;
-                });
-
-            }
-            return false;
-        }
     }
 
     protected void addAdditionalSaveData(CompoundTag nbttagcompound) {

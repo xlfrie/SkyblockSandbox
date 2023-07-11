@@ -1,7 +1,6 @@
 package me.xlfrie.sbsandbox.Bosses.Custom;
 
 import net.minecraft.util.Mth;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -14,7 +13,7 @@ import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_19_R2.CraftWorld;
+import org.bukkit.craftbukkit.v1_20_R1.CraftWorld;
 import org.bukkit.event.entity.EntityCombustByEntityEvent;
 
 public class ErroneousSoul extends Creeper implements CustomBossTemplate {
@@ -55,7 +54,7 @@ public class ErroneousSoul extends Creeper implements CustomBossTemplate {
             }
         }
 
-        boolean flag = entity.hurt(DamageSource.mobAttack(this), f);
+        boolean flag = entity.hurt(this.damageSources().mobAttack(this), f);
         if (flag) {
             if (f1 > 0.0F && entity instanceof LivingEntity) {
                 ((LivingEntity)entity).knockback(f1 * 0.5F, Mth.sin(this.getYRot() * 0.017453292F), -Mth.cos(this.getYRot() * 0.017453292F));

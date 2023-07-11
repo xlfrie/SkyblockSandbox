@@ -2,15 +2,14 @@ package me.xlfrie.sbsandbox.CustomItems.Weapons;
 
 import me.xlfrie.sbsandbox.CustomItems.CustomItemBase;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Illusioner;
 import net.minecraft.world.level.ExplosionDamageCalculator;
 import net.minecraft.world.level.Level;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_19_R2.CraftWorld;
-import org.bukkit.craftbukkit.v1_19_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_20_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -69,7 +68,7 @@ public class BombDetonator extends CustomItemBase {
         Location loc = player.getTargetBlock(null, 200).getLocation();
         if (loc.getBlock().getBlockData().getMaterial() == Material.AIR) return;
         ServerLevel level = ((CraftWorld) player.getWorld()).getHandle();
-        level.explode(new Illusioner(EntityType.ILLUSIONER, level), DamageSource.playerAttack(((CraftPlayer) player).getHandle()), new ExplosionDamageCalculator(), loc.getX(), loc.getY() + 1, loc.getZ(), 100, false, Level.ExplosionInteraction.BLOCK);
+        level.explode(new Illusioner(EntityType.ILLUSIONER, level), ((CraftPlayer) player).getHandle().damageSources().playerAttack(((CraftPlayer) player).getHandle()), new ExplosionDamageCalculator(), loc.getX(), loc.getY() + 1, loc.getZ(), 100, false, Level.ExplosionInteraction.BLOCK);
         abilityRegister(player);
     }
 }

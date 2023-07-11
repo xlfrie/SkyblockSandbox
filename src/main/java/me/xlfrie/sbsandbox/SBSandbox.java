@@ -17,7 +17,7 @@ import net.minecraft.world.entity.decoration.ArmorStand;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.craftbukkit.v1_19_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -104,6 +104,7 @@ public final class SBSandbox extends JavaPlugin {
         new NpcClick(this);
         new MiscHandler(this);
 
+
         new JasonSword();
         new Hyperion();
         new BombDetonator();
@@ -112,7 +113,6 @@ public final class SBSandbox extends JavaPlugin {
         new GloriousArmor.GloriousLeggings();
         new GloriousArmor.GloriousBoots();
         new GrapplingHook();
-        new GyrokineticWand();
         new GyrokineticWand2();
         new LaserGun();
         new PortalGun();
@@ -131,10 +131,15 @@ public final class SBSandbox extends JavaPlugin {
         getCommand("lobby").setExecutor(new LobbyCommand());
         getCommand("rank").setExecutor(new RankCommand());
         getCommand("giveitem").setExecutor(new GiveItemCommand());
+        getCommand("event").setExecutor(new EventCommand());
 
 // Inject into channel pipeline
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-            Utils.injectPacket(onlinePlayer);
+            try {
+                Utils.injectPacket(onlinePlayer);
+            } catch (NoSuchFieldException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         if (Bukkit.getWorlds().size() < 2) {
@@ -166,7 +171,11 @@ public final class SBSandbox extends JavaPlugin {
         npcs.clear();
         saveConfig();
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-            Utils.uninjectPacket(onlinePlayer);
+            try {
+                Utils.uninjectPacket(onlinePlayer);
+            } catch (NoSuchFieldException e) {
+                throw new RuntimeException(e);
+            }
         }
         Bukkit.getLogger().info("Shutting down");
     }

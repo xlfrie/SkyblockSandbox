@@ -9,8 +9,8 @@ import net.minecraft.world.entity.item.FallingBlockEntity;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
-import org.bukkit.craftbukkit.v1_19_R2.CraftWorld;
-import org.bukkit.craftbukkit.v1_19_R2.block.data.CraftBlockData;
+import org.bukkit.craftbukkit.v1_20_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_20_R1.block.data.CraftBlockData;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -130,7 +130,7 @@ public class PortalGun extends CustomItemBase {
             _loc.setPitch(180);
             _loc.add(_loc.getDirection().clone().crossProduct(new Vector(0, 1, 0)).multiply(offset[0]));
         }
-        FallingBlockEntity fbe = NGInfFallingBlock.fall(((CraftWorld) player.getWorld()).getHandle(), new BlockPos(Math.round(_loc.getX()), Math.round(_loc.getY()), Math.round(_loc.getZ())), ((CraftBlockData) color.createBlockData()).getState());
+        FallingBlockEntity fbe = NGInfFallingBlock.fall(((CraftWorld) player.getWorld()).getHandle(), new BlockPos(Math.toIntExact(Math.round(_loc.getX())), Math.toIntExact(Math.round(_loc.getY())), Math.toIntExact(Math.round(_loc.getZ()))), ((CraftBlockData) color.createBlockData()).getState());
         fbe.setNoGravity(true);
         fbe.dropItem = false;
         fbe.time = -2_147_483_647;

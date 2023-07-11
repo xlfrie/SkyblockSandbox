@@ -9,8 +9,8 @@ import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import net.minecraft.util.Tuple;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_19_R2.CraftWorld;
-import org.bukkit.craftbukkit.v1_19_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_20_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -32,7 +32,7 @@ public class NPCRotationHandler implements Listener {
                 default:
                     ServerPlayer npc = integerCustomNpcEntry.getValue().getB();
                     ServerGamePacketListenerImpl ps = ((CraftPlayer) player).getHandle().connection;
-                    if (npc.level != ((CraftWorld) player.getWorld()).getHandle()) return;
+                    if (npc.level() != ((CraftWorld) player.getWorld()).getHandle()) return;
                     Location loc = npc.getBukkitEntity().getLocation();
                     loc.setDirection(player.getLocation().subtract(loc).toVector());
                     float yaw = loc.getYaw();

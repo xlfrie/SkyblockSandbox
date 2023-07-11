@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
-import org.bukkit.craftbukkit.v1_19_R2.event.CraftEventFactory;
+import org.bukkit.craftbukkit.v1_20_R1.event.CraftEventFactory;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 
 public class GyroBlockEntity extends FallingBlockEntity {
@@ -43,7 +43,7 @@ public class GyroBlockEntity extends FallingBlockEntity {
 
     public static FallingBlockEntity fall(Level world, double x, double y, double z, BlockState iblockdata, CreatureSpawnEvent.SpawnReason spawnReason) {
         FallingBlockEntity entityfallingblock = new GyroBlockEntity(world, x, y, z, iblockdata.hasProperty(BlockStateProperties.WATERLOGGED) ? iblockdata.setValue(BlockStateProperties.WATERLOGGED, false) : iblockdata);
-        if (CraftEventFactory.callEntityChangeBlockEvent(entityfallingblock, new BlockPos(x, y, z), iblockdata.getFluidState().createLegacyBlock()).isCancelled()) {
+        if (CraftEventFactory.callEntityChangeBlockEvent(entityfallingblock, new BlockPos((int) x, (int) y, (int) z), iblockdata.getFluidState().createLegacyBlock()).isCancelled()) {
             return entityfallingblock;
         } else {
             world.addFreshEntity(entityfallingblock, spawnReason);
@@ -53,7 +53,7 @@ public class GyroBlockEntity extends FallingBlockEntity {
 
     @Override
     protected void readAdditionalSaveData(CompoundTag nbttagcompound) {
-        this.blockState = NbtUtils.readBlockState(this.level.holderLookup(Registries.BLOCK), nbttagcompound.getCompound("BlockState"));
+        this.blockState = NbtUtils.readBlockState(this.level().holderLookup(Registries.BLOCK), nbttagcompound.getCompound("BlockState"));
         this.time = nbttagcompound.getInt("Time");
         if (nbttagcompound.contains("HurtEntities", 99)) {
             this.hurtEntities = nbttagcompound.getBoolean("HurtEntities");

@@ -15,11 +15,19 @@ public class PacketHandler implements Listener {
 
     @EventHandler
     public void join(PlayerJoinEvent event) {
-        Utils.injectPacket(event.getPlayer());
+        try {
+            Utils.injectPacket(event.getPlayer());
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @EventHandler
     public void leave(PlayerQuitEvent event) {
-        Utils.uninjectPacket(event.getPlayer());
+        try {
+            Utils.uninjectPacket(event.getPlayer());
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

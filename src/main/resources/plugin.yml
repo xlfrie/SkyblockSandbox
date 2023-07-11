@@ -10,6 +10,11 @@ commands:
     usage: /giveitem id
     permission: sbsandbox.owner
     permission-message: §cYou do not have permission.
+  event:
+    description: Trigger events
+    usage: /event
+    permission: sbsandbox.owner
+    permission-message: §cYou do not have permission.
   stonk:
     description: Stonk.
     usage: /stonk

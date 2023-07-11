@@ -7,7 +7,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_19_R2.CraftWorld;
+import org.bukkit.craftbukkit.v1_20_R1.CraftWorld;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -29,7 +29,7 @@ public class GuardianBeam {
         guardianBeam.setInvisible(true);
         serverLevel.addFreshEntity(guardianBeam);
         guardianBeam.setActiveAttackTarget(stand.getId());
-        guardianBeam.level.broadcastEntityEvent(guardianBeam, (byte) 21);
+        guardianBeam.level().broadcastEntityEvent(guardianBeam, (byte) 21);
         UUID uuid = UUID.randomUUID();
         customEntities.put(uuid, new Tuple<>(stand, guardianBeam));
         return uuid;

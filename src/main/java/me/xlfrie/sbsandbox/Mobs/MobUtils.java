@@ -15,8 +15,8 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Zombie;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_19_R2.CraftWorld;
-import org.bukkit.craftbukkit.v1_19_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_20_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 
@@ -47,7 +47,7 @@ public class MobUtils {
 
         ServerPlayer puppet = new ServerPlayer(((CraftWorld) location.getWorld()).getHandle().getServer(), ((CraftWorld) location.getWorld()).getHandle(), gameProfile);
         puppet.setPos(location.getX(), location.getY(), location.getZ());
-        puppet.level = ((CraftWorld) location.getWorld()).getHandle();
+        puppet.setServerLevel(((CraftWorld) location.getWorld()).getHandle());
         puppet.setId(puppetMaster.getId());
 
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
@@ -68,7 +68,7 @@ public class MobUtils {
 
     public static void dragonDeathEffect(Location location) {
         EnderDragon ed = new EnderDragon(EntityType.ENDER_DRAGON, ((CraftWorld) location.getWorld()).getHandle(), location);
-        ed.level.addFreshEntity(ed);
+        ed.level().addFreshEntity(ed);
     }
 
 }

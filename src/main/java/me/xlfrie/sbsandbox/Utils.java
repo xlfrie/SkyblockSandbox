@@ -2,10 +2,11 @@ package me.xlfrie.sbsandbox;
 
 import io.netty.channel.*;
 import me.xlfrie.sbsandbox.Events.PacketEvent;
+import net.minecraft.network.Connection;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
-import org.bukkit.craftbukkit.v1_19_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_20_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import java.io.*;
@@ -52,7 +53,7 @@ public final class Utils {
         bukkitWorld.setAutoSave(false);
     }
 
-    public static void injectPacket(Player player) {
+    public static void injectPacket(Player player) throws NoSuchFieldException {
         ChannelDuplexHandler channelDuplexHandler = new ChannelDuplexHandler() {
             @Override
             public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
@@ -68,12 +69,33 @@ public final class Utils {
             }
 
         };
-        ChannelPipeline pipeline = ((CraftPlayer) player).getHandle().connection.connection.channel.pipeline();
+
+        Field field = ((CraftPlayer) player).getHandle().connection.getClass().getDeclaredField("h");
+        field.setAccessible(true);
+        Connection conn;
+        try {
+            conn = (Connection) field.get(((CraftPlayer) player).getHandle().connection);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+        field.setAccessible(false);
+
+        ChannelPipeline pipeline = conn.channel.pipeline();
         pipeline.addBefore("packet_handler", player.getUniqueId().toString(), channelDuplexHandler);
     }
 
-    public static void uninjectPacket(Player player) {
-        Channel channel = ((CraftPlayer) player).getHandle().connection.connection.channel;
+    public static void uninjectPacket(Player player) throws NoSuchFieldException {
+        Field field = ((CraftPlayer) player).getHandle().connection.getClass().getField("h");
+        field.setAccessible(true);
+        Connection conn;
+        try {
+            conn = (Connection) field.get(((CraftPlayer) player).getHandle().connection);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+        field.setAccessible(false);
+
+        Channel channel = conn.channel;
         channel.eventLoop().submit(() -> {
             channel.pipeline().remove(player.getUniqueId().toString());
             return null;
