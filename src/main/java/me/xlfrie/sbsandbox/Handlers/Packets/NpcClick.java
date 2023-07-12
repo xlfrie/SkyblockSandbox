@@ -19,6 +19,7 @@ public class NpcClick implements Listener {
     @EventHandler
     public void packet(PacketEvent event) {
         if (event.getPacket() instanceof ServerboundInteractPacket) {
+
             ServerboundInteractPacket serverboundInteractPacket = (ServerboundInteractPacket) event.getPacket();
             int eid = Integer.parseInt(Utils.getValue(serverboundInteractPacket, "a").toString());
             Object interactionAction;
